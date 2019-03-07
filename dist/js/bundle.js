@@ -7505,6 +7505,63 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
         return data;
     }
 
+    loadDataFromServer(server, id) {
+        const obj = this;
+
+        fetch(server + '/jsonapi/group/study?filter[id][condition][path]=id&filter[id][condition][operator]=%3D&filter[id][condition][value]=' + id, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+            if (data != null && data.data[0] != null && data.data[0].relationships.field_data_package.links.related != null) {
+                fetch(data.data[0].relationships.field_data_package.links.related.replace('http://', 'http://'), { credentials: 'include' })
+                //          fetch(data.data[0].relationships.field_data_package.links.related.replace('http://', 'https://'), {credentials: 'include'})
+                .then(resp => resp.json()).then(function (data) {
+                    if (data.data.relationships.field_resources.links.related != null) {
+                        //              fetch(data.relationships.field_resources.links.related.replace('http://', 'https://'), {credentials: 'include'})
+                        fetch(data.data.relationships.field_resources.links.related.replace('http://', 'http://'), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+                            obj.convertDataFromServer(data, 'eu-gl:adaptation-options:identification');
+                        }).catch(function (error) {
+                            console.log(JSON.stringify(error));
+                        });
+                    }
+                }).catch(function (error) {
+                    console.log(JSON.stringify(error));
+                });
+            }
+        }).catch(function (error) {
+            console.log(JSON.stringify(error));
+        });
+    }
+
+    convertDataFromServer(originData, mapType) {
+        var resourceArray = originData.data;
+        const thisObj = this;
+
+        for (var i = 0; i < resourceArray.length; ++i) {
+            const resource = resourceArray[i];
+
+            fetch(resource.relationships.field_analysis_context.links.related, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+                if (data.data.relationships.field_field_eu_gl_methodology.links.related != null) {
+                    fetch(data.data.relationships.field_field_eu_gl_methodology.links.related, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+                        console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
+                        if (data.data[0].attributes.field_eu_gl_taxonomy_id.value == mapType) {
+                            if (resource.attributes.field_url != null) {
+                                fetch(resource.attributes.field_urld, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+                                    thisObj.setState({
+                                        data: this.convertData(originData)
+                                    });
+                                }).catch(function (error) {
+                                    console.log(JSON.stringify(error));
+                                });
+                            }
+                        }
+                    }).catch(function (error) {
+                        console.log(JSON.stringify(error));
+                    });
+                }
+            }).catch(function (error) {
+                console.log(JSON.stringify(error));
+            });
+        }
+    }
+
     removeNameSpace(val) {
         if (val != null) {
             if (val.lastIndexOf(":") != -1) {
