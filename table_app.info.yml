@@ -1,0 +1,7 @@
+name: table_app
+description: shows different tables
+package: Custom
+
+type: module
+core: 8.x
+

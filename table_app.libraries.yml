@@ -1,8 +1,8 @@
-map_app:
+table_app:
   css:
     component:
      dist/css/leaflet.css: {}
      dist/css/leaflet-draw.css: {}
-     src/MapComp.css: {}
+     src/index.css: {}
   js:
     dist/js/bundle.js: {}
