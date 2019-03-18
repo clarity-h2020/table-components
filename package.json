@@ -9,7 +9,9 @@
     "react-dom": "^16.5.2",
     "react-scripts": "1.1.5",
     "react-router-dom": "latest",
-    "react-table": "latest"
+    "react-table": "latest",
+    "turf": "latest",
+    "wicket": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -95,30 +95,68 @@ export default class RiskAndImpactTable extends React.Component {
   loadDataFromServer(server) {
     const obj = this;
 
-    fetch(server + "/jsonapi/user/user", { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
-      let authInfo = null;
+    fetch(server + "/jsonapi", { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
 
-      if (data != null && data.data[0] != null && data.data[0].attributes.field_basic_auth_credentials != null) {
-        authInfo = data.data[0].attributes.field_basic_auth_credentials;
-      }
+      if (data != null && data.meta != null && data.meta.links != null && data.meta.links.me != null && data.meta.links.me.href != null) {
+        fetch(data.meta.links.me.href.replace('http://', 'https://'), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+          let authInfo = null;
 
-      let headers = new Headers();
+          if (data != null && data.data != null && data.data.attributes != null && data.data.attributes.field_basic_auth_credentials != null) {
+            authInfo = data.data.attributes.field_basic_auth_credentials;
+          }
 
-      if (authInfo != null) {
-        headers.append('Authorization', 'Basic ' + btoa(authInfo));
-      }
+          let headers = new Headers();
 
-      fetch("https://service.emikat.at/EmiKatTst/api/scenarios/2846/feature/view.2812/table/data", { headers: headers }).then(resp => resp.json()).then(function (data) {
-        obj.setState({
-          allData: obj.convertData(data)
+          if (authInfo != null) {
+            headers.append('Authorization', 'Basic ' + btoa(authInfo));
+          }
+
+          fetch("https://service.emikat.at/EmiKatTst/api/scenarios/2846/feature/view.2812/table/data", { headers: headers }).then(resp => resp.json()).then(function (data) {
+            obj.setState({
+              allData: obj.convertData(data)
+            });
+            obj.changeHazard();
+          }).catch(function (error) {
+            console.log(JSON.stringify(error));
+          });
+        }).catch(function (error) {
+          console.log(JSON.stringify(error));
         });
-        this.changeHazard();
-      }).catch(function (error) {
-        console.log(JSON.stringify(error));
-      });
+      }
     }).catch(function (error) {
       console.log(JSON.stringify(error));
     });
+
+    // fetch(server + "/jsonapi/user/user", {credentials: 'include'})
+    // .then((resp) => resp.json())
+    // .then(function(data) {
+    //   let authInfo = null;
+
+    //   if (data != null && data.data[0] != null && data.data[0].attributes.field_basic_auth_credentials != null) {
+    //     authInfo = data.data[0].attributes.field_basic_auth_credentials;
+    //   }
+
+    //   let headers = new Headers();
+
+    //   if (authInfo != null) {
+    //     headers.append('Authorization', 'Basic ' + btoa(authInfo));
+    //   }
+
+    //   fetch("https://service.emikat.at/EmiKatTst/api/scenarios/2846/feature/view.2812/table/data", {headers: headers})
+    //   .then((resp) => resp.json())
+    //   .then(function(data) {
+    //     obj.setState({
+    //       allData: obj.convertData(data)
+    //     });
+    //     this.changeHazard();
+    //   })
+    //   .catch(function(error) {
+    //     console.log(JSON.stringify(error));
+    //   });         
+    // })
+    // .catch(function(error) {
+    //   console.log(JSON.stringify(error));
+    // });         
   }
 
   createOptions(d) {
