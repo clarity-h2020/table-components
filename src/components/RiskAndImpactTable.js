@@ -336,7 +336,7 @@ export default class RiskAndImpactTable extends React.Component {
       .then(function(data) {
 
         if (data != null && data.meta != null && data.meta.links != null && data.meta.links.me != null && data.meta.links.me.href != null) {
-          fetch(data.meta.links.me.href.replace('http://', 'http://'), {credentials: 'include'})
+          fetch(data.meta.links.me.href.replace('http://', 'https://'), {credentials: 'include'})
           .then((resp) => resp.json())
           .then(function(data) {
             let authInfo = null;

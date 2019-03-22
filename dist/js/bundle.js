@@ -11125,7 +11125,7 @@ class RiskAndImpactTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.C
     fetch(server + "/jsonapi", { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
 
       if (data != null && data.meta != null && data.meta.links != null && data.meta.links.me != null && data.meta.links.me.href != null) {
-        fetch(data.meta.links.me.href.replace('http://', 'http://'), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+        fetch(data.meta.links.me.href.replace('http://', 'https://'), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
           let authInfo = null;
 
           if (data != null && data.data != null && data.data.attributes != null && data.data.attributes.field_basic_auth_credentials != null) {
