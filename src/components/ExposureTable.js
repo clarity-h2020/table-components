@@ -43,63 +43,63 @@ export default class ExposureTable extends React.Component {
       {
          hazard: 'HW,PF,FL',
          elementAtRisk: "Population",
-         classes: "Age group 0-14",
+         vulnerabilityClasses: "Age group 0-14",
          values: "1.2",
          unit: "pop/km2"
        },
        {
          hazard: 'HW,PF,FL',
          elementAtRisk: "Population",
-         classes: "Age group 15-64",
+         vulnerabilityClasses: "Age group 15-64",
          values: "3.2",
          unit: "pop/km2"
        },
        {
          hazard: 'HW,PF,FL',
          elementAtRisk: "Population",
-         classes: ">65",
+         vulnerabilityClasses: ">65",
          values: "3.5",
          unit: "pop/km2"
        },
        {
          hazard: 'PF,FL',
          elementAtRisk: "Buildings",
-         classes: "Continuous Residential (S.L. > 80%)",
+         vulnerabilityClasses: "Continuous Residential (S.L. > 80%)",
          values: "2.1",
          unit: "m3/m2"
        },
        {
          hazard: 'PF,FL',
          elementAtRisk: "Buildings",
-         classes: "Med-Hi Density Discontinuous Res. (30% < S.L. < 80%)",
+         vulnerabilityClasses: "Med-Hi Density Discontinuous Res. (30% < S.L. < 80%)",
          values: "3.2",
          unit: "m3/m2"
        },
        {
          hazard: 'PF,FL',
          elementAtRisk: "Buildings",
-         classes: "Low Density Discontinuous Res. (S.L. < 30%)",
+         vulnerabilityClasses: "Low Density Discontinuous Res. (S.L. < 30%)",
          values: "2.5",
          unit: "m3/m2"
        },
        {
          hazard: 'PF,FL',
          elementAtRisk: "Buildings",
-         classes: "Non Residential",
+         vulnerabilityClasses: "Non Residential",
          values: "4.3",
          unit: "m3/m2"
        },
        {
          hazard: 'PF,FL',
          elementAtRisk: "Infrastructure",
-         classes: "Roads",
+         vulnerabilityClasses: "Roads",
          values: "3.3",
          unit: "ml"
        },
        {
          hazard: 'PF,FL',
          elementAtRisk: "Infrastructure",
-         classes: "Railways",
+         vulnerabilityClasses: "Railways",
          values: "3.2",
          unit: "ml"
        }
@@ -107,23 +107,29 @@ export default class ExposureTable extends React.Component {
 
    this.state = {
      data: [],
-      columns:  [{
+     loading: true,
+     columns:  [{
         Header: 'Hazards',
         id: 'Hazards',
-        accessor: 'hazard' 
+        accessor: 'hazard',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, {
         Header: 'Element at risk',
         id: 'ElementAtRisk',
         accessor: 'elementAtRisk',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, {
         Header: 'Classes',
-        accessor: 'classes',
+        accessor: 'vulnerabilityClasses',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, {
         Header: 'values',
         accessor: 'values',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }, {
         Header: 'Unit',
         accessor: 'unit',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
       }],
       expanded: ["Hazards", "ElementAtRisk"]
     };
@@ -147,7 +153,8 @@ export default class ExposureTable extends React.Component {
     .then(function(data) {
       obj.setState({
         allData: data,
-        data: data
+        data: data,
+        loading: false
       });
     })
     .catch(function(error) {
@@ -171,6 +178,7 @@ export default class ExposureTable extends React.Component {
             <TableComponent
             data={this.state.data}
             columns={this.state.columns}
+            loading={this.state.loading}
 //            header={header}
             pivotBy={["Hazards", "ElementAtRisk"]}
 //            expanded={["Hazards", "ElementAtRisk"]}

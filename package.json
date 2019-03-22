@@ -11,7 +11,8 @@
     "react-router-dom": "latest",
     "react-table": "latest",
     "turf": "latest",
-    "wicket": "latest"
+    "wicket": "latest",
+    "proj4": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

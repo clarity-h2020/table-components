@@ -49,7 +49,16 @@ export default class HazardLocalEffectsTable extends React.Component {
         Header: ' ',
         columns: [{
           Header: 'Hazard',
-          accessor: 'hazard'
+          accessor: 'hazard',
+          Cell: row => React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'span',
+              { title: row.value },
+              row.value
+            )
+          )
         }] }, {
         Header: 'Current (1971 - 2000)',
         columns: [{
@@ -99,7 +108,7 @@ export default class HazardLocalEffectsTable extends React.Component {
       }) === -1) {
         options.push(React.createElement(
           'option',
-          { value: obj.period },
+          { key: obj.period, value: obj.period },
           obj.period
         ));
         periods.push(obj.period);
@@ -112,7 +121,7 @@ export default class HazardLocalEffectsTable extends React.Component {
   rowWithColor(row) {
     return React.createElement(
       'span',
-      { style: {
+      { title: row.value, style: {
           color: row.value === 'High' ? '#ff2e00' : row.value === 'Medium' ? '#ffbf00' : '#57d500'
         } },
       row.value

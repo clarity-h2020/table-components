@@ -4,7 +4,6 @@ import TableComponent from './commons/TableComponent';
 
 
 
-
 export default class RiskAndImpactTable extends React.Component {
     constructor(props) {
      super(props);
@@ -273,8 +272,9 @@ export default class RiskAndImpactTable extends React.Component {
     };
     this.dData = this.convertData(originalData);
      this.state = {
-      data: this.dData,
-      allData: this.dData,
+      loading: true,
+      data: [], //this.dData,
+      allData: [], //this.dData,
         columns:  [{
           Header: 'Hazards',
           id: 'Hazards',
@@ -284,31 +284,43 @@ export default class RiskAndImpactTable extends React.Component {
 //              {this.createOptions(this.convertData(originalData))}
 //            </select>
 //          </div>),
-          accessor: 'hazard' 
+          accessor: 'hazard',
+          Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
           Header: 'Element at risk (Exposure)',
           id: 'ElementAtRisk',
           accessor: 'elementAtRisk',
+          Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
           Header: 'Vulnerability classes',
           accessor: 'vulnerabilityClasses',
+          Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
           Header: 'Unit',
           accessor: 'unit',
+          Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
           Header: 'Damage Classes',
           columns: [{
-            Header: 'D1',
-            accessor: 'd1' 
+            Header: () => (<span title={this.state.d1Tooltip}>D1</span>),
+            accessor: 'd1',
+            Cell: row => <div><span title={row.value}>{row.value}</span></div>
           }, {
-            Header: 'D2',
-            accessor: 'd2' 
+            Header: () => (<span title={this.state.d2Tooltip}>D2</span>),
+            accessor: 'd2',
+            Cell: row => <div><span title={row.value}>{row.value}</span></div>
           }, {
-            Header: 'D3',
-            accessor: 'd3' 
+            Header: () => (<span title={this.state.d3Tooltip}>D3</span>),
+            accessor: 'd3',
+            Cell: row => <div><span title={row.value}>{row.value}</span></div>
           }, {
-            Header: 'D4',
-            accessor: 'd4' 
+            Header: () => (<span title={this.state.d4Tooltip}>D4</span>),
+            accessor: 'd4',
+            Cell: row => <div><span title={row.value}>{row.value}</span></div>
+          }, {
+            Header: () => (<span title={this.state.d5Tooltip}>D5</span>),
+            accessor: 'd5',
+            Cell: row => <div><span title={row.value}>{row.value}</span></div>
           }]
         }],
         expanded: ["Hazards", "ElementAtRisk"],
@@ -324,7 +336,7 @@ export default class RiskAndImpactTable extends React.Component {
       .then(function(data) {
 
         if (data != null && data.meta != null && data.meta.links != null && data.meta.links.me != null && data.meta.links.me.href != null) {
-          fetch(data.meta.links.me.href.replace('http://', 'https://'), {credentials: 'include'})
+          fetch(data.meta.links.me.href.replace('http://', 'http://'), {credentials: 'include'})
           .then((resp) => resp.json())
           .then(function(data) {
             let authInfo = null;
@@ -343,8 +355,10 @@ export default class RiskAndImpactTable extends React.Component {
             .then((resp) => resp.json())
             .then(function(data) {
               obj.setState({
+                loading: false,
                 allData: obj.convertData(data)
               });
+              obj.loadTooltips(server, obj);
               obj.changeHazard();
             })
             .catch(function(error) {
@@ -392,19 +406,80 @@ export default class RiskAndImpactTable extends React.Component {
       // });         
     }
 
-    createOptions(d) {
-      var options = [];
-      var periods = [];
-      
-      for (var i = 0; i < d.length; ++i) {
-        var obj = d[i];
-        if ( periods.findIndex((val)=>{return val === obj.hazard;}) === -1) {
-          options.push(<option value={obj.hazard}>{obj.hazard}</option>);
-          periods.push(obj.hazard);
+    loadTooltips(server, thisObj) {
+      var eAtRId = "element-at-risk:infrastructure:damage-class:";
+
+      if (this.state.allData != null && this.state.allData[0] != null && this.state.allData[0].elementAtRisk != null) {
+        var eAtRisk = this.state.allData[0].elementAtRisk;
+
+        if (eAtRisk === 'people') {
+          eAtRId = "element-at-risk:population:damage-class:";
+        } else {
+          eAtRId = "element-at-risk:" + eAtRisk + ":damage-class:";
+        }
+
+        for (var i = 1; i < 6; ++i) {
+          const damageClass = i;
+          fetch(server + "/jsonapi/taxonomy_term/elements_at_risk?filter[field_elements_at_risk_id][value]=" + eAtRId + "d" + i, {credentials: 'include'})
+          .then((resp) => resp.json())
+          .then(function(data) {
+            switch (damageClass) {
+              case 1: {
+                thisObj.setState({
+                  d1Tooltip: data.data[0].attributes.description.value.replace("<p>", "").replace("</p>", "")
+                });
+                break;
+              }
+              case 2: {
+                thisObj.setState({
+                  d2Tooltip: data.data[0].attributes.description.value.replace("<p>", "").replace("</p>", "")
+                });
+                break;
+              }
+              case 3: {
+                thisObj.setState({
+                  d3Tooltip: data.data[0].attributes.description.value.replace("<p>", "").replace("</p>", "")
+                });
+                break;
+              }
+              case 4: {
+                thisObj.setState({
+                  d4Tooltip: data.data[0].attributes.description.value.replace("<p>", "").replace("</p>", "")
+                });
+                break;
+              }
+              case 5: {
+                thisObj.setState({
+                  d5Tooltip: data.data[0].attributes.description.value.replace("<p>", "").replace("</p>", "")
+                });
+                break;
+              }
+            }
+          })
+          .catch(function(error) {
+            console.log(JSON.stringify(error));
+          });
         }
       }
+    }
 
-      return options;
+    createOptions(d) {
+      if (d != null) {
+        var options = [];
+        var periods = [];
+        
+        for (var i = 0; i < d.length; ++i) {
+          var obj = d[i];
+          if ( periods.findIndex((val)=>{return val === obj.hazard;}) === -1) {
+            options.push(<option key={obj.hazard} value={obj.hazard}>{obj.hazard}</option>);
+            periods.push(obj.hazard);
+          }
+        }
+
+        return options;
+      } else {
+        return null;
+      }
     }
 
     changeHazard() {
@@ -427,12 +502,12 @@ export default class RiskAndImpactTable extends React.Component {
 
 
     convertData(originData) {
-      var data = new Array();
+      var data = [];
       if (originData == null) {
         originData = this.dData;
       }
       var cols = originData.columnnames;
-      var colIndex = new Array();
+      var colIndex = [];
 
       for (var i = 0; i < cols.length; ++i) {
         colIndex[cols[i]] = i;
@@ -440,8 +515,8 @@ export default class RiskAndImpactTable extends React.Component {
 
       var rows = originData.rows;
 
-      for (var i = 0; i < rows.length; ++i) {
-        data[i] = new Object();
+      for (let i = 0; i < rows.length; ++i) {
+        data[i] = {};
         var origin = rows[i].values;
         data[i].hazard = origin[colIndex["HAZEVENT_NAME"]];
         data[i].elementAtRisk = origin[colIndex["NAME"]];
@@ -467,8 +542,7 @@ export default class RiskAndImpactTable extends React.Component {
 
     render() {
       window.specificTableComponent = this;
-
-      const header = "The following table and the associated chart show the development of different categories' elements for several scenarios. There are always 3 scenarios considered: 1) the current today's rate development, 2) low rate development and 3) high rate development for the selected time period. The values will be used in assessing the vulnarability, risk and impact in the next steps.";
+//      var dd = "data=" + this.state.data};
       return (
         <div>
           <div>
@@ -481,6 +555,7 @@ export default class RiskAndImpactTable extends React.Component {
             <TableComponent
             data={this.state.data}
             columns={this.state.columns}
+            loading={this.state.loading}
 //            pivotBy={this.state.pivot} //{["Hazards", "ElementAtRisk"]}
 //            expanded={["Hazards", "ElementAtRisk"]}
             />
