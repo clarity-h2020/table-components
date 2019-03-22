@@ -5,6 +5,7 @@ import TableComponent from './commons/TableComponent';
 import SimpleLegendComponent from './commons/SimpleLegendComponent';
 import turf from 'turf';
 import Wkt from 'wicket';
+import proj4 from 'proj4';
 
 //const CharacteriseHazardTable = () => {
 //    return (<img width={1058} height={578} src='../../../../../../modules/custom/map-component/src/img/01-HC-03-Table.png' />);
@@ -92,6 +93,7 @@ export default class CharacteriseHazardTable extends React.Component {
     this.state = {
       data: [],
       allData: [],
+      loading: true,
 
       columns: this.getColumns([]),
       legend: [{ name: 'Low: of no concern for the study', color: '#57d500' }, { name: "Medium: will probably affect some types of elements", color: '#ffbf00' }, { name: "High: will most probably affect some types of elements", color: '#ff2e00' }]
@@ -103,7 +105,16 @@ export default class CharacteriseHazardTable extends React.Component {
       Header: ' ',
       columns: [{
         Header: 'Hazard',
-        accessor: 'hazard'
+        accessor: 'hazard',
+        Cell: row => React.createElement(
+          'div',
+          null,
+          React.createElement(
+            'span',
+            { title: row.value },
+            row.value
+          )
+        )
       }] }, {
       Header: 'Current (1971 - 2000)',
       columns: [{
@@ -150,13 +161,15 @@ export default class CharacteriseHazardTable extends React.Component {
     fetch(server + '/jsonapi/group/study?filter[id][condition][path]=id&filter[id][condition][operator]=%3D&filter[id][condition][value]=' + id, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
       var wktVar = new Wkt.Wkt();
       if (data.data[0].attributes.field_area != null && data.data[0].attributes.field_area.value != null) {
-        //          wktVar.read(data.data[0].attributes.field_area.value);
-        //          requestData.bbox = obj.getBoundsFromArea(wktVar.toJson());
+        wktVar.read(data.data[0].attributes.field_area.value);
+        var studyAreaBbox = obj.getBoundsFromArea(wktVar.toJson());
+        requestData.bbox = [studyAreaBbox[0][0], studyAreaBbox[0][1], studyAreaBbox[1][0], studyAreaBbox[1][1]];
         fetch("https://clarity.meteogrid.com/api/request_hazard", { method: 'POST', body: JSON.stringify(requestData), headers: { 'Content-Type': 'application/json' } }).then(resp => resp.json()).then(function (data) {
           obj.setState({
             allData: data,
             data: data,
-            columns: obj.getColumns(data)
+            columns: obj.getColumns(data),
+            loading: false
           });
           obj.changeFutureScenario();
         }).catch(function (error) {
@@ -176,8 +189,9 @@ export default class CharacteriseHazardTable extends React.Component {
 
   getBoundsFromArea(area) {
     const bboxArray = turf.bbox(area);
-    const corner1 = [bboxArray[1], bboxArray[0]];
-    const corner2 = [bboxArray[3], bboxArray[2]];
+    const targetProj = 'PROJCS["ETRS89 / LAEA Europe",  GEOGCS["ETRS89", DATUM["European_Terrestrial_Reference_System_1989", SPHEROID["GRS 1980",6378137,298.257222101, AUTHORITY["EPSG","7019"]], TOWGS84[0,0,0,0,0,0,0], AUTHORITY["EPSG","6258"]], PRIMEM["Greenwich",0, AUTHORITY["EPSG","8901"]], UNIT["degree",0.0174532925199433, AUTHORITY["EPSG","9122"]], AUTHORITY["EPSG","4258"]], PROJECTION["Lambert_Azimuthal_Equal_Area"], PARAMETER["latitude_of_center",52], PARAMETER["longitude_of_center",10], PARAMETER["false_easting",4321000], PARAMETER["false_northing",3210000], UNIT["metre",1, AUTHORITY["EPSG","9001"]], AUTHORITY["EPSG","3035"]]';
+    const corner1 = proj4(targetProj, [bboxArray[0], bboxArray[1]]);
+    const corner2 = proj4(targetProj, [bboxArray[2], bboxArray[3]]);
     var bounds = [corner1, corner2];
 
     return bounds;
@@ -194,7 +208,7 @@ export default class CharacteriseHazardTable extends React.Component {
       }) === -1) {
         options.push(React.createElement(
           'option',
-          { value: obj.period },
+          { key: obj.period, value: obj.period },
           obj.period
         ));
         periods.push(obj.period);
@@ -205,12 +219,13 @@ export default class CharacteriseHazardTable extends React.Component {
   }
 
   rowWithColor(row) {
+    var content = row.column.id === 'earlyResponseScenario' ? row.value + " (+" + Math.round(row.original.earlyResponseScenario_value * 100) / 100 + ")" : row.column.id === 'effectiveMeasuresScenario' ? row.value + " (+" + Math.round(row.original.effectiveMeasuresScenario_value * 100) / 100 + ")" : row.column.id === 'businessAsUsualScenario' ? row.value + " (+" + Math.round(row.original.businessAsUsualScenario_value * 100) / 100 + ")" : row.value;
     return React.createElement(
       'span',
-      { style: {
+      { title: content, style: {
           color: row.value === 'High' ? '#ff2e00' : row.value === 'Medium' ? '#ffbf00' : '#57d500'
         } },
-      row.value
+      content
     );
   }
 
@@ -257,7 +272,8 @@ export default class CharacteriseHazardTable extends React.Component {
         React.createElement(TableComponent, {
           data: this.state.data,
           columns: this.state.columns,
-          header: header
+          header: header,
+          loading: this.state.loading
         })
       ),
       React.createElement(

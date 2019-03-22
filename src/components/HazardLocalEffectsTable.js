@@ -52,8 +52,9 @@ export default class HazardLocalEffectsTable extends React.Component {
           Header: ' ',
           columns: [{
               Header: 'Hazard',
-              accessor: 'hazard' 
-        }]}, {
+              accessor: 'hazard',
+              Cell: row => <div><span title={row.value}>{row.value}</span></div>
+            }]}, {
           Header: 'Current (1971 - 2000)',
           columns: [{
               Header: 'Baseline',
@@ -94,7 +95,7 @@ export default class HazardLocalEffectsTable extends React.Component {
       for (var i = 0; i < d.length; ++i) {
         var obj = d[i];
         if ( periods.findIndex((val)=>{return val === obj.period;}) === -1) {
-          options.push(<option value={obj.period}>{obj.period}</option>);
+          options.push(<option key={obj.period} value={obj.period}>{obj.period}</option>);
           periods.push(obj.period);
         }
       }
@@ -104,7 +105,7 @@ export default class HazardLocalEffectsTable extends React.Component {
 
     rowWithColor(row) {
       return (
-        <span style={{
+        <span title={row.value} style={{
           color: row.value === 'High' ? '#ff2e00'
             : row.value === 'Medium' ? '#ffbf00'
             : '#57d500'

@@ -69,6 +69,8 @@ export default class TableComponent extends React.Component {
       ),
       React.createElement("br", null),
       React.createElement(ReactTable, {
+        loading: this.props.loading,
+        LoadingComponent: this.props.LoadingComponent,
         data: this.props.data,
         columns: this.props.columns,
         defaultPageSize: 10,

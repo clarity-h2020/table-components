@@ -8,6 +8,7 @@ import TableComponent from './commons/TableComponent';
 export default class AdaptationOptionsTable extends React.Component {
     constructor(props) {
      super(props);
+     this.protocol = "https://";
      var originData = [{
       "id": "adaptation-option:constructions-on-piles",
       "image": "https://raw.githubusercontent.com/clarity-h2020/data-package/master/schemas/adaptation-options/icons/constructions-on-piles.png",
@@ -803,28 +804,6 @@ export default class AdaptationOptionsTable extends React.Component {
 
      this.state = {
        data: this.convertData(originData),
-      //  data: [
-      //    {
-      //       "adaptation": "Constructions on piles",
-      //       "elementAtRisk": "buildings",
-      //       "hazard": "Pluvial Flooding",
-      //       "variationLocal": "-",
-      //       "variationVulnerability": "++",
-      //       "newDevelopment": "€€",
-      //       "retrofitting": "€",
-      //       "adaptationImage": "https://raw.githubusercontent.com/clarity-h2020/data-package/master/schemas/adaptation-options/icons/constructions-on-piles.png"
-      //     },
-      //     {
-      //       "adaptation": "Constructions on piles",
-      //       "elementAtRisk": "buildings",
-      //       "hazard": "Storm surge - River Flood",
-      //       "variationLocal": "-",
-      //       "variationVulnerability": "+++",
-      //       "newDevelopment": "€€",
-      //       "retrofitting": "€",
-      //       "adaptationImage": "https://raw.githubusercontent.com/clarity-h2020/data-package/master/schemas/adaptation-options/icons/constructions-on-piles.png"
-      //     }
-      //   ],
         columns:  [{
           Header: 'ADAPTATION',
           id: 'Adaptation',
@@ -859,11 +838,11 @@ export default class AdaptationOptionsTable extends React.Component {
     }
 
     convertData(originData) {
-      var data = new Array();
+      var data = [];
       var index = 0;
 
       for (var i = 0; i < originData.length; ++i) {
-        data[index] = new Object();
+        data[index] = {};
         var origin = originData[i];
         data[index].adaptation = this.removeNameSpace(origin.id);
         data[index].adaptationImage = origin.image;
@@ -873,7 +852,7 @@ export default class AdaptationOptionsTable extends React.Component {
         for (var v = 0; v < origin.variations.length; ++v) {
           if (v > 0) {
             ++index;
-            data[index] = new Object();
+            data[index] = {};
             data[index].adaptation = this.removeNameSpace(origin.id);
             data[index].adaptationImage = origin.image;
             data[index].newDevelopment = this.getSymbols(origin.cost.new_development, "€", "N/A");
@@ -896,13 +875,11 @@ export default class AdaptationOptionsTable extends React.Component {
         .then((resp) => resp.json())
         .then(function(data) {
             if (data != null && data.data[0] != null && data.data[0].relationships.field_data_package.links.related != null) {
-            fetch(data.data[0].relationships.field_data_package.links.related.replace('http://', 'http://'), {credentials: 'include'})
-    //          fetch(data.data[0].relationships.field_data_package.links.related.replace('http://', 'https://'), {credentials: 'include'})
+            fetch(data.data[0].relationships.field_data_package.links.related.replace('http://', obj.protocol), {credentials: 'include'})
             .then((resp) => resp.json())
             .then(function(data) {
                 if (data.data.relationships.field_resources.links.related != null) {
-    //              fetch(data.relationships.field_resources.links.related.replace('http://', 'https://'), {credentials: 'include'})
-                fetch(data.data.relationships.field_resources.links.related.replace('http://', 'http://'), {credentials: 'include'})
+                fetch(data.relationships.field_resources.links.related.replace('http://', obj.protocol), {credentials: 'include'})
                 .then((resp) => resp.json())
                 .then(function(data) {
                     obj.convertDataFromServer(data, 'eu-gl:adaptation-options:identification');
@@ -937,9 +914,9 @@ export default class AdaptationOptionsTable extends React.Component {
                 .then((resp) => resp.json())
                 .then(function(data) {
                   console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
-                  if (data.data[0].attributes.field_eu_gl_taxonomy_id.value == mapType) {
+                  if (data.data[0].attributes.field_eu_gl_taxonomy_id.value === mapType) {
                     if (resource.attributes.field_url != null) {
-                      fetch(resource.attributes.field_urld, {credentials: 'include'})
+                      fetch(resource.attributes.field_url, {credentials: 'include'})
                       .then((resp) => resp.json())
                       .then(function(data) {
                             thisObj.setState({
@@ -966,7 +943,7 @@ export default class AdaptationOptionsTable extends React.Component {
 
     removeNameSpace(val) {
       if (val != null) {
-        if (val.lastIndexOf(":") != -1) {
+        if (val.lastIndexOf(":") !== -1) {
           return val.substring(val.lastIndexOf(":") + 1, val.length);
         }
       }
@@ -997,7 +974,6 @@ export default class AdaptationOptionsTable extends React.Component {
   
   
     render() {
-        const header = "The following table and the associated chart show the development of different categories' elements for several scenarios. There are always 3 scenarios considered: 1) the current today's rate development, 2) low rate development and 3) high rate development for the selected time period. The values will be used in assessing the vulnarability, risk and impact in the next steps.";
         return (
           <div>
             <div>
@@ -1017,14 +993,6 @@ export default class AdaptationOptionsTable extends React.Component {
   
   }
 
-
-
-//const RiskAndImpactTable = () => {
-//    return (<img width={1058} height={578} src='../../../../../../modules/custom/map-component/src/img/05-RA-03-table.png' />);
-//};
-
-
-//export default RiskAndImpactTable;
 
 if (document.getElementById('adaptation-options-table-container') != null) {
     ReactDOM.render(<AdaptationOptionsTable />, document.getElementById('adaptation-options-table-container'));
