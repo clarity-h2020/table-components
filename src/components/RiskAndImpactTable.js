@@ -285,6 +285,8 @@ export default class RiskAndImpactTable extends React.Component {
 //            </select>
 //          </div>),
           accessor: 'hazard',
+          minWidth: 350,
+          width: 350,
           Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
           Header: 'Element at risk (Exposure)',
@@ -546,7 +548,7 @@ export default class RiskAndImpactTable extends React.Component {
       return (
         <div>
           <div>
-          <h1>Risk estimates/assessments for the selected hazard</h1>
+          <h1>Damage level estimates for the selected hazard</h1>
           <select id="futureScenario-combo" onChange={this.changeHazard.bind(this)} style={{"marginLeft": '10px'}}>
             {this.createOptions(this.state.allData)}
           </select>

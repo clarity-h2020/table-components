@@ -62,6 +62,8 @@ export default class RiskAndImpactTable extends React.Component {
         //            </select>
         //          </div>),
         accessor: 'hazard',
+        minWidth: 350,
+        width: 350,
         Cell: row => React.createElement(
           'div',
           null,
@@ -418,7 +420,7 @@ export default class RiskAndImpactTable extends React.Component {
         React.createElement(
           'h1',
           null,
-          'Risk estimates/assessments for the selected hazard'
+          'Damage level estimates for the selected hazard'
         ),
         React.createElement(
           'select',
