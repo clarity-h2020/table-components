@@ -803,7 +803,7 @@ export default class AdaptationOptionsTable extends React.Component {
 ];
 
      this.state = {
-       data: this.convertData(originData),
+       data: [], //this.convertData(originData),
         columns:  [{
           Header: 'ADAPTATION',
           id: 'Adaptation',
@@ -833,8 +833,9 @@ export default class AdaptationOptionsTable extends React.Component {
           }]
         }],
         expanded: ["Adaptation"],
-        pivot: ["Adaptation"]
-      };
+        pivot: ["Adaptation"],
+        loading: true
+    };
     }
 
     convertData(originData) {
@@ -875,11 +876,11 @@ export default class AdaptationOptionsTable extends React.Component {
         .then((resp) => resp.json())
         .then(function(data) {
             if (data != null && data.data[0] != null && data.data[0].relationships.field_data_package.links.related != null) {
-            fetch(data.data[0].relationships.field_data_package.links.related.replace('http://', obj.protocol), {credentials: 'include'})
+            fetch(data.data[0].relationships.field_data_package.links.related.href.replace('http://', obj.protocol), {credentials: 'include'})
             .then((resp) => resp.json())
             .then(function(data) {
                 if (data.data.relationships.field_resources.links.related != null) {
-                fetch(data.relationships.field_resources.links.related.replace('http://', obj.protocol), {credentials: 'include'})
+                fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol), {credentials: 'include'})
                 .then((resp) => resp.json())
                 .then(function(data) {
                     obj.convertDataFromServer(data, 'eu-gl:adaptation-options:identification');
@@ -906,21 +907,22 @@ export default class AdaptationOptionsTable extends React.Component {
         for (var i = 0; i < resourceArray.length; ++i) {
           const resource = resourceArray[i];
   
-          fetch(resource.relationships.field_analysis_context.links.related, {credentials: 'include'})
+          fetch(resource.relationships.field_analysis_context.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
           .then((resp) => resp.json())
           .then(function(data) {
-            if (data.data.relationships.field_field_eu_gl_methodology.links.related != null) {
-                fetch(data.data.relationships.field_field_eu_gl_methodology.links.related, {credentials: 'include'})
+            if (data.data.relationships.field_field_eu_gl_methodology.links.related.href != null) {
+                fetch(data.data.relationships.field_field_eu_gl_methodology.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
                 .then((resp) => resp.json())
                 .then(function(data) {
                   console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
                   if (data.data[0].attributes.field_eu_gl_taxonomy_id.value === mapType) {
                     if (resource.attributes.field_url != null) {
-                      fetch(resource.attributes.field_url, {credentials: 'include'})
+                      fetch(resource.attributes.field_url)
                       .then((resp) => resp.json())
                       .then(function(data) {
                             thisObj.setState({
-                                data: this.convertData(originData)
+                                data: thisObj.convertData(data),
+                                loading: false
                             });
                       })
                       .catch(function(error) {
@@ -974,6 +976,7 @@ export default class AdaptationOptionsTable extends React.Component {
   
   
     render() {
+        window.tableCom = this;
         return (
           <div>
             <div>
@@ -983,6 +986,7 @@ export default class AdaptationOptionsTable extends React.Component {
               <TableComponent
               data={this.state.data}
               columns={this.state.columns}
+              loading={this.state.loading}
 //              pivotBy={this.state.pivot} //{["Hazards", "ElementAtRisk"]}
 //              expanded={["Hazards", "ElementAtRisk"]}
               />
