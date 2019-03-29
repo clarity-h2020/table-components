@@ -7,6 +7,7 @@ import TableComponent from './commons/TableComponent';
 export default class RiskAndImpactTable extends React.Component {
     constructor(props) {
      super(props);
+     this.protocol = "https://";
      var originalData = {
       "name": "TAB Impact Results for Impact Assessment Drupal Table",
       "description": null,
@@ -285,8 +286,6 @@ export default class RiskAndImpactTable extends React.Component {
 //            </select>
 //          </div>),
           accessor: 'hazard',
-          minWidth: 350,
-          width: 350,
           Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
           Header: 'Element at risk (Exposure)',
@@ -338,7 +337,7 @@ export default class RiskAndImpactTable extends React.Component {
       .then(function(data) {
 
         if (data != null && data.meta != null && data.meta.links != null && data.meta.links.me != null && data.meta.links.me.href != null) {
-          fetch(data.meta.links.me.href.replace('http://', 'https://'), {credentials: 'include'})
+          fetch(data.meta.links.me.href.replace('http://', obj.protocol), {credentials: 'include'})
           .then((resp) => resp.json())
           .then(function(data) {
             let authInfo = null;
@@ -375,37 +374,6 @@ export default class RiskAndImpactTable extends React.Component {
       .catch(function(error) {
         console.log(JSON.stringify(error));
       });   
-
-      // fetch(server + "/jsonapi/user/user", {credentials: 'include'})
-      // .then((resp) => resp.json())
-      // .then(function(data) {
-      //   let authInfo = null;
-
-      //   if (data != null && data.data[0] != null && data.data[0].attributes.field_basic_auth_credentials != null) {
-      //     authInfo = data.data[0].attributes.field_basic_auth_credentials;
-      //   }
-      
-      //   let headers = new Headers();
-  
-      //   if (authInfo != null) {
-      //     headers.append('Authorization', 'Basic ' + btoa(authInfo));
-      //   }
-
-      //   fetch("https://service.emikat.at/EmiKatTst/api/scenarios/2846/feature/view.2812/table/data", {headers: headers})
-      //   .then((resp) => resp.json())
-      //   .then(function(data) {
-      //     obj.setState({
-      //       allData: obj.convertData(data)
-      //     });
-      //     this.changeHazard();
-      //   })
-      //   .catch(function(error) {
-      //     console.log(JSON.stringify(error));
-      //   });         
-      // })
-      // .catch(function(error) {
-      //   console.log(JSON.stringify(error));
-      // });         
     }
 
     loadTooltips(server, thisObj) {
@@ -524,14 +492,23 @@ export default class RiskAndImpactTable extends React.Component {
         data[i].elementAtRisk = origin[colIndex["NAME"]];
         data[i].vulnerabilityClasses = origin[colIndex["VULCLASS_NAME"]];
         data[i].unit = origin[colIndex["QUANTITYUNIT"]];
-        data[i].d1 = origin[colIndex["DAMAGELEVEL1QUANTITY"]];
-        data[i].d2 = origin[colIndex["DAMAGELEVEL2QUANTITY"]];
-        data[i].d3 = origin[colIndex["DAMAGELEVEL3QUANTITY"]];
-        data[i].d4 = origin[colIndex["DAMAGELEVEL4QUANTITY"]];
-        data[i].d5 = origin[colIndex["DAMAGELEVEL5QUANTITY"]];
+        data[i].d1 = this.round(origin[colIndex["DAMAGELEVEL1QUANTITY"]]);
+        data[i].d2 = this.round(origin[colIndex["DAMAGELEVEL2QUANTITY"]]);
+        data[i].d3 = this.round(origin[colIndex["DAMAGELEVEL3QUANTITY"]]);
+        data[i].d4 = this.round(origin[colIndex["DAMAGELEVEL4QUANTITY"]]);
+        data[i].d5 = this.round(origin[colIndex["DAMAGELEVEL5QUANTITY"]]);
       }
 
       return data;
+    }
+
+    round(value) {
+      if (value != null) {
+        //round to integer and add thousands separator
+        return Math.round(value).toLocaleString('en-GB');
+      } else {
+        return value;
+      }
     }
 
     componentDidMount () {
