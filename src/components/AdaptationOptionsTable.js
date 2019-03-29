@@ -808,6 +808,8 @@ export default class AdaptationOptionsTable extends React.Component {
           Header: 'ADAPTATION',
           id: 'Adaptation',
           accessor: 'adaptation',
+          minWidth: 300,
+          width: 300,
           Cell: this.adaptationCell
         }, {
           Header: 'Targeted element at risk',
@@ -880,14 +882,16 @@ export default class AdaptationOptionsTable extends React.Component {
             .then((resp) => resp.json())
             .then(function(data) {
                 if (data.data.relationships.field_resources.links.related != null) {
-                fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol), {credentials: 'include'})
-                .then((resp) => resp.json())
-                .then(function(data) {
-                    obj.convertDataFromServer(data, 'eu-gl:adaptation-options:identification');
-                })
-                .catch(function(error) {
-                    console.log(JSON.stringify(error));
-                });         
+                    var includes = 'include=field_analysis_context.field_field_eu_gl_methodology';
+
+                    fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + '?' + includes, {credentials: 'include'})
+                    .then((resp) => resp.json())
+                    .then(function(data) {
+                        obj.convertDataFromServer(data, 'eu-gl:adaptation-options:identification');
+                    })
+                    .catch(function(error) {
+                        console.log(JSON.stringify(error));
+                    });         
                 }
             })
             .catch(function(error) {
@@ -900,6 +904,7 @@ export default class AdaptationOptionsTable extends React.Component {
         });         
     }
 
+
     convertDataFromServer(originData, mapType) {
         var resourceArray = originData.data;
         const thisObj = this;
@@ -907,41 +912,89 @@ export default class AdaptationOptionsTable extends React.Component {
         for (var i = 0; i < resourceArray.length; ++i) {
           const resource = resourceArray[i];
   
-          fetch(resource.relationships.field_analysis_context.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
-          .then((resp) => resp.json())
-          .then(function(data) {
-            if (data.data.relationships.field_field_eu_gl_methodology.links.related.href != null) {
-                fetch(data.data.relationships.field_field_eu_gl_methodology.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
-                .then((resp) => resp.json())
-                .then(function(data) {
-                  console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
-                  if (data.data[0].attributes.field_eu_gl_taxonomy_id.value === mapType) {
-                    if (resource.attributes.field_url != null) {
-                      fetch(resource.attributes.field_url)
-                      .then((resp) => resp.json())
-                      .then(function(data) {
-                            thisObj.setState({
-                                data: thisObj.convertData(data),
-                                loading: false
-                            });
-                      })
-                      .catch(function(error) {
-                        console.log(JSON.stringify(error));
-                      });         
-        
-                    }
-                  }
-              })
-                .catch(function(error) {
-                  console.log(JSON.stringify(error));
-                });         
+          if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
+            var analysisContext = this.getInculdedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+  
+            if (analysisContext != null) {
+              if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
+                var mythodologyData = this.getInculdedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
+                console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
+  
+                if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
+                     if (resource.attributes.field_url != null) {
+                       fetch(resource.attributes.field_url)
+                       .then((resp) => resp.json())
+                       .then(function(data) {
+                             thisObj.setState({
+                                 data: thisObj.convertData(data),
+                                 loading: false
+                             });
+                       })
+                       .catch(function(error) {
+                         console.log(JSON.stringify(error));
+                       });         
+                }
               }
-          })
-          .catch(function(error) {
-            console.log(JSON.stringify(error));
-          });         
+            }
+          }
         }
+      }
     }
+  
+    getInculdedObject(type, id, includedArray) {
+        if (type != null && id != null) {
+            for (let i = 0; i < includedArray.length; ++i) {
+              if (includedArray[i].type === type && includedArray[i].id === id) {
+                return includedArray[i];
+              }
+            }
+        }
+    
+        return null;
+    }
+    
+    // convertDataFromServer(originData, mapType) {
+    //     var resourceArray = originData.data;
+    //     const thisObj = this;
+  
+    //     for (var i = 0; i < resourceArray.length; ++i) {
+    //       const resource = resourceArray[i];
+  
+    //       fetch(resource.relationships.field_analysis_context.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
+    //       .then((resp) => resp.json())
+    //       .then(function(data) {
+    //         if (data.data.relationships.field_field_eu_gl_methodology.links.related.href != null) {
+    //             fetch(data.data.relationships.field_field_eu_gl_methodology.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
+    //             .then((resp) => resp.json())
+    //             .then(function(data) {
+    //               console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
+    //               if (data.data[0].attributes.field_eu_gl_taxonomy_id.value === mapType) {
+    //                 if (resource.attributes.field_url != null) {
+    //                   fetch(resource.attributes.field_url)
+    //                   .then((resp) => resp.json())
+    //                   .then(function(data) {
+    //                         thisObj.setState({
+    //                             data: thisObj.convertData(data),
+    //                             loading: false
+    //                         });
+    //                   })
+    //                   .catch(function(error) {
+    //                     console.log(JSON.stringify(error));
+    //                   });         
+        
+    //                 }
+    //               }
+    //           })
+    //             .catch(function(error) {
+    //               console.log(JSON.stringify(error));
+    //             });         
+    //           }
+    //       })
+    //       .catch(function(error) {
+    //         console.log(JSON.stringify(error));
+    //       });         
+    //     }
+    // }
 
     removeNameSpace(val) {
       if (val != null) {

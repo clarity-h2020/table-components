@@ -12043,6 +12043,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 class RiskAndImpactTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
+    this.protocol = "https://";
     var originalData = {
       "name": "TAB Impact Results for Impact Assessment Drupal Table",
       "description": null,
@@ -12100,8 +12101,6 @@ class RiskAndImpactTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.C
         //            </select>
         //          </div>),
         accessor: 'hazard',
-        minWidth: 350,
-        width: 350,
         Cell: row => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           null,
@@ -12243,7 +12242,7 @@ class RiskAndImpactTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.C
     fetch(server + "/jsonapi", { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
 
       if (data != null && data.meta != null && data.meta.links != null && data.meta.links.me != null && data.meta.links.me.href != null) {
-        fetch(data.meta.links.me.href.replace('http://', 'https://'), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+        fetch(data.meta.links.me.href.replace('http://', obj.protocol), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
           let authInfo = null;
 
           if (data != null && data.data != null && data.data.attributes != null && data.data.attributes.field_basic_auth_credentials != null) {
@@ -12273,37 +12272,6 @@ class RiskAndImpactTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.C
     }).catch(function (error) {
       console.log(JSON.stringify(error));
     });
-
-    // fetch(server + "/jsonapi/user/user", {credentials: 'include'})
-    // .then((resp) => resp.json())
-    // .then(function(data) {
-    //   let authInfo = null;
-
-    //   if (data != null && data.data[0] != null && data.data[0].attributes.field_basic_auth_credentials != null) {
-    //     authInfo = data.data[0].attributes.field_basic_auth_credentials;
-    //   }
-
-    //   let headers = new Headers();
-
-    //   if (authInfo != null) {
-    //     headers.append('Authorization', 'Basic ' + btoa(authInfo));
-    //   }
-
-    //   fetch("https://service.emikat.at/EmiKatTst/api/scenarios/2846/feature/view.2812/table/data", {headers: headers})
-    //   .then((resp) => resp.json())
-    //   .then(function(data) {
-    //     obj.setState({
-    //       allData: obj.convertData(data)
-    //     });
-    //     this.changeHazard();
-    //   })
-    //   .catch(function(error) {
-    //     console.log(JSON.stringify(error));
-    //   });         
-    // })
-    // .catch(function(error) {
-    //   console.log(JSON.stringify(error));
-    // });         
   }
 
   loadTooltips(server, thisObj) {
@@ -12428,14 +12396,23 @@ class RiskAndImpactTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.C
       data[i].elementAtRisk = origin[colIndex["NAME"]];
       data[i].vulnerabilityClasses = origin[colIndex["VULCLASS_NAME"]];
       data[i].unit = origin[colIndex["QUANTITYUNIT"]];
-      data[i].d1 = origin[colIndex["DAMAGELEVEL1QUANTITY"]];
-      data[i].d2 = origin[colIndex["DAMAGELEVEL2QUANTITY"]];
-      data[i].d3 = origin[colIndex["DAMAGELEVEL3QUANTITY"]];
-      data[i].d4 = origin[colIndex["DAMAGELEVEL4QUANTITY"]];
-      data[i].d5 = origin[colIndex["DAMAGELEVEL5QUANTITY"]];
+      data[i].d1 = this.round(origin[colIndex["DAMAGELEVEL1QUANTITY"]]);
+      data[i].d2 = this.round(origin[colIndex["DAMAGELEVEL2QUANTITY"]]);
+      data[i].d3 = this.round(origin[colIndex["DAMAGELEVEL3QUANTITY"]]);
+      data[i].d4 = this.round(origin[colIndex["DAMAGELEVEL4QUANTITY"]]);
+      data[i].d5 = this.round(origin[colIndex["DAMAGELEVEL5QUANTITY"]]);
     }
 
     return data;
+  }
+
+  round(value) {
+    if (value != null) {
+      //round to integer and add thousands separator
+      return Math.round(value).toLocaleString('en-GB');
+    } else {
+      return value;
+    }
   }
 
   componentDidMount() {
@@ -13211,6 +13188,8 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
                 Header: 'ADAPTATION',
                 id: 'Adaptation',
                 accessor: 'adaptation',
+                minWidth: 300,
+                width: 300,
                 Cell: this.adaptationCell
             }, {
                 Header: 'Targeted element at risk',
@@ -13279,7 +13258,9 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
             if (data != null && data.data[0] != null && data.data[0].relationships.field_data_package.links.related != null) {
                 fetch(data.data[0].relationships.field_data_package.links.related.href.replace('http://', obj.protocol), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
                     if (data.data.relationships.field_resources.links.related != null) {
-                        fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+                        var includes = 'include=field_analysis_context.field_field_eu_gl_methodology';
+
+                        fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + '?' + includes, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
                             obj.convertDataFromServer(data, 'eu-gl:adaptation-options:identification');
                         }).catch(function (error) {
                             console.log(JSON.stringify(error));
@@ -13301,11 +13282,15 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
         for (var i = 0; i < resourceArray.length; ++i) {
             const resource = resourceArray[i];
 
-            fetch(resource.relationships.field_analysis_context.links.related.href.replace('http://', thisObj.protocol), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
-                if (data.data.relationships.field_field_eu_gl_methodology.links.related.href != null) {
-                    fetch(data.data.relationships.field_field_eu_gl_methodology.links.related.href.replace('http://', thisObj.protocol), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
-                        console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
-                        if (data.data[0].attributes.field_eu_gl_taxonomy_id.value === mapType) {
+            if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
+                var analysisContext = this.getInculdedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+
+                if (analysisContext != null) {
+                    if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
+                        var mythodologyData = this.getInculdedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
+                        console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
+
+                        if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
                             if (resource.attributes.field_url != null) {
                                 fetch(resource.attributes.field_url).then(resp => resp.json()).then(function (data) {
                                     thisObj.setState({
@@ -13317,15 +13302,66 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
                                 });
                             }
                         }
-                    }).catch(function (error) {
-                        console.log(JSON.stringify(error));
-                    });
+                    }
                 }
-            }).catch(function (error) {
-                console.log(JSON.stringify(error));
-            });
+            }
         }
     }
+
+    getInculdedObject(type, id, includedArray) {
+        if (type != null && id != null) {
+            for (let i = 0; i < includedArray.length; ++i) {
+                if (includedArray[i].type === type && includedArray[i].id === id) {
+                    return includedArray[i];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    // convertDataFromServer(originData, mapType) {
+    //     var resourceArray = originData.data;
+    //     const thisObj = this;
+
+    //     for (var i = 0; i < resourceArray.length; ++i) {
+    //       const resource = resourceArray[i];
+
+    //       fetch(resource.relationships.field_analysis_context.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
+    //       .then((resp) => resp.json())
+    //       .then(function(data) {
+    //         if (data.data.relationships.field_field_eu_gl_methodology.links.related.href != null) {
+    //             fetch(data.data.relationships.field_field_eu_gl_methodology.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
+    //             .then((resp) => resp.json())
+    //             .then(function(data) {
+    //               console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
+    //               if (data.data[0].attributes.field_eu_gl_taxonomy_id.value === mapType) {
+    //                 if (resource.attributes.field_url != null) {
+    //                   fetch(resource.attributes.field_url)
+    //                   .then((resp) => resp.json())
+    //                   .then(function(data) {
+    //                         thisObj.setState({
+    //                             data: thisObj.convertData(data),
+    //                             loading: false
+    //                         });
+    //                   })
+    //                   .catch(function(error) {
+    //                     console.log(JSON.stringify(error));
+    //                   });         
+
+    //                 }
+    //               }
+    //           })
+    //             .catch(function(error) {
+    //               console.log(JSON.stringify(error));
+    //             });         
+    //           }
+    //       })
+    //       .catch(function(error) {
+    //         console.log(JSON.stringify(error));
+    //       });         
+    //     }
+    // }
 
     removeNameSpace(val) {
         if (val != null) {
