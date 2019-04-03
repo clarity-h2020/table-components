@@ -17,6 +17,7 @@ export default class CharacteriseHazardTable extends React.Component {
      super(props);
      this.request = {
       "type": "eu-gl:hazard-characterization",
+      "epsg": "EPSG:3035",
       "bbox": [4466000.0, 2130000.0, 4491000.0, 2155000.0],
       "hazards": [{
           "hazard": "Heat Wave Duration",

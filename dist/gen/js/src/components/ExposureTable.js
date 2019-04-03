@@ -12,6 +12,7 @@ export default class ExposureTable extends React.Component {
     super(props);
     this.request = {
       "type": "eu-gl:exposure-evaluation",
+      "epsg": "EPSG:3035",
       "bbox": [4650000.0, 1950000.0, 4675000.0, 1975000.0],
       "data": [{
         "hazard": "HW,PF,FL",
