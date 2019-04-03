@@ -7524,6 +7524,7 @@ class CharacteriseHazardTable extends __WEBPACK_IMPORTED_MODULE_0_react___defaul
     super(props);
     this.request = {
       "type": "eu-gl:hazard-characterization",
+      "epsg": "EPSG:3035",
       "bbox": [4466000.0, 2130000.0, 4491000.0, 2155000.0],
       "hazards": [{
         "hazard": "Heat Wave Duration",
@@ -11490,6 +11491,7 @@ class ExposureTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compon
     super(props);
     this.request = {
       "type": "eu-gl:exposure-evaluation",
+      "epsg": "EPSG:3035",
       "bbox": [4650000.0, 1950000.0, 4675000.0, 1975000.0],
       "data": [{
         "hazard": "HW,PF,FL",
@@ -11746,6 +11748,7 @@ class HazardLocalEffectsTable extends __WEBPACK_IMPORTED_MODULE_0_react___defaul
     this.request = {
       //     "type": "eu-gl:hazard-characterization:local-effects",
       "type": "eu-gl:hazard-characterization",
+      "epsg": "EPSG:3035",
       "bbox": [4466000.0, 2130000.0, 4491000.0, 2155000.0],
       "hazards": [{
         "hazard": "Heat Wave Duration",
