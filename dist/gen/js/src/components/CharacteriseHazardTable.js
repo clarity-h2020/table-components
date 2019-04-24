@@ -7,11 +7,6 @@ import turf from 'turf';
 import Wkt from 'wicket';
 import proj4 from 'proj4';
 
-//const CharacteriseHazardTable = () => {
-//    return (<img width={1058} height={578} src='../../../../../../modules/custom/map-component/src/img/01-HC-03-Table.png' />);
-//};
-
-
 export default class CharacteriseHazardTable extends React.Component {
   constructor(props) {
     super(props);

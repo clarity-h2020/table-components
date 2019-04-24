@@ -1029,7 +1029,7 @@ exports.f = __webpack_require__(11) ? gOPD : function getOwnPropertyDescriptor(O
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(20);
 var toObject = __webpack_require__(14);
-var IE_PROTO = __webpack_require__(112)('IE_PROTO');
+var IE_PROTO = __webpack_require__(115)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -1174,7 +1174,7 @@ var ctx = __webpack_require__(25);
 var IObject = __webpack_require__(61);
 var toObject = __webpack_require__(14);
 var toLength = __webpack_require__(13);
-var asc = __webpack_require__(129);
+var asc = __webpack_require__(132);
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1;
   var IS_FILTER = TYPE == 2;
@@ -1267,7 +1267,7 @@ if (__webpack_require__(11)) {
   var fails = __webpack_require__(5);
   var $export = __webpack_require__(0);
   var $typed = __webpack_require__(91);
-  var $buffer = __webpack_require__(135);
+  var $buffer = __webpack_require__(138);
   var ctx = __webpack_require__(25);
   var anInstance = __webpack_require__(46);
   var propertyDesc = __webpack_require__(39);
@@ -1282,21 +1282,21 @@ if (__webpack_require__(11)) {
   var classof = __webpack_require__(63);
   var isObject = __webpack_require__(6);
   var toObject = __webpack_require__(14);
-  var isArrayIter = __webpack_require__(126);
+  var isArrayIter = __webpack_require__(129);
   var create = __webpack_require__(43);
   var getPrototypeOf = __webpack_require__(23);
   var gOPN = __webpack_require__(44).f;
-  var getIterFn = __webpack_require__(128);
+  var getIterFn = __webpack_require__(131);
   var uid = __webpack_require__(40);
   var wks = __webpack_require__(7);
   var createArrayMethod = __webpack_require__(32);
   var createArrayIncludes = __webpack_require__(81);
   var speciesConstructor = __webpack_require__(88);
-  var ArrayIterators = __webpack_require__(131);
+  var ArrayIterators = __webpack_require__(134);
   var Iterators = __webpack_require__(56);
   var $iterDetect = __webpack_require__(85);
   var setSpecies = __webpack_require__(45);
-  var arrayFill = __webpack_require__(130);
+  var arrayFill = __webpack_require__(133);
   var arrayCopyWithin = __webpack_require__(190);
   var $DP = __webpack_require__(12);
   var $GOPD = __webpack_require__(22);
@@ -1909,7 +1909,7 @@ module.exports = function (key) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
 var $keys = __webpack_require__(176);
-var enumBugKeys = __webpack_require__(113);
+var enumBugKeys = __webpack_require__(116);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -1936,21 +1936,21 @@ module.exports = function (index, length) {
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(1);
 var dPs = __webpack_require__(177);
-var enumBugKeys = __webpack_require__(113);
-var IE_PROTO = __webpack_require__(112)('IE_PROTO');
+var enumBugKeys = __webpack_require__(116);
+var IE_PROTO = __webpack_require__(115)('IE_PROTO');
 var Empty = function () { /* empty */ };
 var PROTOTYPE = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(110)('iframe');
+  var iframe = __webpack_require__(113)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(114).appendChild(iframe);
+  __webpack_require__(117).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -1982,7 +1982,7 @@ module.exports = Object.create || function create(O, Properties) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
 var $keys = __webpack_require__(176);
-var hiddenKeys = __webpack_require__(113).concat('length', 'prototype');
+var hiddenKeys = __webpack_require__(116).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
@@ -2026,10 +2026,10 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 
 var ctx = __webpack_require__(25);
 var call = __webpack_require__(188);
-var isArrayIter = __webpack_require__(126);
+var isArrayIter = __webpack_require__(129);
 var anObject = __webpack_require__(1);
 var toLength = __webpack_require__(13);
-var getIterFn = __webpack_require__(128);
+var getIterFn = __webpack_require__(131);
 var BREAK = {};
 var RETURN = {};
 var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
@@ -2496,7 +2496,7 @@ module.exports = function (it, tag, stat) {
 var $export = __webpack_require__(0);
 var defined = __webpack_require__(29);
 var fails = __webpack_require__(5);
-var spaces = __webpack_require__(116);
+var spaces = __webpack_require__(119);
 var space = '[' + spaces + ']';
 var non = '\u200b\u0085';
 var ltrim = RegExp('^' + space + space + '*');
@@ -2766,7 +2766,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(146)(content, options);
+var update = __webpack_require__(149)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -3501,7 +3501,7 @@ var isObject = __webpack_require__(6);
 var fails = __webpack_require__(5);
 var $iterDetect = __webpack_require__(85);
 var setToStringTag = __webpack_require__(54);
-var inheritIfRequired = __webpack_require__(117);
+var inheritIfRequired = __webpack_require__(120);
 
 module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
   var Base = global[NAME];
@@ -4193,6 +4193,78 @@ const SimpleLegendComponent = props => {
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/*eslint global-require: 0*/
+
+/**
+ * Turf is a modular geospatial analysis engine written in JavaScript. It performs geospatial
+ * processing tasks with GeoJSON data and can be run on a server or in a browser.
+ *
+ * @module turf
+ * @summary Geospatial analysis for JavaScript
+ */
+module.exports = {
+    isolines: __webpack_require__(241),
+    convex: __webpack_require__(245),
+    within: __webpack_require__(260),
+    concave: __webpack_require__(261),
+    difference: __webpack_require__(262),
+    collect: __webpack_require__(263),
+    flip: __webpack_require__(264),
+    simplify: __webpack_require__(265),
+    bezier: __webpack_require__(267),
+    tag: __webpack_require__(269),
+    sample: __webpack_require__(270),
+    envelope: __webpack_require__(271),
+    square: __webpack_require__(151),
+    midpoint: __webpack_require__(272),
+    buffer: __webpack_require__(273),
+    center: __webpack_require__(155),
+    centroid: __webpack_require__(275),
+    combine: __webpack_require__(276),
+    distance: __webpack_require__(16),
+    explode: __webpack_require__(156),
+    bbox: __webpack_require__(68),
+    tesselate: __webpack_require__(277),
+    bboxPolygon: __webpack_require__(154),
+    inside: __webpack_require__(50),
+    intersect: __webpack_require__(279),
+    nearest: __webpack_require__(280),
+    planepoint: __webpack_require__(150),
+    random: __webpack_require__(281),
+    tin: __webpack_require__(104),
+    union: __webpack_require__(153),
+    bearing: __webpack_require__(70),
+    destination: __webpack_require__(71),
+    kinks: __webpack_require__(283),
+    pointOnSurface: __webpack_require__(284),
+    area: __webpack_require__(285),
+    along: __webpack_require__(288),
+    lineDistance: __webpack_require__(289),
+    lineSlice: __webpack_require__(290),
+    pointOnLine: __webpack_require__(157),
+    pointGrid: __webpack_require__(291),
+    squareGrid: __webpack_require__(292),
+    triangleGrid: __webpack_require__(293),
+    hexGrid: __webpack_require__(294)
+};
+
+var helpers = __webpack_require__(2);
+
+module.exports.point = helpers.point;
+module.exports.polygon = helpers.polygon;
+module.exports.lineString = helpers.lineString;
+module.exports.multiPoint = helpers.multiPoint;
+module.exports.multiPolygon = helpers.multiPolygon;
+module.exports.multiLineString = helpers.multiLineString;
+module.exports.feature = helpers.feature;
+module.exports.featureCollection = helpers.featureCollection;
+module.exports.geometryCollection = helpers.geometryCollection;
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
 //http://en.wikipedia.org/wiki/Delaunay_triangulation
 //https://github.com/ironwallaby/delaunay
 var polygon = __webpack_require__(2).polygon;
@@ -4433,13 +4505,13 @@ function triangulate(vertices) {
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var twoProduct = __webpack_require__(150)
+var twoProduct = __webpack_require__(152)
 var robustSum = __webpack_require__(250)
 var robustScale = __webpack_require__(251)
 var robustSubtract = __webpack_require__(253)
@@ -4629,7 +4701,942 @@ function generateOrientationProc() {
 generateOrientationProc()
 
 /***/ }),
-/* 105 */
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/** @license
+ *
+ *  Copyright (C) 2012 K. Arthur Endsley (kaendsle@mtu.edu)
+ *  Michigan Tech Research Institute (MTRI)
+ *  3600 Green Court, Suite 100, Ann Arbor, MI, 48105
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+(function (root, factory) {
+
+    if (true) {
+        // AMD (+ global for extensions)
+        !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+            return factory();
+        }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else if (typeof module !== 'undefined' && typeof exports === "object") {
+        // CommonJS
+        module.exports = factory();
+    } else {
+        // Browser
+        root.Wkt = factory();
+    }
+}(this, function () {
+
+
+    var beginsWith, endsWith, root, Wkt;
+
+    // Establish the root object, window in the browser, or exports on the server
+    root = this;
+
+    /**
+     * @desc The Wkt namespace.
+     * @property    {String}    delimiter   - The default delimiter for separating components of atomic geometry (coordinates)
+     * @namespace
+     * @global
+     */
+    Wkt = function (obj) {
+        if (obj instanceof Wkt) return obj;
+        if (!(this instanceof Wkt)) return new Wkt(obj);
+        this._wrapped = obj;
+    };
+
+
+
+    /**
+     * Returns true if the substring is found at the beginning of the string.
+     * @param   str {String}    The String to search
+     * @param   sub {String}    The substring of interest
+     * @return      {Boolean}
+     * @private
+     */
+    beginsWith = function (str, sub) {
+        return str.substring(0, sub.length) === sub;
+    };
+
+    /**
+     * Returns true if the substring is found at the end of the string.
+     * @param   str {String}    The String to search
+     * @param   sub {String}    The substring of interest
+     * @return      {Boolean}
+     * @private
+     */
+    endsWith = function (str, sub) {
+        return str.substring(str.length - sub.length) === sub;
+    };
+
+    /**
+     * The default delimiter for separating components of atomic geometry (coordinates)
+     * @ignore
+     */
+    Wkt.delimiter = ' ';
+
+    /**
+     * Determines whether or not the passed Object is an Array.
+     * @param   obj {Object}    The Object in question
+     * @return      {Boolean}
+     * @member Wkt.isArray
+     * @method
+     */
+    Wkt.isArray = function (obj) {
+        return !!(obj && obj.constructor === Array);
+    };
+
+    /**
+     * Removes given character String(s) from a String.
+     * @param   str {String}    The String to search
+     * @param   sub {String}    The String character(s) to trim
+     * @return      {String}    The trimmed string
+     * @member Wkt.trim
+     * @method
+     */
+    Wkt.trim = function (str, sub) {
+        sub = sub || ' '; // Defaults to trimming spaces
+        // Trim beginning spaces
+        while (beginsWith(str, sub)) {
+            str = str.substring(1);
+        }
+        // Trim ending spaces
+        while (endsWith(str, sub)) {
+            str = str.substring(0, str.length - 1);
+        }
+        return str;
+    };
+
+    /**
+     * An object for reading WKT strings and writing geographic features
+     * @constructor this.Wkt.Wkt
+     * @param   initializer {String}    An optional WKT string for immediate read
+     * @property            {Array}     components      - Holder for atomic geometry objects (internal representation of geometric components)
+     * @property            {String}    delimiter       - The default delimiter for separating components of atomic geometry (coordinates)
+     * @property            {Object}    regExes         - Some regular expressions copied from OpenLayers.Format.WKT.js
+     * @property            {String}    type            - The Well-Known Text name (e.g. 'point') of the geometry
+     * @property            {Boolean}   wrapVerticies   - True to wrap vertices in MULTIPOINT geometries; If true: MULTIPOINT((30 10),(10 30),(40 40)); If false: MULTIPOINT(30 10,10 30,40 40)
+     * @return              {this.Wkt.Wkt}
+     * @memberof Wkt
+     */
+    Wkt.Wkt = function (initializer) {
+
+        /**
+         * The default delimiter between X and Y coordinates.
+         * @ignore
+         */
+        this.delimiter = Wkt.delimiter || ' ';
+
+        /**
+         * Configuration parameter for controlling how Wicket seralizes
+         * MULTIPOINT strings. Examples; both are valid WKT:
+         * If true: MULTIPOINT((30 10),(10 30),(40 40))
+         * If false: MULTIPOINT(30 10,10 30,40 40)
+         * @ignore
+         */
+        this.wrapVertices = true;
+
+        /**
+         * Some regular expressions copied from OpenLayers.Format.WKT.js
+         * @ignore
+         */
+        this.regExes = {
+            'typeStr': /^\s*(\w+)\s*\(\s*(.*)\s*\)\s*$/,
+            'spaces': /\s+|\+/, // Matches the '+' or the empty space
+            'numeric': /-*\d+(\.*\d+)?/,
+            'comma': /\s*,\s*/,
+            'parenComma': /\)\s*,\s*\(/,
+            'coord': /-*\d+\.*\d+ -*\d+\.*\d+/, // e.g. "24 -14"
+            'doubleParenComma': /\)\s*\)\s*,\s*\(\s*\(/,
+            'ogcTypes': /^(multi)?(point|line|polygon|box)?(string)?$/i, // Captures e.g. "Multi","Line","String"
+            'crudeJson': /^{.*"(type|coordinates|geometries|features)":.*}$/ // Attempts to recognize JSON strings
+        };
+
+        /**
+         * Strip any whitespace and parens from front and back.
+         * This is the equivalent of s/^\s*\(?(.*)\)?\s*$/$1/ but without the risk of catastrophic backtracking.
+         * @param   str {String}
+         */
+        this._stripWhitespaceAndParens = function (fullStr) {
+            var trimmed = fullStr.trim();
+            var noParens = trimmed.replace(/^\(?(.*?)\)?$/, '$1');
+            return noParens;
+        };
+
+        /**
+         * The internal representation of geometry--the "components" of geometry.
+         * @ignore
+         */
+        this.components = undefined;
+
+        // An initial WKT string may be provided
+        if (initializer && typeof initializer === 'string') {
+            this.read(initializer);
+        } else if (initializer && typeof initializer !== undefined) {
+            this.fromObject(initializer);
+        }
+
+    };
+
+
+
+    /**
+     * Returns true if the internal geometry is a collection of geometries.
+     * @return  {Boolean}   Returns true when it is a collection
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.isCollection = function () {
+        switch (this.type.slice(0, 5)) {
+            case 'multi':
+                // Trivial; any multi-geometry is a collection
+                return true;
+            case 'polyg':
+                // Polygons with holes are "collections" of rings
+                return true;
+            default:
+                // Any other geometry is not a collection
+                return false;
+        }
+    };
+
+    /**
+     * Compares two x,y coordinates for equality.
+     * @param   a   {Object}    An object with x and y properties
+     * @param   b   {Object}    An object with x and y properties
+     * @return      {Boolean}
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.sameCoords = function (a, b) {
+        return (a.x === b.x && a.y === b.y);
+    };
+
+    /**
+     * Sets internal geometry (components) from framework geometry (e.g.
+     * Google Polygon objects or google.maps.Polygon).
+     * @param   obj {Object}    The framework-dependent geometry representation
+     * @return      {this.Wkt.Wkt}   The object itself
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.fromObject = function (obj) {
+        var result;
+
+        if (obj.hasOwnProperty('type') && obj.hasOwnProperty('coordinates')) {
+            result = this.fromJson(obj);
+        } else {
+            result = this.deconstruct.call(this, obj);
+        }
+
+        this.components = result.components;
+        this.isRectangle = result.isRectangle || false;
+        this.type = result.type;
+        return this;
+    };
+
+    /**
+     * Creates external geometry objects based on a plug-in framework's
+     * construction methods and available geometry classes.
+     * @param   config  {Object}    An optional framework-dependent properties specification
+     * @return          {Object}    The framework-dependent geometry representation
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.toObject = function (config) {
+        var obj = this.construct[this.type].call(this, config);
+        // Don't assign the "properties" property to an Array
+        if (typeof obj === 'object' && !Wkt.isArray(obj)) {
+            obj.properties = this.properties;
+        }
+        return obj;
+    };
+
+    /**
+     * Returns the WKT string representation; the same as the write() method.
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.toString = function (config) {
+        return this.write();
+    };
+
+    /**
+     * Parses a JSON representation as an Object.
+     * @param	obj	{Object}	An Object with the GeoJSON schema
+     * @return	{this.Wkt.Wkt}	The object itself
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.fromJson = function (obj) {
+        var i, j, k, coords, iring, oring;
+
+        this.type = obj.type.toLowerCase();
+        this.components = [];
+        if (obj.hasOwnProperty('geometry')) { //Feature
+            this.fromJson(obj.geometry);
+            this.properties = obj.properties;
+            return this;
+        }
+        coords = obj.coordinates;
+
+        if (!Wkt.isArray(coords[0])) { // Point
+            this.components.push({
+                x: coords[0],
+                y: coords[1]
+            });
+
+        } else {
+
+            for (i in coords) {
+                if (coords.hasOwnProperty(i)) {
+
+                    if (!Wkt.isArray(coords[i][0])) { // LineString
+
+                        if (this.type === 'multipoint') { // MultiPoint
+                            this.components.push([{
+                                x: coords[i][0],
+                                y: coords[i][1]
+                            }]);
+
+                        } else {
+                            this.components.push({
+                                x: coords[i][0],
+                                y: coords[i][1]
+                            });
+
+                        }
+
+                    } else {
+
+                        oring = [];
+                        for (j in coords[i]) {
+                            if (coords[i].hasOwnProperty(j)) {
+
+                                if (!Wkt.isArray(coords[i][j][0])) {
+                                    oring.push({
+                                        x: coords[i][j][0],
+                                        y: coords[i][j][1]
+                                    });
+
+                                } else {
+
+                                    iring = [];
+                                    for (k in coords[i][j]) {
+                                        if (coords[i][j].hasOwnProperty(k)) {
+
+                                            iring.push({
+                                                x: coords[i][j][k][0],
+                                                y: coords[i][j][k][1]
+                                            });
+
+                                        }
+                                    }
+
+                                    oring.push(iring);
+
+                                }
+
+                            }
+                        }
+
+                        this.components.push(oring);
+                    }
+                }
+            }
+
+        }
+
+        return this;
+    };
+
+    /**
+     * Creates a JSON representation, with the GeoJSON schema, of the geometry.
+     * @return    {Object}    The corresponding GeoJSON representation
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.toJson = function () {
+        var cs, json, i, j, k, ring, rings;
+
+        cs = this.components;
+        json = {
+            coordinates: [],
+            type: (function () {
+                var i, type, s;
+
+                type = this.regExes.ogcTypes.exec(this.type).slice(1);
+                s = [];
+
+                for (i in type) {
+                    if (type.hasOwnProperty(i)) {
+                        if (type[i] !== undefined) {
+                            s.push(type[i].toLowerCase().slice(0, 1).toUpperCase() + type[i].toLowerCase().slice(1));
+                        }
+                    }
+                }
+
+                return s;
+            }.call(this)).join('')
+        }
+
+        // Wkt BOX type gets a special bbox property in GeoJSON
+        if (this.type.toLowerCase() === 'box') {
+            json.type = 'Polygon';
+            json.bbox = [];
+
+            for (i in cs) {
+                if (cs.hasOwnProperty(i)) {
+                    json.bbox = json.bbox.concat([cs[i].x, cs[i].y]);
+                }
+            }
+
+            json.coordinates = [
+                [
+                    [cs[0].x, cs[0].y],
+                    [cs[0].x, cs[1].y],
+                    [cs[1].x, cs[1].y],
+                    [cs[1].x, cs[0].y],
+                    [cs[0].x, cs[0].y]
+                ]
+            ];
+
+            return json;
+        }
+
+        // For the coordinates of most simple features
+        for (i in cs) {
+            if (cs.hasOwnProperty(i)) {
+
+                // For those nested structures
+                if (Wkt.isArray(cs[i])) {
+                    rings = [];
+
+                    for (j in cs[i]) {
+                        if (cs[i].hasOwnProperty(j)) {
+
+                            if (Wkt.isArray(cs[i][j])) { // MULTIPOLYGONS
+                                ring = [];
+
+                                for (k in cs[i][j]) {
+                                    if (cs[i][j].hasOwnProperty(k)) {
+                                        ring.push([cs[i][j][k].x, cs[i][j][k].y]);
+                                    }
+                                }
+
+                                rings.push(ring);
+
+                            } else { // POLYGONS and MULTILINESTRINGS
+
+                                if (cs[i].length > 1) {
+                                    rings.push([cs[i][j].x, cs[i][j].y]);
+
+                                } else { // MULTIPOINTS
+                                    rings = rings.concat([cs[i][j].x, cs[i][j].y]);
+                                }
+                            }
+                        }
+                    }
+
+                    json.coordinates.push(rings);
+
+                } else {
+                    if (cs.length > 1) { // For LINESTRING type
+                        json.coordinates.push([cs[i].x, cs[i].y]);
+
+                    } else { // For POINT type
+                        json.coordinates = json.coordinates.concat([cs[i].x, cs[i].y]);
+                    }
+                }
+
+            }
+        }
+
+        return json;
+    };
+
+    /**
+     * Absorbs the geometry of another this.Wkt.Wkt instance, merging it with its own,
+     * creating a collection (MULTI-geometry) based on their types, which must agree.
+     * For example, creates a MULTIPOLYGON from a POLYGON type merged with another
+     * POLYGON type, or adds a POLYGON instance to a MULTIPOLYGON instance.
+     * @param   wkt {String}    A Wkt.Wkt object
+     * @return	{this.Wkt.Wkt}	The object itself
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.merge = function (wkt) {
+        var prefix = this.type.slice(0, 5);
+
+        if (this.type !== wkt.type) {
+            if (this.type.slice(5, this.type.length) !== wkt.type) {
+                throw TypeError('The input geometry types must agree or the calling this.Wkt.Wkt instance must be a multigeometry of the other');
+            }
+        }
+
+        switch (prefix) {
+
+            case 'point':
+                this.components = [this.components.concat(wkt.components)];
+                break;
+
+            case 'multi':
+                this.components = this.components.concat((wkt.type.slice(0, 5) === 'multi') ? wkt.components : [wkt.components]);
+                break;
+
+            default:
+                this.components = [
+                    this.components,
+                    wkt.components
+                ];
+                break;
+
+        }
+
+        if (prefix !== 'multi') {
+            this.type = 'multi' + this.type;
+        }
+        return this;
+    };
+
+    /**
+     * Reads a WKT string, validating and incorporating it.
+     * @param   str {String}    A WKT or GeoJSON string
+     * @return	{this.Wkt.Wkt}	The object itself
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.read = function (str) {
+        var matches;
+        matches = this.regExes.typeStr.exec(str);
+        if (matches) {
+            this.type = matches[1].toLowerCase();
+            this.base = matches[2];
+            if (this.ingest[this.type]) {
+                this.components = this.ingest[this.type].apply(this, [this.base]);
+            }
+
+        } else {
+            if (this.regExes.crudeJson.test(str)) {
+                if (typeof JSON === 'object' && typeof JSON.parse === 'function') {
+                    this.fromJson(JSON.parse(str));
+
+                } else {
+                    console.log('JSON.parse() is not available; cannot parse GeoJSON strings');
+                    throw {
+                        name: 'JSONError',
+                        message: 'JSON.parse() is not available; cannot parse GeoJSON strings'
+                    };
+                }
+
+            } else {
+                console.log('Invalid WKT string provided to read()');
+                throw {
+                    name: 'WKTError',
+                    message: 'Invalid WKT string provided to read()'
+                };
+            }
+        }
+
+        return this;
+    }; // eo readWkt
+
+    /**
+     * Writes a WKT string.
+     * @param   components  {Array}     An Array of internal geometry objects
+     * @return              {String}    The corresponding WKT representation
+     * @memberof this.Wkt.Wkt
+     * @method
+     */
+    Wkt.Wkt.prototype.write = function (components) {
+        var i, pieces, data;
+
+        components = components || this.components;
+
+        pieces = [];
+
+        pieces.push(this.type.toUpperCase() + '(');
+
+        for (i = 0; i < components.length; i += 1) {
+            if (this.isCollection() && i > 0) {
+                pieces.push(',');
+            }
+
+            // There should be an extract function for the named type
+            if (!this.extract[this.type]) {
+                return null;
+            }
+
+            data = this.extract[this.type].apply(this, [components[i]]);
+            if (this.isCollection() && this.type !== 'multipoint') {
+                pieces.push('(' + data + ')');
+
+            } else {
+                pieces.push(data);
+
+                // If not at the end of the components, add a comma
+                if (i !== (components.length - 1) && this.type !== 'multipoint') {
+                    pieces.push(',');
+                }
+
+            }
+        }
+
+        pieces.push(')');
+
+        return pieces.join('');
+    };
+
+    /**
+     * This object contains functions as property names that extract WKT
+     * strings from the internal representation.
+     * @memberof this.Wkt.Wkt
+     * @namespace this.Wkt.Wkt.extract
+     * @instance
+     */
+    Wkt.Wkt.prototype.extract = {
+        /**
+         * Return a WKT string representing atomic (point) geometry
+         * @param   point   {Object}    An object with x and y properties
+         * @return          {String}    The WKT representation
+         * @memberof this.Wkt.Wkt.extract
+         * @instance
+         */
+        point: function (point) {
+            return String(point.x) + this.delimiter + String(point.y);
+        },
+
+        /**
+         * Return a WKT string representing multiple atoms (points)
+         * @param   multipoint  {Array}     Multiple x-and-y objects
+         * @return              {String}    The WKT representation
+         * @memberof this.Wkt.Wkt.extract
+         * @instance
+         */
+        multipoint: function (multipoint) {
+            var i, parts = [],
+                s;
+
+            for (i = 0; i < multipoint.length; i += 1) {
+                s = this.extract.point.apply(this, [multipoint[i]]);
+
+                if (this.wrapVertices) {
+                    s = '(' + s + ')';
+                }
+
+                parts.push(s);
+            }
+
+            return parts.join(',');
+        },
+
+        /**
+         * Return a WKT string representing a chain (linestring) of atoms
+         * @param   linestring  {Array}     Multiple x-and-y objects
+         * @return              {String}    The WKT representation
+         * @memberof this.Wkt.Wkt.extract
+         * @instance
+         */
+        linestring: function (linestring) {
+            // Extraction of linestrings is the same as for points
+            return this.extract.point.apply(this, [linestring]);
+        },
+
+        /**
+         * Return a WKT string representing multiple chains (multilinestring) of atoms
+         * @param   multilinestring {Array}     Multiple of multiple x-and-y objects
+         * @return                  {String}    The WKT representation
+         * @memberof this.Wkt.Wkt.extract
+         * @instance
+         */
+        multilinestring: function (multilinestring) {
+            var i, parts = [];
+
+            if (multilinestring.length) {
+                for (i = 0; i < multilinestring.length; i += 1) {
+                    parts.push(this.extract.linestring.apply(this, [multilinestring[i]]));
+                }
+            } else {
+                parts.push(this.extract.point.apply(this, [multilinestring]));
+            }
+
+            return parts.join(',');
+        },
+
+        /**
+         * Return a WKT string representing multiple atoms in closed series (polygon)
+         * @param   polygon {Array}     Collection of ordered x-and-y objects
+         * @return          {String}    The WKT representation
+         * @memberof this.Wkt.Wkt.extract
+         * @instance
+         */
+        polygon: function (polygon) {
+            // Extraction of polygons is the same as for multilinestrings
+            return this.extract.multilinestring.apply(this, [polygon]);
+        },
+
+        /**
+         * Return a WKT string representing multiple closed series (multipolygons) of multiple atoms
+         * @param   multipolygon    {Array}     Collection of ordered x-and-y objects
+         * @return                  {String}    The WKT representation
+         * @memberof this.Wkt.Wkt.extract
+         * @instance
+         */
+        multipolygon: function (multipolygon) {
+            var i, parts = [];
+            for (i = 0; i < multipolygon.length; i += 1) {
+                parts.push('(' + this.extract.polygon.apply(this, [multipolygon[i]]) + ')');
+            }
+            return parts.join(',');
+        },
+
+        /**
+         * Return a WKT string representing a 2DBox
+         * @param   multipolygon    {Array}     Collection of ordered x-and-y objects
+         * @return                  {String}    The WKT representation
+         * @memberof this.Wkt.Wkt.extract
+         * @instance
+         */
+        box: function (box) {
+            return this.extract.linestring.apply(this, [box]);
+        },
+
+        geometrycollection: function (str) {
+            console.log('The geometrycollection WKT type is not yet supported.');
+        }
+    };
+
+    /**
+     * This object contains functions as property names that ingest WKT
+     * strings into the internal representation.
+     * @memberof this.Wkt.Wkt
+     * @namespace this.Wkt.Wkt.ingest
+     * @instance
+     */
+    Wkt.Wkt.prototype.ingest = {
+
+        /**
+         * Return point feature given a point WKT fragment.
+         * @param   str {String}    A WKT fragment representing the point
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        point: function (str) {
+            var coords = Wkt.trim(str).split(this.regExes.spaces);
+            // In case a parenthetical group of coordinates is passed...
+            return [{ // ...Search for numeric substrings
+                x: parseFloat(this.regExes.numeric.exec(coords[0])[0]),
+                y: parseFloat(this.regExes.numeric.exec(coords[1])[0])
+            }];
+        },
+
+        /**
+         * Return a multipoint feature given a multipoint WKT fragment.
+         * @param   str {String}    A WKT fragment representing the multipoint
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        multipoint: function (str) {
+            var i, components, points;
+            components = [];
+            points = Wkt.trim(str).split(this.regExes.comma);
+            for (i = 0; i < points.length; i += 1) {
+                components.push(this.ingest.point.apply(this, [points[i]]));
+            }
+            return components;
+        },
+
+        /**
+         * Return a linestring feature given a linestring WKT fragment.
+         * @param   str {String}    A WKT fragment representing the linestring
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        linestring: function (str) {
+            var i, multipoints, components;
+
+            // In our x-and-y representation of components, parsing
+            //  multipoints is the same as parsing linestrings
+            multipoints = this.ingest.multipoint.apply(this, [str]);
+
+            // However, the points need to be joined
+            components = [];
+            for (i = 0; i < multipoints.length; i += 1) {
+                components = components.concat(multipoints[i]);
+            }
+            return components;
+        },
+
+        /**
+         * Return a multilinestring feature given a multilinestring WKT fragment.
+         * @param   str {String}    A WKT fragment representing the multilinestring
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        multilinestring: function (str) {
+            var i, components, line, lines;
+            components = [];
+
+            lines = Wkt.trim(str).split(this.regExes.doubleParenComma);
+            if (lines.length === 1) { // If that didn't work...
+                lines = Wkt.trim(str).split(this.regExes.parenComma);
+            }
+
+            for (i = 0; i < lines.length; i += 1) {
+                line = this._stripWhitespaceAndParens(lines[i]);
+                components.push(this.ingest.linestring.apply(this, [line]));
+            }
+
+            return components;
+        },
+
+        /**
+         * Return a polygon feature given a polygon WKT fragment.
+         * @param   str {String}    A WKT fragment representing the polygon
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        polygon: function (str) {
+            var i, j, components, subcomponents, ring, rings;
+            rings = Wkt.trim(str).split(this.regExes.parenComma);
+            components = []; // Holds one or more rings
+            for (i = 0; i < rings.length; i += 1) {
+                ring = this._stripWhitespaceAndParens(rings[i]).split(this.regExes.comma);
+                subcomponents = []; // Holds the outer ring and any inner rings (holes)
+                for (j = 0; j < ring.length; j += 1) {
+                    // Split on the empty space or '+' character (between coordinates)
+                    var split = ring[j].split(this.regExes.spaces);
+                    if (split.length > 2) {
+                        //remove the elements which are blanks
+                        split = split.filter(function (n) {
+                            return n != ""
+                        });
+                    }
+                    if (split.length === 2) {
+                        var x_cord = split[0];
+                        var y_cord = split[1];
+
+                        //now push
+                        subcomponents.push({
+                            x: parseFloat(x_cord),
+                            y: parseFloat(y_cord)
+                        });
+                    }
+                }
+                components.push(subcomponents);
+            }
+            return components;
+        },
+
+        /**
+         * Return box vertices (which would become the Rectangle bounds) given a Box WKT fragment.
+         * @param   str {String}    A WKT fragment representing the box
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        box: function (str) {
+            var i, multipoints, components;
+
+            // In our x-and-y representation of components, parsing
+            //  multipoints is the same as parsing linestrings
+            multipoints = this.ingest.multipoint.apply(this, [str]);
+
+            // However, the points need to be joined
+            components = [];
+            for (i = 0; i < multipoints.length; i += 1) {
+                components = components.concat(multipoints[i]);
+            }
+
+            return components;
+        },
+
+        /**
+         * Return a multipolygon feature given a multipolygon WKT fragment.
+         * @param   str {String}    A WKT fragment representing the multipolygon
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        multipolygon: function (str) {
+            var i, components, polygon, polygons;
+            components = [];
+            polygons = Wkt.trim(str).split(this.regExes.doubleParenComma);
+            for (i = 0; i < polygons.length; i += 1) {
+                polygon = this._stripWhitespaceAndParens(polygons[i]);
+                components.push(this.ingest.polygon.apply(this, [polygon]));
+            }
+            return components;
+        },
+
+        /**
+         * Return an array of features given a geometrycollection WKT fragment.
+         * @param   str {String}    A WKT fragment representing the geometry collection
+         * @memberof this.Wkt.Wkt.ingest
+         * @instance
+         */
+        geometrycollection: function (str) {
+            console.log('The geometrycollection WKT type is not yet supported.');
+        }
+
+    }; // eo ingest
+
+    return Wkt;
+}));
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Proj__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Point__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_toPoint__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__defs__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__transform__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_mgrs__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__version__ = __webpack_require__(315);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__projs__ = __webpack_require__(317);
+
+
+
+
+
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].defaultDatum = 'WGS84'; //default datum
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].Proj = __WEBPACK_IMPORTED_MODULE_1__Proj__["a" /* default */];
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].WGS84 = new __WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].Proj('WGS84');
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].Point = __WEBPACK_IMPORTED_MODULE_2__Point__["a" /* default */];
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].toPoint = __WEBPACK_IMPORTED_MODULE_3__common_toPoint__["a" /* default */];
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].defs = __WEBPACK_IMPORTED_MODULE_4__defs__["a" /* default */];
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].transform = __WEBPACK_IMPORTED_MODULE_5__transform__["a" /* default */];
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].mgrs = __WEBPACK_IMPORTED_MODULE_6_mgrs__["a" /* default */];
+__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].version = __WEBPACK_IMPORTED_MODULE_7__version__["a" /* default */];
+Object(__WEBPACK_IMPORTED_MODULE_8__projs__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */]);
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */]);
+
+
+/***/ }),
+/* 108 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4712,7 +5719,7 @@ Projection.projections.start();
 
 
 /***/ }),
-/* 106 */
+/* 109 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4723,7 +5730,7 @@ Projection.projections.start();
 });
 
 /***/ }),
-/* 107 */
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4733,7 +5740,7 @@ Projection.projections.start();
 });
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4755,7 +5762,7 @@ Projection.projections.start();
 });
 
 /***/ }),
-/* 109 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4771,7 +5778,7 @@ Projection.projections.start();
 });
 
 /***/ }),
-/* 110 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(6);
@@ -4784,7 +5791,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 111 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
@@ -4799,7 +5806,7 @@ module.exports = function (name) {
 
 
 /***/ }),
-/* 112 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(80)('keys');
@@ -4810,7 +5817,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 113 */
+/* 116 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -4820,7 +5827,7 @@ module.exports = (
 
 
 /***/ }),
-/* 114 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(3).document;
@@ -4828,7 +5835,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 115 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
@@ -4859,7 +5866,7 @@ module.exports = {
 
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports) {
 
 module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
@@ -4867,11 +5874,11 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 
 
 /***/ }),
-/* 117 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(6);
-var setPrototypeOf = __webpack_require__(115).set;
+var setPrototypeOf = __webpack_require__(118).set;
 module.exports = function (that, target, C) {
   var S = target.constructor;
   var P;
@@ -4882,7 +5889,7 @@ module.exports = function (that, target, C) {
 
 
 /***/ }),
-/* 118 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4901,7 +5908,7 @@ module.exports = function repeat(count) {
 
 
 /***/ }),
-/* 119 */
+/* 122 */
 /***/ (function(module, exports) {
 
 // 20.2.2.28 Math.sign(x)
@@ -4912,7 +5919,7 @@ module.exports = Math.sign || function sign(x) {
 
 
 /***/ }),
-/* 120 */
+/* 123 */
 /***/ (function(module, exports) {
 
 // 20.2.2.14 Math.expm1(x)
@@ -4928,7 +5935,7 @@ module.exports = (!$expm1
 
 
 /***/ }),
-/* 121 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(30);
@@ -4951,7 +5958,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 122 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4961,7 +5968,7 @@ var $export = __webpack_require__(0);
 var redefine = __webpack_require__(18);
 var hide = __webpack_require__(17);
 var Iterators = __webpack_require__(56);
-var $iterCreate = __webpack_require__(123);
+var $iterCreate = __webpack_require__(126);
 var setToStringTag = __webpack_require__(54);
 var getPrototypeOf = __webpack_require__(23);
 var ITERATOR = __webpack_require__(7)('iterator');
@@ -5027,7 +6034,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5047,7 +6054,7 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 124 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // helper for String#{startsWith, endsWith, includes}
@@ -5061,7 +6068,7 @@ module.exports = function (that, searchString, NAME) {
 
 
 /***/ }),
-/* 125 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MATCH = __webpack_require__(7)('match');
@@ -5079,7 +6086,7 @@ module.exports = function (KEY) {
 
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
@@ -5093,7 +6100,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5108,7 +6115,7 @@ module.exports = function (object, index, value) {
 
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(63);
@@ -5122,7 +6129,7 @@ module.exports = __webpack_require__(24).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
@@ -5134,7 +6141,7 @@ module.exports = function (original, length) {
 
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5156,7 +6163,7 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5170,7 +6177,7 @@ var toIObject = __webpack_require__(21);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(122)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(125)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -5197,13 +6204,13 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(25);
 var invoke = __webpack_require__(181);
-var html = __webpack_require__(114);
-var cel = __webpack_require__(110);
+var html = __webpack_require__(117);
+var cel = __webpack_require__(113);
 var global = __webpack_require__(3);
 var process = global.process;
 var setTask = global.setImmediate;
@@ -5287,11 +6294,11 @@ module.exports = {
 
 
 /***/ }),
-/* 133 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
-var macrotask = __webpack_require__(132).set;
+var macrotask = __webpack_require__(135).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
@@ -5362,7 +6369,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 134 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5387,7 +6394,7 @@ module.exports.f = function (C) {
 
 
 /***/ }),
-/* 135 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5405,7 +6412,7 @@ var toLength = __webpack_require__(13);
 var toIndex = __webpack_require__(200);
 var gOPN = __webpack_require__(44).f;
 var dP = __webpack_require__(12).f;
-var arrayFill = __webpack_require__(130);
+var arrayFill = __webpack_require__(133);
 var setToStringTag = __webpack_require__(54);
 var ARRAY_BUFFER = 'ArrayBuffer';
 var DATA_VIEW = 'DataView';
@@ -5670,7 +6677,7 @@ exports[DATA_VIEW] = $DataView;
 
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5684,7 +6691,7 @@ module.exports = function (val) {
 
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5692,7 +6699,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CharacteriseHazardTable__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CharacteriseHazardTable__ = __webpack_require__(146);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_ExposureTable__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_HazardLocalEffectsTable__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_RiskAndImpactTable__ = __webpack_require__(171);
@@ -5758,7 +6765,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5770,7 +6777,7 @@ function _inheritsLoose(subClass, superClass) {
 }
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5787,20 +6794,20 @@ function _inheritsLoose(subClass, superClass) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return context; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_react_context__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_create_react_context___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_create_react_context__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__babel_runtime_helpers_esm_inheritsLoose__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__babel_runtime_helpers_esm_inheritsLoose__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_tiny_warning__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_history__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_history__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_tiny_invariant__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_path_to_regexp__ = __webpack_require__(221);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_path_to_regexp__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__babel_runtime_helpers_esm_extends__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_react_is__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_react_is__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_react_is___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_react_is__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__babel_runtime_helpers_esm_objectWithoutPropertiesLoose__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__babel_runtime_helpers_esm_objectWithoutPropertiesLoose__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_hoist_non_react_statics__ = __webpack_require__(225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_hoist_non_react_statics__);
 
@@ -6527,7 +7534,7 @@ if (process.env.NODE_ENV !== "production") {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(10)))
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7451,7 +8458,7 @@ function createMemoryHistory(props) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(10)))
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7466,7 +8473,7 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7487,7 +8494,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 
 /***/ }),
-/* 143 */
+/* 146 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7500,11 +8507,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_table_react_table_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_table_react_table_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__commons_TableComponent__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__commons_SimpleLegendComponent__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_turf__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_turf__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_turf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_turf__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_wicket__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_wicket__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_wicket___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_wicket__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_proj4__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_proj4__ = __webpack_require__(107);
 
 
 
@@ -7512,11 +8519,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-
-//const CharacteriseHazardTable = () => {
-//    return (<img width={1058} height={578} src='../../../../../../modules/custom/map-component/src/img/01-HC-03-Table.png' />);
-//};
 
 
 class CharacteriseHazardTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
@@ -7806,7 +8808,7 @@ if (document.getElementById('characteriseHazard-table-container') != null) {
 }
 
 /***/ }),
-/* 144 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7821,7 +8823,7 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 145 */
+/* 148 */
 /***/ (function(module, exports) {
 
 /*
@@ -7903,7 +8905,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 146 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -8309,79 +9311,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 147 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*eslint global-require: 0*/
-
-/**
- * Turf is a modular geospatial analysis engine written in JavaScript. It performs geospatial
- * processing tasks with GeoJSON data and can be run on a server or in a browser.
- *
- * @module turf
- * @summary Geospatial analysis for JavaScript
- */
-module.exports = {
-    isolines: __webpack_require__(241),
-    convex: __webpack_require__(245),
-    within: __webpack_require__(260),
-    concave: __webpack_require__(261),
-    difference: __webpack_require__(262),
-    collect: __webpack_require__(263),
-    flip: __webpack_require__(264),
-    simplify: __webpack_require__(265),
-    bezier: __webpack_require__(267),
-    tag: __webpack_require__(269),
-    sample: __webpack_require__(270),
-    envelope: __webpack_require__(271),
-    square: __webpack_require__(149),
-    midpoint: __webpack_require__(272),
-    buffer: __webpack_require__(273),
-    center: __webpack_require__(153),
-    centroid: __webpack_require__(275),
-    combine: __webpack_require__(276),
-    distance: __webpack_require__(16),
-    explode: __webpack_require__(154),
-    bbox: __webpack_require__(68),
-    tesselate: __webpack_require__(277),
-    bboxPolygon: __webpack_require__(152),
-    inside: __webpack_require__(50),
-    intersect: __webpack_require__(279),
-    nearest: __webpack_require__(280),
-    planepoint: __webpack_require__(148),
-    random: __webpack_require__(281),
-    tin: __webpack_require__(103),
-    union: __webpack_require__(151),
-    bearing: __webpack_require__(70),
-    destination: __webpack_require__(71),
-    kinks: __webpack_require__(283),
-    pointOnSurface: __webpack_require__(284),
-    area: __webpack_require__(285),
-    along: __webpack_require__(288),
-    lineDistance: __webpack_require__(289),
-    lineSlice: __webpack_require__(290),
-    pointOnLine: __webpack_require__(155),
-    pointGrid: __webpack_require__(291),
-    squareGrid: __webpack_require__(292),
-    triangleGrid: __webpack_require__(293),
-    hexGrid: __webpack_require__(294)
-};
-
-var helpers = __webpack_require__(2);
-
-module.exports.point = helpers.point;
-module.exports.polygon = helpers.polygon;
-module.exports.lineString = helpers.lineString;
-module.exports.multiPoint = helpers.multiPoint;
-module.exports.multiPolygon = helpers.multiPolygon;
-module.exports.multiLineString = helpers.multiLineString;
-module.exports.feature = helpers.feature;
-module.exports.featureCollection = helpers.featureCollection;
-module.exports.geometryCollection = helpers.geometryCollection;
-
-
-/***/ }),
-/* 148 */
+/* 150 */
 /***/ (function(module, exports) {
 
 /**
@@ -8459,7 +9389,7 @@ module.exports = function (point, triangle) {
 
 
 /***/ }),
-/* 149 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var distance = __webpack_require__(16);
@@ -8510,7 +9440,7 @@ module.exports = function (bbox) {
 
 
 /***/ }),
-/* 150 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8549,7 +9479,7 @@ function twoProduct(a, b, result) {
 }
 
 /***/ }),
-/* 151 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // look here for help http://svn.osgeo.org/grass/grass/branches/releasebranch_6_4/vector/v.overlay/main.c
@@ -8627,7 +9557,7 @@ module.exports = function (poly1, poly2) {
 
 
 /***/ }),
-/* 152 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var polygon = __webpack_require__(2).polygon;
@@ -8663,7 +9593,7 @@ module.exports = function (bbox) {
 
 
 /***/ }),
-/* 153 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var bbox = __webpack_require__(68),
@@ -8790,7 +9720,7 @@ module.exports = function (layer) {
 
 
 /***/ }),
-/* 154 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var featureCollection = __webpack_require__(2).featureCollection;
@@ -8839,7 +9769,7 @@ module.exports = function (geojson) {
 
 
 /***/ }),
-/* 155 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var distance = __webpack_require__(16);
@@ -8997,941 +9927,6 @@ function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2Sta
         return false;
     }
 }
-
-
-/***/ }),
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/** @license
- *
- *  Copyright (C) 2012 K. Arthur Endsley (kaendsle@mtu.edu)
- *  Michigan Tech Research Institute (MTRI)
- *  3600 Green Court, Suite 100, Ann Arbor, MI, 48105
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
-(function (root, factory) {
-
-    if (true) {
-        // AMD (+ global for extensions)
-        !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-            return factory();
-        }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else if (typeof module !== 'undefined' && typeof exports === "object") {
-        // CommonJS
-        module.exports = factory();
-    } else {
-        // Browser
-        root.Wkt = factory();
-    }
-}(this, function () {
-
-
-    var beginsWith, endsWith, root, Wkt;
-
-    // Establish the root object, window in the browser, or exports on the server
-    root = this;
-
-    /**
-     * @desc The Wkt namespace.
-     * @property    {String}    delimiter   - The default delimiter for separating components of atomic geometry (coordinates)
-     * @namespace
-     * @global
-     */
-    Wkt = function (obj) {
-        if (obj instanceof Wkt) return obj;
-        if (!(this instanceof Wkt)) return new Wkt(obj);
-        this._wrapped = obj;
-    };
-
-
-
-    /**
-     * Returns true if the substring is found at the beginning of the string.
-     * @param   str {String}    The String to search
-     * @param   sub {String}    The substring of interest
-     * @return      {Boolean}
-     * @private
-     */
-    beginsWith = function (str, sub) {
-        return str.substring(0, sub.length) === sub;
-    };
-
-    /**
-     * Returns true if the substring is found at the end of the string.
-     * @param   str {String}    The String to search
-     * @param   sub {String}    The substring of interest
-     * @return      {Boolean}
-     * @private
-     */
-    endsWith = function (str, sub) {
-        return str.substring(str.length - sub.length) === sub;
-    };
-
-    /**
-     * The default delimiter for separating components of atomic geometry (coordinates)
-     * @ignore
-     */
-    Wkt.delimiter = ' ';
-
-    /**
-     * Determines whether or not the passed Object is an Array.
-     * @param   obj {Object}    The Object in question
-     * @return      {Boolean}
-     * @member Wkt.isArray
-     * @method
-     */
-    Wkt.isArray = function (obj) {
-        return !!(obj && obj.constructor === Array);
-    };
-
-    /**
-     * Removes given character String(s) from a String.
-     * @param   str {String}    The String to search
-     * @param   sub {String}    The String character(s) to trim
-     * @return      {String}    The trimmed string
-     * @member Wkt.trim
-     * @method
-     */
-    Wkt.trim = function (str, sub) {
-        sub = sub || ' '; // Defaults to trimming spaces
-        // Trim beginning spaces
-        while (beginsWith(str, sub)) {
-            str = str.substring(1);
-        }
-        // Trim ending spaces
-        while (endsWith(str, sub)) {
-            str = str.substring(0, str.length - 1);
-        }
-        return str;
-    };
-
-    /**
-     * An object for reading WKT strings and writing geographic features
-     * @constructor this.Wkt.Wkt
-     * @param   initializer {String}    An optional WKT string for immediate read
-     * @property            {Array}     components      - Holder for atomic geometry objects (internal representation of geometric components)
-     * @property            {String}    delimiter       - The default delimiter for separating components of atomic geometry (coordinates)
-     * @property            {Object}    regExes         - Some regular expressions copied from OpenLayers.Format.WKT.js
-     * @property            {String}    type            - The Well-Known Text name (e.g. 'point') of the geometry
-     * @property            {Boolean}   wrapVerticies   - True to wrap vertices in MULTIPOINT geometries; If true: MULTIPOINT((30 10),(10 30),(40 40)); If false: MULTIPOINT(30 10,10 30,40 40)
-     * @return              {this.Wkt.Wkt}
-     * @memberof Wkt
-     */
-    Wkt.Wkt = function (initializer) {
-
-        /**
-         * The default delimiter between X and Y coordinates.
-         * @ignore
-         */
-        this.delimiter = Wkt.delimiter || ' ';
-
-        /**
-         * Configuration parameter for controlling how Wicket seralizes
-         * MULTIPOINT strings. Examples; both are valid WKT:
-         * If true: MULTIPOINT((30 10),(10 30),(40 40))
-         * If false: MULTIPOINT(30 10,10 30,40 40)
-         * @ignore
-         */
-        this.wrapVertices = true;
-
-        /**
-         * Some regular expressions copied from OpenLayers.Format.WKT.js
-         * @ignore
-         */
-        this.regExes = {
-            'typeStr': /^\s*(\w+)\s*\(\s*(.*)\s*\)\s*$/,
-            'spaces': /\s+|\+/, // Matches the '+' or the empty space
-            'numeric': /-*\d+(\.*\d+)?/,
-            'comma': /\s*,\s*/,
-            'parenComma': /\)\s*,\s*\(/,
-            'coord': /-*\d+\.*\d+ -*\d+\.*\d+/, // e.g. "24 -14"
-            'doubleParenComma': /\)\s*\)\s*,\s*\(\s*\(/,
-            'ogcTypes': /^(multi)?(point|line|polygon|box)?(string)?$/i, // Captures e.g. "Multi","Line","String"
-            'crudeJson': /^{.*"(type|coordinates|geometries|features)":.*}$/ // Attempts to recognize JSON strings
-        };
-
-        /**
-         * Strip any whitespace and parens from front and back.
-         * This is the equivalent of s/^\s*\(?(.*)\)?\s*$/$1/ but without the risk of catastrophic backtracking.
-         * @param   str {String}
-         */
-        this._stripWhitespaceAndParens = function (fullStr) {
-            var trimmed = fullStr.trim();
-            var noParens = trimmed.replace(/^\(?(.*?)\)?$/, '$1');
-            return noParens;
-        };
-
-        /**
-         * The internal representation of geometry--the "components" of geometry.
-         * @ignore
-         */
-        this.components = undefined;
-
-        // An initial WKT string may be provided
-        if (initializer && typeof initializer === 'string') {
-            this.read(initializer);
-        } else if (initializer && typeof initializer !== undefined) {
-            this.fromObject(initializer);
-        }
-
-    };
-
-
-
-    /**
-     * Returns true if the internal geometry is a collection of geometries.
-     * @return  {Boolean}   Returns true when it is a collection
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.isCollection = function () {
-        switch (this.type.slice(0, 5)) {
-            case 'multi':
-                // Trivial; any multi-geometry is a collection
-                return true;
-            case 'polyg':
-                // Polygons with holes are "collections" of rings
-                return true;
-            default:
-                // Any other geometry is not a collection
-                return false;
-        }
-    };
-
-    /**
-     * Compares two x,y coordinates for equality.
-     * @param   a   {Object}    An object with x and y properties
-     * @param   b   {Object}    An object with x and y properties
-     * @return      {Boolean}
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.sameCoords = function (a, b) {
-        return (a.x === b.x && a.y === b.y);
-    };
-
-    /**
-     * Sets internal geometry (components) from framework geometry (e.g.
-     * Google Polygon objects or google.maps.Polygon).
-     * @param   obj {Object}    The framework-dependent geometry representation
-     * @return      {this.Wkt.Wkt}   The object itself
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.fromObject = function (obj) {
-        var result;
-
-        if (obj.hasOwnProperty('type') && obj.hasOwnProperty('coordinates')) {
-            result = this.fromJson(obj);
-        } else {
-            result = this.deconstruct.call(this, obj);
-        }
-
-        this.components = result.components;
-        this.isRectangle = result.isRectangle || false;
-        this.type = result.type;
-        return this;
-    };
-
-    /**
-     * Creates external geometry objects based on a plug-in framework's
-     * construction methods and available geometry classes.
-     * @param   config  {Object}    An optional framework-dependent properties specification
-     * @return          {Object}    The framework-dependent geometry representation
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.toObject = function (config) {
-        var obj = this.construct[this.type].call(this, config);
-        // Don't assign the "properties" property to an Array
-        if (typeof obj === 'object' && !Wkt.isArray(obj)) {
-            obj.properties = this.properties;
-        }
-        return obj;
-    };
-
-    /**
-     * Returns the WKT string representation; the same as the write() method.
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.toString = function (config) {
-        return this.write();
-    };
-
-    /**
-     * Parses a JSON representation as an Object.
-     * @param	obj	{Object}	An Object with the GeoJSON schema
-     * @return	{this.Wkt.Wkt}	The object itself
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.fromJson = function (obj) {
-        var i, j, k, coords, iring, oring;
-
-        this.type = obj.type.toLowerCase();
-        this.components = [];
-        if (obj.hasOwnProperty('geometry')) { //Feature
-            this.fromJson(obj.geometry);
-            this.properties = obj.properties;
-            return this;
-        }
-        coords = obj.coordinates;
-
-        if (!Wkt.isArray(coords[0])) { // Point
-            this.components.push({
-                x: coords[0],
-                y: coords[1]
-            });
-
-        } else {
-
-            for (i in coords) {
-                if (coords.hasOwnProperty(i)) {
-
-                    if (!Wkt.isArray(coords[i][0])) { // LineString
-
-                        if (this.type === 'multipoint') { // MultiPoint
-                            this.components.push([{
-                                x: coords[i][0],
-                                y: coords[i][1]
-                            }]);
-
-                        } else {
-                            this.components.push({
-                                x: coords[i][0],
-                                y: coords[i][1]
-                            });
-
-                        }
-
-                    } else {
-
-                        oring = [];
-                        for (j in coords[i]) {
-                            if (coords[i].hasOwnProperty(j)) {
-
-                                if (!Wkt.isArray(coords[i][j][0])) {
-                                    oring.push({
-                                        x: coords[i][j][0],
-                                        y: coords[i][j][1]
-                                    });
-
-                                } else {
-
-                                    iring = [];
-                                    for (k in coords[i][j]) {
-                                        if (coords[i][j].hasOwnProperty(k)) {
-
-                                            iring.push({
-                                                x: coords[i][j][k][0],
-                                                y: coords[i][j][k][1]
-                                            });
-
-                                        }
-                                    }
-
-                                    oring.push(iring);
-
-                                }
-
-                            }
-                        }
-
-                        this.components.push(oring);
-                    }
-                }
-            }
-
-        }
-
-        return this;
-    };
-
-    /**
-     * Creates a JSON representation, with the GeoJSON schema, of the geometry.
-     * @return    {Object}    The corresponding GeoJSON representation
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.toJson = function () {
-        var cs, json, i, j, k, ring, rings;
-
-        cs = this.components;
-        json = {
-            coordinates: [],
-            type: (function () {
-                var i, type, s;
-
-                type = this.regExes.ogcTypes.exec(this.type).slice(1);
-                s = [];
-
-                for (i in type) {
-                    if (type.hasOwnProperty(i)) {
-                        if (type[i] !== undefined) {
-                            s.push(type[i].toLowerCase().slice(0, 1).toUpperCase() + type[i].toLowerCase().slice(1));
-                        }
-                    }
-                }
-
-                return s;
-            }.call(this)).join('')
-        }
-
-        // Wkt BOX type gets a special bbox property in GeoJSON
-        if (this.type.toLowerCase() === 'box') {
-            json.type = 'Polygon';
-            json.bbox = [];
-
-            for (i in cs) {
-                if (cs.hasOwnProperty(i)) {
-                    json.bbox = json.bbox.concat([cs[i].x, cs[i].y]);
-                }
-            }
-
-            json.coordinates = [
-                [
-                    [cs[0].x, cs[0].y],
-                    [cs[0].x, cs[1].y],
-                    [cs[1].x, cs[1].y],
-                    [cs[1].x, cs[0].y],
-                    [cs[0].x, cs[0].y]
-                ]
-            ];
-
-            return json;
-        }
-
-        // For the coordinates of most simple features
-        for (i in cs) {
-            if (cs.hasOwnProperty(i)) {
-
-                // For those nested structures
-                if (Wkt.isArray(cs[i])) {
-                    rings = [];
-
-                    for (j in cs[i]) {
-                        if (cs[i].hasOwnProperty(j)) {
-
-                            if (Wkt.isArray(cs[i][j])) { // MULTIPOLYGONS
-                                ring = [];
-
-                                for (k in cs[i][j]) {
-                                    if (cs[i][j].hasOwnProperty(k)) {
-                                        ring.push([cs[i][j][k].x, cs[i][j][k].y]);
-                                    }
-                                }
-
-                                rings.push(ring);
-
-                            } else { // POLYGONS and MULTILINESTRINGS
-
-                                if (cs[i].length > 1) {
-                                    rings.push([cs[i][j].x, cs[i][j].y]);
-
-                                } else { // MULTIPOINTS
-                                    rings = rings.concat([cs[i][j].x, cs[i][j].y]);
-                                }
-                            }
-                        }
-                    }
-
-                    json.coordinates.push(rings);
-
-                } else {
-                    if (cs.length > 1) { // For LINESTRING type
-                        json.coordinates.push([cs[i].x, cs[i].y]);
-
-                    } else { // For POINT type
-                        json.coordinates = json.coordinates.concat([cs[i].x, cs[i].y]);
-                    }
-                }
-
-            }
-        }
-
-        return json;
-    };
-
-    /**
-     * Absorbs the geometry of another this.Wkt.Wkt instance, merging it with its own,
-     * creating a collection (MULTI-geometry) based on their types, which must agree.
-     * For example, creates a MULTIPOLYGON from a POLYGON type merged with another
-     * POLYGON type, or adds a POLYGON instance to a MULTIPOLYGON instance.
-     * @param   wkt {String}    A Wkt.Wkt object
-     * @return	{this.Wkt.Wkt}	The object itself
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.merge = function (wkt) {
-        var prefix = this.type.slice(0, 5);
-
-        if (this.type !== wkt.type) {
-            if (this.type.slice(5, this.type.length) !== wkt.type) {
-                throw TypeError('The input geometry types must agree or the calling this.Wkt.Wkt instance must be a multigeometry of the other');
-            }
-        }
-
-        switch (prefix) {
-
-            case 'point':
-                this.components = [this.components.concat(wkt.components)];
-                break;
-
-            case 'multi':
-                this.components = this.components.concat((wkt.type.slice(0, 5) === 'multi') ? wkt.components : [wkt.components]);
-                break;
-
-            default:
-                this.components = [
-                    this.components,
-                    wkt.components
-                ];
-                break;
-
-        }
-
-        if (prefix !== 'multi') {
-            this.type = 'multi' + this.type;
-        }
-        return this;
-    };
-
-    /**
-     * Reads a WKT string, validating and incorporating it.
-     * @param   str {String}    A WKT or GeoJSON string
-     * @return	{this.Wkt.Wkt}	The object itself
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.read = function (str) {
-        var matches;
-        matches = this.regExes.typeStr.exec(str);
-        if (matches) {
-            this.type = matches[1].toLowerCase();
-            this.base = matches[2];
-            if (this.ingest[this.type]) {
-                this.components = this.ingest[this.type].apply(this, [this.base]);
-            }
-
-        } else {
-            if (this.regExes.crudeJson.test(str)) {
-                if (typeof JSON === 'object' && typeof JSON.parse === 'function') {
-                    this.fromJson(JSON.parse(str));
-
-                } else {
-                    console.log('JSON.parse() is not available; cannot parse GeoJSON strings');
-                    throw {
-                        name: 'JSONError',
-                        message: 'JSON.parse() is not available; cannot parse GeoJSON strings'
-                    };
-                }
-
-            } else {
-                console.log('Invalid WKT string provided to read()');
-                throw {
-                    name: 'WKTError',
-                    message: 'Invalid WKT string provided to read()'
-                };
-            }
-        }
-
-        return this;
-    }; // eo readWkt
-
-    /**
-     * Writes a WKT string.
-     * @param   components  {Array}     An Array of internal geometry objects
-     * @return              {String}    The corresponding WKT representation
-     * @memberof this.Wkt.Wkt
-     * @method
-     */
-    Wkt.Wkt.prototype.write = function (components) {
-        var i, pieces, data;
-
-        components = components || this.components;
-
-        pieces = [];
-
-        pieces.push(this.type.toUpperCase() + '(');
-
-        for (i = 0; i < components.length; i += 1) {
-            if (this.isCollection() && i > 0) {
-                pieces.push(',');
-            }
-
-            // There should be an extract function for the named type
-            if (!this.extract[this.type]) {
-                return null;
-            }
-
-            data = this.extract[this.type].apply(this, [components[i]]);
-            if (this.isCollection() && this.type !== 'multipoint') {
-                pieces.push('(' + data + ')');
-
-            } else {
-                pieces.push(data);
-
-                // If not at the end of the components, add a comma
-                if (i !== (components.length - 1) && this.type !== 'multipoint') {
-                    pieces.push(',');
-                }
-
-            }
-        }
-
-        pieces.push(')');
-
-        return pieces.join('');
-    };
-
-    /**
-     * This object contains functions as property names that extract WKT
-     * strings from the internal representation.
-     * @memberof this.Wkt.Wkt
-     * @namespace this.Wkt.Wkt.extract
-     * @instance
-     */
-    Wkt.Wkt.prototype.extract = {
-        /**
-         * Return a WKT string representing atomic (point) geometry
-         * @param   point   {Object}    An object with x and y properties
-         * @return          {String}    The WKT representation
-         * @memberof this.Wkt.Wkt.extract
-         * @instance
-         */
-        point: function (point) {
-            return String(point.x) + this.delimiter + String(point.y);
-        },
-
-        /**
-         * Return a WKT string representing multiple atoms (points)
-         * @param   multipoint  {Array}     Multiple x-and-y objects
-         * @return              {String}    The WKT representation
-         * @memberof this.Wkt.Wkt.extract
-         * @instance
-         */
-        multipoint: function (multipoint) {
-            var i, parts = [],
-                s;
-
-            for (i = 0; i < multipoint.length; i += 1) {
-                s = this.extract.point.apply(this, [multipoint[i]]);
-
-                if (this.wrapVertices) {
-                    s = '(' + s + ')';
-                }
-
-                parts.push(s);
-            }
-
-            return parts.join(',');
-        },
-
-        /**
-         * Return a WKT string representing a chain (linestring) of atoms
-         * @param   linestring  {Array}     Multiple x-and-y objects
-         * @return              {String}    The WKT representation
-         * @memberof this.Wkt.Wkt.extract
-         * @instance
-         */
-        linestring: function (linestring) {
-            // Extraction of linestrings is the same as for points
-            return this.extract.point.apply(this, [linestring]);
-        },
-
-        /**
-         * Return a WKT string representing multiple chains (multilinestring) of atoms
-         * @param   multilinestring {Array}     Multiple of multiple x-and-y objects
-         * @return                  {String}    The WKT representation
-         * @memberof this.Wkt.Wkt.extract
-         * @instance
-         */
-        multilinestring: function (multilinestring) {
-            var i, parts = [];
-
-            if (multilinestring.length) {
-                for (i = 0; i < multilinestring.length; i += 1) {
-                    parts.push(this.extract.linestring.apply(this, [multilinestring[i]]));
-                }
-            } else {
-                parts.push(this.extract.point.apply(this, [multilinestring]));
-            }
-
-            return parts.join(',');
-        },
-
-        /**
-         * Return a WKT string representing multiple atoms in closed series (polygon)
-         * @param   polygon {Array}     Collection of ordered x-and-y objects
-         * @return          {String}    The WKT representation
-         * @memberof this.Wkt.Wkt.extract
-         * @instance
-         */
-        polygon: function (polygon) {
-            // Extraction of polygons is the same as for multilinestrings
-            return this.extract.multilinestring.apply(this, [polygon]);
-        },
-
-        /**
-         * Return a WKT string representing multiple closed series (multipolygons) of multiple atoms
-         * @param   multipolygon    {Array}     Collection of ordered x-and-y objects
-         * @return                  {String}    The WKT representation
-         * @memberof this.Wkt.Wkt.extract
-         * @instance
-         */
-        multipolygon: function (multipolygon) {
-            var i, parts = [];
-            for (i = 0; i < multipolygon.length; i += 1) {
-                parts.push('(' + this.extract.polygon.apply(this, [multipolygon[i]]) + ')');
-            }
-            return parts.join(',');
-        },
-
-        /**
-         * Return a WKT string representing a 2DBox
-         * @param   multipolygon    {Array}     Collection of ordered x-and-y objects
-         * @return                  {String}    The WKT representation
-         * @memberof this.Wkt.Wkt.extract
-         * @instance
-         */
-        box: function (box) {
-            return this.extract.linestring.apply(this, [box]);
-        },
-
-        geometrycollection: function (str) {
-            console.log('The geometrycollection WKT type is not yet supported.');
-        }
-    };
-
-    /**
-     * This object contains functions as property names that ingest WKT
-     * strings into the internal representation.
-     * @memberof this.Wkt.Wkt
-     * @namespace this.Wkt.Wkt.ingest
-     * @instance
-     */
-    Wkt.Wkt.prototype.ingest = {
-
-        /**
-         * Return point feature given a point WKT fragment.
-         * @param   str {String}    A WKT fragment representing the point
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        point: function (str) {
-            var coords = Wkt.trim(str).split(this.regExes.spaces);
-            // In case a parenthetical group of coordinates is passed...
-            return [{ // ...Search for numeric substrings
-                x: parseFloat(this.regExes.numeric.exec(coords[0])[0]),
-                y: parseFloat(this.regExes.numeric.exec(coords[1])[0])
-            }];
-        },
-
-        /**
-         * Return a multipoint feature given a multipoint WKT fragment.
-         * @param   str {String}    A WKT fragment representing the multipoint
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        multipoint: function (str) {
-            var i, components, points;
-            components = [];
-            points = Wkt.trim(str).split(this.regExes.comma);
-            for (i = 0; i < points.length; i += 1) {
-                components.push(this.ingest.point.apply(this, [points[i]]));
-            }
-            return components;
-        },
-
-        /**
-         * Return a linestring feature given a linestring WKT fragment.
-         * @param   str {String}    A WKT fragment representing the linestring
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        linestring: function (str) {
-            var i, multipoints, components;
-
-            // In our x-and-y representation of components, parsing
-            //  multipoints is the same as parsing linestrings
-            multipoints = this.ingest.multipoint.apply(this, [str]);
-
-            // However, the points need to be joined
-            components = [];
-            for (i = 0; i < multipoints.length; i += 1) {
-                components = components.concat(multipoints[i]);
-            }
-            return components;
-        },
-
-        /**
-         * Return a multilinestring feature given a multilinestring WKT fragment.
-         * @param   str {String}    A WKT fragment representing the multilinestring
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        multilinestring: function (str) {
-            var i, components, line, lines;
-            components = [];
-
-            lines = Wkt.trim(str).split(this.regExes.doubleParenComma);
-            if (lines.length === 1) { // If that didn't work...
-                lines = Wkt.trim(str).split(this.regExes.parenComma);
-            }
-
-            for (i = 0; i < lines.length; i += 1) {
-                line = this._stripWhitespaceAndParens(lines[i]);
-                components.push(this.ingest.linestring.apply(this, [line]));
-            }
-
-            return components;
-        },
-
-        /**
-         * Return a polygon feature given a polygon WKT fragment.
-         * @param   str {String}    A WKT fragment representing the polygon
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        polygon: function (str) {
-            var i, j, components, subcomponents, ring, rings;
-            rings = Wkt.trim(str).split(this.regExes.parenComma);
-            components = []; // Holds one or more rings
-            for (i = 0; i < rings.length; i += 1) {
-                ring = this._stripWhitespaceAndParens(rings[i]).split(this.regExes.comma);
-                subcomponents = []; // Holds the outer ring and any inner rings (holes)
-                for (j = 0; j < ring.length; j += 1) {
-                    // Split on the empty space or '+' character (between coordinates)
-                    var split = ring[j].split(this.regExes.spaces);
-                    if (split.length > 2) {
-                        //remove the elements which are blanks
-                        split = split.filter(function (n) {
-                            return n != ""
-                        });
-                    }
-                    if (split.length === 2) {
-                        var x_cord = split[0];
-                        var y_cord = split[1];
-
-                        //now push
-                        subcomponents.push({
-                            x: parseFloat(x_cord),
-                            y: parseFloat(y_cord)
-                        });
-                    }
-                }
-                components.push(subcomponents);
-            }
-            return components;
-        },
-
-        /**
-         * Return box vertices (which would become the Rectangle bounds) given a Box WKT fragment.
-         * @param   str {String}    A WKT fragment representing the box
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        box: function (str) {
-            var i, multipoints, components;
-
-            // In our x-and-y representation of components, parsing
-            //  multipoints is the same as parsing linestrings
-            multipoints = this.ingest.multipoint.apply(this, [str]);
-
-            // However, the points need to be joined
-            components = [];
-            for (i = 0; i < multipoints.length; i += 1) {
-                components = components.concat(multipoints[i]);
-            }
-
-            return components;
-        },
-
-        /**
-         * Return a multipolygon feature given a multipolygon WKT fragment.
-         * @param   str {String}    A WKT fragment representing the multipolygon
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        multipolygon: function (str) {
-            var i, components, polygon, polygons;
-            components = [];
-            polygons = Wkt.trim(str).split(this.regExes.doubleParenComma);
-            for (i = 0; i < polygons.length; i += 1) {
-                polygon = this._stripWhitespaceAndParens(polygons[i]);
-                components.push(this.ingest.polygon.apply(this, [polygon]));
-            }
-            return components;
-        },
-
-        /**
-         * Return an array of features given a geometrycollection WKT fragment.
-         * @param   str {String}    A WKT fragment representing the geometry collection
-         * @memberof this.Wkt.Wkt.ingest
-         * @instance
-         */
-        geometrycollection: function (str) {
-            console.log('The geometrycollection WKT type is not yet supported.');
-        }
-
-    }; // eo ingest
-
-    return Wkt;
-}));
-
-
-/***/ }),
-/* 157 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core__ = __webpack_require__(295);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Proj__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Point__ = __webpack_require__(314);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_toPoint__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__defs__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__transform__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_mgrs__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__version__ = __webpack_require__(315);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__projs__ = __webpack_require__(317);
-
-
-
-
-
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].defaultDatum = 'WGS84'; //default datum
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].Proj = __WEBPACK_IMPORTED_MODULE_1__Proj__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].WGS84 = new __WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].Proj('WGS84');
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].Point = __WEBPACK_IMPORTED_MODULE_2__Point__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].toPoint = __WEBPACK_IMPORTED_MODULE_3__common_toPoint__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].defs = __WEBPACK_IMPORTED_MODULE_4__defs__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].transform = __WEBPACK_IMPORTED_MODULE_5__transform__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].mgrs = __WEBPACK_IMPORTED_MODULE_6_mgrs__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */].version = __WEBPACK_IMPORTED_MODULE_7__version__["a" /* default */];
-Object(__WEBPACK_IMPORTED_MODULE_8__projs__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */]);
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__core__["a" /* default */]);
 
 
 /***/ }),
@@ -10334,7 +10329,7 @@ function cleanWKT(wkt) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_values__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__datum_transform__ = __webpack_require__(310);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__adjust_axis__ = __webpack_require__(312);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Proj__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Proj__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_toPoint__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__checkSanity__ = __webpack_require__(313);
 
@@ -11231,7 +11226,7 @@ var C88 = 0.3076171875;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pj_mlfn__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pj_mlfn__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_values__ = __webpack_require__(4);
 
 
@@ -11477,18 +11472,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__commons_TableComponent__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_turf__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_turf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_turf__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_wicket__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_wicket___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_wicket__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_proj4__ = __webpack_require__(107);
 
 
 
 
-//const ExposureTable = () => {
-//    return (<img width={1058} height={578} src='../../../../../../modules/custom/map-component/src/img/03-EE-03-table.png' />);
-//};
+
 
 
 class ExposureTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
+    this.protocol = "https://";
+    this.layerParams = ['COVERAGEID', 'layers'];
     this.request = {
       "type": "eu-gl:exposure-evaluation",
       "epsg": "EPSG:3035",
@@ -11646,11 +11646,11 @@ class ExposureTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compon
     });
   }
 
-  initServer(server) {
-    this.loadDataFromServer(server, this.request);
+  initServer(server, id) {
+    this.loadDataFromServer(server, id, this.request);
   }
 
-  loadDataFromServer(server, requestData) {
+  sendRequestToRestApi(requestData) {
     const obj = this;
 
     fetch("https://clarity.meteogrid.com/api/request_exposure", { method: 'POST', body: JSON.stringify(requestData), headers: { 'Content-Type': 'application/json' } }).then(resp => resp.json()).then(function (data) {
@@ -11668,9 +11668,154 @@ class ExposureTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compon
     });
   }
 
+  loadDataFromServer(server, id, request) {
+    const obj = this;
+
+    fetch(server + '/jsonapi/group/study?filter[id][condition][path]=id&filter[id][condition][operator]=%3D&filter[id][condition][value]=' + id, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+      var wktVar = new __WEBPACK_IMPORTED_MODULE_4_wicket___default.a.Wkt();
+      if (data.data[0].attributes.field_area != null && data.data[0].attributes.field_area.value != null) {
+        wktVar.read(data.data[0].attributes.field_area.value);
+        var studyAreaBbox = obj.getBoundsFromArea(wktVar.toJson());
+        request.bbox = [studyAreaBbox[0][0], studyAreaBbox[0][1], studyAreaBbox[1][0], studyAreaBbox[1][1]];
+      }
+      if (data != null && data.data[0] != null && data.data[0].relationships.field_data_package.links.related != null) {
+        fetch(data.data[0].relationships.field_data_package.links.related.href.replace('http://', obj.protocol), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+          if (data.data.relationships.field_resources.links.related != null) {
+            var includes = 'include=field_analysis_context.field_field_eu_gl_methodology,field_analysis_context.field_hazard,field_analysis_context.field_exposure_category,field_analysis_context.field_vulnerability_classes';
+            var separator = data.data.relationships.field_resources.links.related.href.indexOf('?') === -1 ? '?' : '&';
+
+            fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + separator + includes, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+              obj.convertDataFromServer(data, 'eu-gl:exposure-evaluation');
+            }).catch(function (error) {
+              console.log(JSON.stringify(error));
+            });
+          }
+        }).catch(function (error) {
+          console.log(JSON.stringify(error));
+        });
+      }
+    }).catch(function (error) {
+      console.log(JSON.stringify(error));
+    });
+  }
+
+  getBoundsFromArea(area) {
+    const bboxArray = __WEBPACK_IMPORTED_MODULE_3_turf___default.a.bbox(area);
+    const targetProj = 'PROJCS["ETRS89 / LAEA Europe",  GEOGCS["ETRS89", DATUM["European_Terrestrial_Reference_System_1989", SPHEROID["GRS 1980",6378137,298.257222101, AUTHORITY["EPSG","7019"]], TOWGS84[0,0,0,0,0,0,0], AUTHORITY["EPSG","6258"]], PRIMEM["Greenwich",0, AUTHORITY["EPSG","8901"]], UNIT["degree",0.0174532925199433, AUTHORITY["EPSG","9122"]], AUTHORITY["EPSG","4258"]], PROJECTION["Lambert_Azimuthal_Equal_Area"], PARAMETER["latitude_of_center",52], PARAMETER["longitude_of_center",10], PARAMETER["false_easting",4321000], PARAMETER["false_northing",3210000], UNIT["metre",1, AUTHORITY["EPSG","9001"]], AUTHORITY["EPSG","3035"]]';
+    const corner1 = Object(__WEBPACK_IMPORTED_MODULE_5_proj4__["a" /* default */])(targetProj, [bboxArray[0], bboxArray[1]]);
+    const corner2 = Object(__WEBPACK_IMPORTED_MODULE_5_proj4__["a" /* default */])(targetProj, [bboxArray[2], bboxArray[3]]);
+    var bounds = [corner1, corner2];
+
+    return bounds;
+  }
+
+  convertDataFromServer(originData, mapType) {
+    var resourceArray = originData.data;
+    const thisObj = this;
+    var dataFromDP = [];
+
+    for (var i = 0; i < resourceArray.length; ++i) {
+      const resource = resourceArray[i];
+
+      if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
+        //analysisContext = eu_fg type
+        var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+
+        if (analysisContext != null) {
+          if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
+            var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
+            console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
+
+            if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
+              if (resource.attributes.field_url != null) {
+                let obj = {};
+
+                //get hazards
+                if (analysisContext.relationships.field_hazard != null && analysisContext.relationships.field_hazard.data != null && analysisContext.relationships.field_hazard.data.length > 0) {
+                  obj.hazard = "";
+                  for (let i = 0; i < analysisContext.relationships.field_hazard.data.length; ++i) {
+                    var hazard = this.getIncludedObject(analysisContext.relationships.field_hazard.data[i].type, analysisContext.relationships.field_hazard.data[i].id, originData.included);
+                    if (hazard != null) {
+                      if (obj.hazard === "") {
+                        obj.hazard = hazard.attributes.name;
+                      } else {
+                        obj.hazard = obj.hazard + ', ' + hazard.attributes.name;
+                      }
+                    }
+                  }
+                }
+
+                //get elements at risk
+                if (analysisContext.relationships.field_exposure_category != null && analysisContext.relationships.field_exposure_category.data != null && analysisContext.relationships.field_exposure_category.data.length > 0) {
+                  obj.elementAtRisk = "";
+                  for (let i = 0; i < analysisContext.relationships.field_exposure_category.data.length; ++i) {
+                    var elAtRisk = this.getIncludedObject(analysisContext.relationships.field_exposure_category.data[i].type, analysisContext.relationships.field_exposure_category.data[i].id, originData.included);
+                    if (elAtRisk != null) {
+                      if (obj.elementAtRisk === "") {
+                        obj.elementAtRisk = elAtRisk.attributes.name;
+                      } else {
+                        obj.elementAtRisk = obj.elementAtRisk + ', ' + elAtRisk.attributes.name;
+                      }
+                    }
+                  }
+                }
+
+                //get vulnerability classes
+                if (analysisContext.relationships.field_vulnerability_classes != null && analysisContext.relationships.field_vulnerability_classes.data != null && analysisContext.relationships.field_vulnerability_classes.data.length > 0) {
+                  obj.vulnerabilityClasses = "";
+                  for (let i = 0; i < analysisContext.relationships.field_vulnerability_classes.data.length; ++i) {
+                    var vulClasses = this.getIncludedObject(analysisContext.relationships.field_vulnerability_classes.data[i].type, analysisContext.relationships.field_vulnerability_classes.data[i].id, originData.included);
+                    if (vulClasses != null) {
+                      if (obj.vulnerabilityClasses === "") {
+                        obj.vulnerabilityClasses = vulClasses.attributes.name;
+                      } else {
+                        obj.vulnerabilityClasses = obj.vulnerabilityClasses + ', ' + vulClasses.attributes.name;
+                      }
+                    }
+                  }
+                }
+
+                obj.layer = this.extractLayers(resource.attributes.field_url);
+                obj.unit = 'pop//km2';
+                dataFromDP.push(obj);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    this.request.data = dataFromDP;
+    this.sendRequestToRestApi(this.request);
+  }
+
+  getIncludedObject(type, id, includedArray) {
+    if (type != null && id != null) {
+      for (let i = 0; i < includedArray.length; ++i) {
+        if (includedArray[i].type === type && includedArray[i].id === id) {
+          return includedArray[i];
+        }
+      }
+    }
+
+    return null;
+  }
+
+  extractLayers(url) {
+    for (let i = 0; i < this.layerParams.length; ++i) {
+      let paramKey = this.layerParams[i];
+
+      if (url.indexOf(paramKey + '=') != -1) {
+        var layerParam = url.substring(url.indexOf(paramKey + '=') + paramKey.length + 1);
+        return layerParam.indexOf('&') !== -1 ? layerParam.substring(0, layerParam.indexOf('&')) : layerParam;
+      }
+    }
+
+    return url;
+  }
+
   render() {
     window.tableCom = this;
-    //      const header = "The following table and the associated chart show the development of different categories' elements for several scenarios. There are always 3 scenarios considered: 1) the current today's rate development, 2) low rate development and 3) high rate development for the selected time period. The values will be used in assessing the vulnarability, risk and impact in the next steps.";
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       null,
@@ -11689,10 +11834,8 @@ class ExposureTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compon
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__commons_TableComponent__["default"], {
           data: this.state.data,
           columns: this.state.columns,
-          loading: this.state.loading
-          //            header={header}
-          , pivotBy: ["Hazards", "ElementAtRisk"]
-          //            expanded={["Hazards", "ElementAtRisk"]}
+          loading: this.state.loading,
+          pivotBy: ["Hazards", "ElementAtRisk"]
         })
       )
     );
@@ -11701,8 +11844,6 @@ class ExposureTable extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compon
 }
 /* harmony export (immutable) */ __webpack_exports__["default"] = ExposureTable;
 
-
-//export default ExposureTable;
 
 if (document.getElementById('exposure-table-container') != null) {
   __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ExposureTable, null), document.getElementById('exposure-table-container'));
@@ -11723,11 +11864,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_table_react_table_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_table_react_table_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__commons_TableComponent__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__commons_SimpleLegendComponent__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_turf__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_turf__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_turf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_turf__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_wicket__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_wicket__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_wicket___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_wicket__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_proj4__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_proj4__ = __webpack_require__(107);
 
 
 
@@ -13262,8 +13403,9 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
                 fetch(data.data[0].relationships.field_data_package.links.related.href.replace('http://', obj.protocol), { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
                     if (data.data.relationships.field_resources.links.related != null) {
                         var includes = 'include=field_analysis_context.field_field_eu_gl_methodology';
+                        var separator = data.data.relationships.field_resources.links.related.href.indexOf('?') === -1 ? '?' : '&';
 
-                        fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + '?' + includes, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
+                        fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + separator + includes, { credentials: 'include' }).then(resp => resp.json()).then(function (data) {
                             obj.convertDataFromServer(data, 'eu-gl:adaptation-options:identification');
                         }).catch(function (error) {
                             console.log(JSON.stringify(error));
@@ -13286,11 +13428,11 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
             const resource = resourceArray[i];
 
             if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
-                var analysisContext = this.getInculdedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+                var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
 
                 if (analysisContext != null) {
                     if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
-                        var mythodologyData = this.getInculdedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
+                        var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
                         console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
 
                         if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
@@ -13311,7 +13453,7 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
         }
     }
 
-    getInculdedObject(type, id, includedArray) {
+    getIncludedObject(type, id, includedArray) {
         if (type != null && id != null) {
             for (let i = 0; i < includedArray.length; ++i) {
                 if (includedArray[i].type === type && includedArray[i].id === id) {
@@ -13322,49 +13464,6 @@ class AdaptationOptionsTable extends __WEBPACK_IMPORTED_MODULE_0_react___default
 
         return null;
     }
-
-    // convertDataFromServer(originData, mapType) {
-    //     var resourceArray = originData.data;
-    //     const thisObj = this;
-
-    //     for (var i = 0; i < resourceArray.length; ++i) {
-    //       const resource = resourceArray[i];
-
-    //       fetch(resource.relationships.field_analysis_context.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
-    //       .then((resp) => resp.json())
-    //       .then(function(data) {
-    //         if (data.data.relationships.field_field_eu_gl_methodology.links.related.href != null) {
-    //             fetch(data.data.relationships.field_field_eu_gl_methodology.links.related.href.replace('http://', thisObj.protocol), {credentials: 'include'})
-    //             .then((resp) => resp.json())
-    //             .then(function(data) {
-    //               console.log(data.data[0].attributes.field_eu_gl_taxonomy_id.value);
-    //               if (data.data[0].attributes.field_eu_gl_taxonomy_id.value === mapType) {
-    //                 if (resource.attributes.field_url != null) {
-    //                   fetch(resource.attributes.field_url)
-    //                   .then((resp) => resp.json())
-    //                   .then(function(data) {
-    //                         thisObj.setState({
-    //                             data: thisObj.convertData(data),
-    //                             loading: false
-    //                         });
-    //                   })
-    //                   .catch(function(error) {
-    //                     console.log(JSON.stringify(error));
-    //                   });         
-
-    //                 }
-    //               }
-    //           })
-    //             .catch(function(error) {
-    //               console.log(JSON.stringify(error));
-    //             });         
-    //           }
-    //       })
-    //       .catch(function(error) {
-    //         console.log(JSON.stringify(error));
-    //       });         
-    //     }
-    // }
 
     removeNameSpace(val) {
         if (val != null) {
@@ -13452,7 +13551,7 @@ if (document.getElementById('adaptation-options-table-container') != null) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(11) && !__webpack_require__(5)(function () {
-  return Object.defineProperty(__webpack_require__(110)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(113)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
@@ -13470,7 +13569,7 @@ exports.f = __webpack_require__(7);
 var has = __webpack_require__(20);
 var toIObject = __webpack_require__(21);
 var arrayIndexOf = __webpack_require__(81)(false);
-var IE_PROTO = __webpack_require__(112)('IE_PROTO');
+var IE_PROTO = __webpack_require__(115)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -13631,7 +13730,7 @@ module.exports = function (fn, args, that) {
 
 var $parseInt = __webpack_require__(3).parseInt;
 var $trim = __webpack_require__(55).trim;
-var ws = __webpack_require__(116);
+var ws = __webpack_require__(119);
 var hex = /^[-+]?0[xX]/;
 
 module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix) {
@@ -13647,7 +13746,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 var $parseFloat = __webpack_require__(3).parseFloat;
 var $trim = __webpack_require__(55).trim;
 
-module.exports = 1 / $parseFloat(__webpack_require__(116) + '-0') !== -Infinity ? function parseFloat(str) {
+module.exports = 1 / $parseFloat(__webpack_require__(119) + '-0') !== -Infinity ? function parseFloat(str) {
   var string = $trim(String(str), 3);
   var result = $parseFloat(string);
   return result === 0 && string.charAt(0) == '-' ? -0 : result;
@@ -13692,7 +13791,7 @@ module.exports = Math.log1p || function log1p(x) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
-var sign = __webpack_require__(119);
+var sign = __webpack_require__(122);
 var pow = Math.pow;
 var EPSILON = pow(2, -52);
 var EPSILON32 = pow(2, -23);
@@ -13840,7 +13939,7 @@ module.exports = function (exec) {
 
 var anObject = __webpack_require__(1);
 var isObject = __webpack_require__(6);
-var newPromiseCapability = __webpack_require__(134);
+var newPromiseCapability = __webpack_require__(137);
 
 module.exports = function (C, x) {
   anObject(C);
@@ -13890,7 +13989,7 @@ var redefineAll = __webpack_require__(48);
 var ctx = __webpack_require__(25);
 var anInstance = __webpack_require__(46);
 var forOf = __webpack_require__(47);
-var $iterDefine = __webpack_require__(122);
+var $iterDefine = __webpack_require__(125);
 var step = __webpack_require__(191);
 var setSpecies = __webpack_require__(45);
 var DESCRIPTORS = __webpack_require__(11);
@@ -14292,7 +14391,7 @@ module.exports = flattenIntoArray;
 
 // https://github.com/tc39/proposal-string-pad-start-end
 var toLength = __webpack_require__(13);
-var repeat = __webpack_require__(118);
+var repeat = __webpack_require__(121);
 var defined = __webpack_require__(29);
 
 module.exports = function (that, maxLength, fillString, left) {
@@ -14386,12 +14485,12 @@ module.exports = Math.scale || function scale(x, inLow, inHigh, outLow, outHigh)
 /* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(137);
+__webpack_require__(140);
 __webpack_require__(353);
 __webpack_require__(354);
 __webpack_require__(579);
 __webpack_require__(173);
-__webpack_require__(143);
+__webpack_require__(146);
 __webpack_require__(169);
 __webpack_require__(170);
 __webpack_require__(171);
@@ -16188,18 +16287,18 @@ module.exports = react;
 /* unused harmony export HashRouter */
 /* unused harmony export Link */
 /* unused harmony export NavLink */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_helpers_esm_inheritsLoose__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_helpers_esm_inheritsLoose__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(142);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2_react_router__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2_react_router__["c"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_tiny_warning__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__babel_runtime_helpers_esm_extends__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__babel_runtime_helpers_esm_objectWithoutPropertiesLoose__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__babel_runtime_helpers_esm_objectWithoutPropertiesLoose__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_tiny_invariant__ = __webpack_require__(100);
 
 
@@ -18261,7 +18360,7 @@ exports.isSuspense = isSuspense;
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-var ReactIs = __webpack_require__(141);
+var ReactIs = __webpack_require__(144);
 var REACT_STATICS = {
     childContextTypes: true,
     contextType: true,
@@ -18377,7 +18476,7 @@ module.exports = hoistNonReactStatics;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(9),n=__webpack_require__(58),da=__webpack_require__(144);function ea(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var k=[c,d,e,f,g,h],l=0;a=Error(b.replace(/%s/g,function(){return k[l++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
+var aa=__webpack_require__(9),n=__webpack_require__(58),da=__webpack_require__(147);function ea(a,b,c,d,e,f,g,h){if(!a){a=void 0;if(void 0===b)a=Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var k=[c,d,e,f,g,h],l=0;a=Error(b.replace(/%s/g,function(){return k[l++]}));a.name="Invariant Violation"}a.framesToPop=1;throw a;}}
 function r(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);ea(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}aa?void 0:r("227");function fa(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}
 var ha=!1,ia=null,ja=!1,ka=null,la={onError:function(a){ha=!0;ia=a}};function ma(a,b,c,d,e,f,g,h,k){ha=!1;ia=null;fa.apply(la,arguments)}function na(a,b,c,d,e,f,g,h,k){ma.apply(this,arguments);if(ha){if(ha){var l=ia;ha=!1;ia=null}else r("198"),l=void 0;ja||(ja=!0,ka=l)}}var oa=null,pa={};
 function qa(){if(oa)for(var a in pa){var b=pa[a],c=oa.indexOf(a);-1<c?void 0:r("96",a);if(!ra[c]){b.extractEvents?void 0:r("97",a);ra[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;sa.hasOwnProperty(h)?r("99",h):void 0;sa[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ta(k[e],g,h);e=!0}else f.registrationName?(ta(f.registrationName,g,h),e=!0):e=!1;e?void 0:r("98",d,a)}}}}
@@ -19330,7 +19429,7 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(9);
 var _assign = __webpack_require__(58);
 var checkPropTypes = __webpack_require__(95);
-var scheduler = __webpack_require__(144);
+var scheduler = __webpack_require__(147);
 var tracing = __webpack_require__(230);
 
 /**
@@ -38663,7 +38762,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 /* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(145)(false);
+exports = module.exports = __webpack_require__(148)(false);
 // imports
 
 
@@ -41290,14 +41389,14 @@ ReactTablePagination.defaultProps = {
 
 //https://github.com/jasondavies/conrec.js
 //http://stackoverflow.com/questions/263305/drawing-a-topographical-map
-var tin = __webpack_require__(103);
+var tin = __webpack_require__(104);
 var inside = __webpack_require__(50);
 var grid = __webpack_require__(242);
 var bbox = __webpack_require__(68);
-var planepoint = __webpack_require__(148);
+var planepoint = __webpack_require__(150);
 var featurecollection = __webpack_require__(2).featureCollection;
 var linestring = __webpack_require__(2).lineString;
-var square = __webpack_require__(149);
+var square = __webpack_require__(151);
 var Conrec = __webpack_require__(244);
 
 /**
@@ -42180,7 +42279,7 @@ function convexHull2D(points) {
 
 module.exports = monotoneConvexHull2D
 
-var orient = __webpack_require__(104)[3]
+var orient = __webpack_require__(105)[3]
 
 function monotoneConvexHull2D(points) {
   var n = points.length
@@ -42427,7 +42526,7 @@ function linearExpansionSum(e, f) {
 "use strict";
 
 
-var twoProduct = __webpack_require__(150)
+var twoProduct = __webpack_require__(152)
 var twoSum = __webpack_require__(252)
 
 module.exports = scaleLinearExpansion
@@ -42740,7 +42839,7 @@ function convexHullnD(points, d) {
 
 module.exports = incrementalConvexHull
 
-var orient = __webpack_require__(104)
+var orient = __webpack_require__(105)
 var compareCell = __webpack_require__(256).compareCells
 
 function compareInt(a, b) {
@@ -43816,7 +43915,7 @@ proto.link = function(x, y) {
 
 module.exports = affineHull
 
-var orient = __webpack_require__(104)
+var orient = __webpack_require__(105)
 
 function linearlyIndependent(points, d) {
   var nhull = new Array(d+1)
@@ -43973,8 +44072,8 @@ module.exports = function (points, polygons) {
 // 3. remove triangles that fail the max length test
 // 4. buffer the results slightly
 // 5. merge the results
-var tin = __webpack_require__(103);
-var union = __webpack_require__(151);
+var tin = __webpack_require__(104);
+var union = __webpack_require__(153);
 var distance = __webpack_require__(16);
 
 /**
@@ -44915,7 +45014,7 @@ function getRandomSubarray(arr, size) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var bbox = __webpack_require__(68);
-var bboxPolygon = __webpack_require__(152);
+var bboxPolygon = __webpack_require__(154);
 
 /**
  * Takes any number of features and returns a rectangular {@link Polygon} that encompasses all vertices.
@@ -46484,10 +46583,10 @@ function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2Sta
 /***/ (function(module, exports, __webpack_require__) {
 
 var featureCollection = __webpack_require__(2).featureCollection;
-var centroid = __webpack_require__(153);
+var centroid = __webpack_require__(155);
 var distance = __webpack_require__(16);
 var inside = __webpack_require__(50);
-var explode = __webpack_require__(154);
+var explode = __webpack_require__(156);
 
 /**
  * Takes a feature and returns a {@link Point} guaranteed to be on the surface of the feature.
@@ -46963,7 +47062,7 @@ function length(coords, units) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var linestring = __webpack_require__(2).lineString;
-var pointOnLine = __webpack_require__(155);
+var pointOnLine = __webpack_require__(157);
 
 /**
  * Takes a {@link LineString|line}, a start {@link Point}, and a stop point
@@ -47384,7 +47483,7 @@ function hexTriangles(center, rx, ry) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Proj__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Proj__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__transform__ = __webpack_require__(161);
 
 
@@ -49118,7 +49217,7 @@ module.exports = {"name":"proj4","version":"2.5.0","description":"Proj4js is a J
 /* unused harmony export inverse */
 /* unused harmony export names */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_pj_enfn__ = __webpack_require__(164);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_pj_mlfn__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_pj_mlfn__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_pj_inv_mlfn__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_adjust_lon__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constants_values__ = __webpack_require__(4);
@@ -50402,10 +50501,10 @@ var names = ["Krovak", "krovak"];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_e1fn__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_e2fn__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_e3fn__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_gN__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_gN__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_adjust_lon__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_adjust_lat__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_imlfn__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_imlfn__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__constants_values__ = __webpack_require__(4);
 
 
@@ -50531,7 +50630,7 @@ var names = ["Cassini", "Cassini_Soldner", "cass"];
 /* unused harmony export inverse */
 /* unused harmony export names */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants_values__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_qsfnz__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_qsfnz__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_adjust_lon__ = __webpack_require__(8);
 
 
@@ -50844,7 +50943,7 @@ var names = ["Lambert Azimuthal Equal Area", "Lambert_Azimuthal_Equal_Area", "la
 /* unused harmony export phi1z */
 /* unused harmony export names */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_msfnz__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_qsfnz__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_qsfnz__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_adjust_lon__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_asinz__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constants_values__ = __webpack_require__(4);
@@ -51107,7 +51206,7 @@ var names = ["gnom"];
 /* unused harmony export inverse */
 /* unused harmony export names */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_adjust_lon__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_qsfnz__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_qsfnz__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_msfnz__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_iqsfnz__ = __webpack_require__(340);
 
@@ -51300,7 +51399,7 @@ var names = ["Equirectangular", "Equidistant_Cylindrical", "eqc"];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_adjust_lat__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_mlfn__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__constants_values__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_gN__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_gN__ = __webpack_require__(110);
 
 
 
@@ -51753,7 +51852,7 @@ var names = ["Miller_Cylindrical", "mill"];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_adjust_lon__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_adjust_lat__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_pj_enfn__ = __webpack_require__(164);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_pj_mlfn__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_pj_mlfn__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_pj_inv_mlfn__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__constants_values__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_asinz__ = __webpack_require__(53);
@@ -51987,7 +52086,7 @@ var names = ["Mollweide", "moll"];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_mlfn__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_adjust_lon__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_adjust_lat__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_imlfn__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_imlfn__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__constants_values__ = __webpack_require__(4);
 
 
@@ -52267,9 +52366,9 @@ var names = ["Van_der_Grinten_I", "VanDerGrinten", "vandg"];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_e1fn__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_e2fn__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_e3fn__ = __webpack_require__(79);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_gN__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_gN__ = __webpack_require__(110);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__common_asinz__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__common_imlfn__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__common_imlfn__ = __webpack_require__(111);
 
 
 
@@ -53172,7 +53271,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__App__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index_css__ = __webpack_require__(577);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__index_css__);
 
@@ -53332,7 +53431,7 @@ __webpack_require__(457);
 __webpack_require__(458);
 __webpack_require__(459);
 __webpack_require__(460);
-__webpack_require__(131);
+__webpack_require__(134);
 __webpack_require__(461);
 __webpack_require__(462);
 __webpack_require__(192);
@@ -53451,7 +53550,7 @@ var setToStringTag = __webpack_require__(54);
 var uid = __webpack_require__(40);
 var wks = __webpack_require__(7);
 var wksExt = __webpack_require__(175);
-var wksDefine = __webpack_require__(111);
+var wksDefine = __webpack_require__(114);
 var enumKeys = __webpack_require__(358);
 var isArray = __webpack_require__(83);
 var anObject = __webpack_require__(1);
@@ -53899,7 +53998,7 @@ module.exports = Object.is || function is(x, y) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $export = __webpack_require__(0);
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(115).set });
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(118).set });
 
 
 /***/ }),
@@ -54000,7 +54099,7 @@ $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $pars
 var global = __webpack_require__(3);
 var has = __webpack_require__(20);
 var cof = __webpack_require__(26);
-var inheritIfRequired = __webpack_require__(117);
+var inheritIfRequired = __webpack_require__(120);
 var toPrimitive = __webpack_require__(28);
 var fails = __webpack_require__(5);
 var gOPN = __webpack_require__(44).f;
@@ -54076,7 +54175,7 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 var $export = __webpack_require__(0);
 var toInteger = __webpack_require__(30);
 var aNumberValue = __webpack_require__(184);
-var repeat = __webpack_require__(118);
+var repeat = __webpack_require__(121);
 var $toFixed = 1.0.toFixed;
 var floor = Math.floor;
 var data = [0, 0, 0, 0, 0, 0];
@@ -54381,7 +54480,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 
 // 20.2.2.9 Math.cbrt(x)
 var $export = __webpack_require__(0);
-var sign = __webpack_require__(119);
+var sign = __webpack_require__(122);
 
 $export($export.S, 'Math', {
   cbrt: function cbrt(x) {
@@ -54425,7 +54524,7 @@ $export($export.S, 'Math', {
 
 // 20.2.2.14 Math.expm1(x)
 var $export = __webpack_require__(0);
-var $expm1 = __webpack_require__(120);
+var $expm1 = __webpack_require__(123);
 
 $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 });
 
@@ -54539,7 +54638,7 @@ $export($export.S, 'Math', {
 // 20.2.2.28 Math.sign(x)
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Math', { sign: __webpack_require__(119) });
+$export($export.S, 'Math', { sign: __webpack_require__(122) });
 
 
 /***/ }),
@@ -54548,7 +54647,7 @@ $export($export.S, 'Math', { sign: __webpack_require__(119) });
 
 // 20.2.2.30 Math.sinh(x)
 var $export = __webpack_require__(0);
-var expm1 = __webpack_require__(120);
+var expm1 = __webpack_require__(123);
 var exp = Math.exp;
 
 // V8 near Chromium 38 has a problem with very small numbers
@@ -54569,7 +54668,7 @@ $export($export.S + $export.F * __webpack_require__(5)(function () {
 
 // 20.2.2.33 Math.tanh(x)
 var $export = __webpack_require__(0);
-var expm1 = __webpack_require__(120);
+var expm1 = __webpack_require__(123);
 var exp = Math.exp;
 
 $export($export.S, 'Math', {
@@ -54668,10 +54767,10 @@ __webpack_require__(55)('trim', function ($trim) {
 
 "use strict";
 
-var $at = __webpack_require__(121)(true);
+var $at = __webpack_require__(124)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(122)(String, 'String', function (iterated) {
+__webpack_require__(125)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -54693,7 +54792,7 @@ __webpack_require__(122)(String, 'String', function (iterated) {
 "use strict";
 
 var $export = __webpack_require__(0);
-var $at = __webpack_require__(121)(false);
+var $at = __webpack_require__(124)(false);
 $export($export.P, 'String', {
   // 21.1.3.3 String.prototype.codePointAt(pos)
   codePointAt: function codePointAt(pos) {
@@ -54711,11 +54810,11 @@ $export($export.P, 'String', {
 
 var $export = __webpack_require__(0);
 var toLength = __webpack_require__(13);
-var context = __webpack_require__(124);
+var context = __webpack_require__(127);
 var ENDS_WITH = 'endsWith';
 var $endsWith = ''[ENDS_WITH];
 
-$export($export.P + $export.F * __webpack_require__(125)(ENDS_WITH), 'String', {
+$export($export.P + $export.F * __webpack_require__(128)(ENDS_WITH), 'String', {
   endsWith: function endsWith(searchString /* , endPosition = @length */) {
     var that = context(this, searchString, ENDS_WITH);
     var endPosition = arguments.length > 1 ? arguments[1] : undefined;
@@ -54737,10 +54836,10 @@ $export($export.P + $export.F * __webpack_require__(125)(ENDS_WITH), 'String', {
 // 21.1.3.7 String.prototype.includes(searchString, position = 0)
 
 var $export = __webpack_require__(0);
-var context = __webpack_require__(124);
+var context = __webpack_require__(127);
 var INCLUDES = 'includes';
 
-$export($export.P + $export.F * __webpack_require__(125)(INCLUDES), 'String', {
+$export($export.P + $export.F * __webpack_require__(128)(INCLUDES), 'String', {
   includes: function includes(searchString /* , position = 0 */) {
     return !!~context(this, searchString, INCLUDES)
       .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
@@ -54756,7 +54855,7 @@ var $export = __webpack_require__(0);
 
 $export($export.P, 'String', {
   // 21.1.3.13 String.prototype.repeat(count)
-  repeat: __webpack_require__(118)
+  repeat: __webpack_require__(121)
 });
 
 
@@ -54769,11 +54868,11 @@ $export($export.P, 'String', {
 
 var $export = __webpack_require__(0);
 var toLength = __webpack_require__(13);
-var context = __webpack_require__(124);
+var context = __webpack_require__(127);
 var STARTS_WITH = 'startsWith';
 var $startsWith = ''[STARTS_WITH];
 
-$export($export.P + $export.F * __webpack_require__(125)(STARTS_WITH), 'String', {
+$export($export.P + $export.F * __webpack_require__(128)(STARTS_WITH), 'String', {
   startsWith: function startsWith(searchString /* , position = 0 */) {
     var that = context(this, searchString, STARTS_WITH);
     var index = toLength(Math.min(arguments.length > 1 ? arguments[1] : undefined, that.length));
@@ -55111,10 +55210,10 @@ var ctx = __webpack_require__(25);
 var $export = __webpack_require__(0);
 var toObject = __webpack_require__(14);
 var call = __webpack_require__(188);
-var isArrayIter = __webpack_require__(126);
+var isArrayIter = __webpack_require__(129);
 var toLength = __webpack_require__(13);
-var createProperty = __webpack_require__(127);
-var getIterFn = __webpack_require__(128);
+var createProperty = __webpack_require__(130);
+var getIterFn = __webpack_require__(131);
 
 $export($export.S + $export.F * !__webpack_require__(85)(function (iter) { Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
@@ -55152,7 +55251,7 @@ $export($export.S + $export.F * !__webpack_require__(85)(function (iter) { Array
 "use strict";
 
 var $export = __webpack_require__(0);
-var createProperty = __webpack_require__(127);
+var createProperty = __webpack_require__(130);
 
 // WebKit Array.of isn't generic
 $export($export.S + $export.F * __webpack_require__(5)(function () {
@@ -55197,7 +55296,7 @@ $export($export.P + $export.F * (__webpack_require__(61) != Object || !__webpack
 "use strict";
 
 var $export = __webpack_require__(0);
-var html = __webpack_require__(114);
+var html = __webpack_require__(117);
 var cof = __webpack_require__(26);
 var toAbsoluteIndex = __webpack_require__(42);
 var toLength = __webpack_require__(13);
@@ -55467,7 +55566,7 @@ __webpack_require__(38)('copyWithin');
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 var $export = __webpack_require__(0);
 
-$export($export.P, 'Array', { fill: __webpack_require__(130) });
+$export($export.P, 'Array', { fill: __webpack_require__(133) });
 
 __webpack_require__(38)('fill');
 
@@ -55526,7 +55625,7 @@ __webpack_require__(45)('Array');
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
-var inheritIfRequired = __webpack_require__(117);
+var inheritIfRequired = __webpack_require__(120);
 var dP = __webpack_require__(12).f;
 var gOPN = __webpack_require__(44).f;
 var isRegExp = __webpack_require__(84);
@@ -55745,9 +55844,9 @@ var aFunction = __webpack_require__(15);
 var anInstance = __webpack_require__(46);
 var forOf = __webpack_require__(47);
 var speciesConstructor = __webpack_require__(88);
-var task = __webpack_require__(132).set;
-var microtask = __webpack_require__(133)();
-var newPromiseCapabilityModule = __webpack_require__(134);
+var task = __webpack_require__(135).set;
+var microtask = __webpack_require__(136)();
+var newPromiseCapabilityModule = __webpack_require__(137);
 var perform = __webpack_require__(193);
 var userAgent = __webpack_require__(89);
 var promiseResolve = __webpack_require__(194);
@@ -56051,7 +56150,7 @@ __webpack_require__(90)(WEAK_SET, function (get) {
 
 var $export = __webpack_require__(0);
 var $typed = __webpack_require__(91);
-var buffer = __webpack_require__(135);
+var buffer = __webpack_require__(138);
 var anObject = __webpack_require__(1);
 var toAbsoluteIndex = __webpack_require__(42);
 var toLength = __webpack_require__(13);
@@ -56102,7 +56201,7 @@ __webpack_require__(45)(ARRAY_BUFFER);
 
 var $export = __webpack_require__(0);
 $export($export.G + $export.W + $export.F * !__webpack_require__(91).ABV, {
-  DataView: __webpack_require__(135).DataView
+  DataView: __webpack_require__(138).DataView
 });
 
 
@@ -56342,7 +56441,7 @@ var Enumerate = function (iterated) {
   var key;
   for (key in iterated) keys.push(key);
 };
-__webpack_require__(123)(Enumerate, 'Object', function () {
+__webpack_require__(126)(Enumerate, 'Object', function () {
   var that = this;
   var keys = that._k;
   var key;
@@ -56526,7 +56625,7 @@ $export($export.S, 'Reflect', { set: set });
 
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
 var $export = __webpack_require__(0);
-var setProto = __webpack_require__(115);
+var setProto = __webpack_require__(118);
 
 if (setProto) $export($export.S, 'Reflect', {
   setPrototypeOf: function setPrototypeOf(target, proto) {
@@ -56572,7 +56671,7 @@ var flattenIntoArray = __webpack_require__(202);
 var toObject = __webpack_require__(14);
 var toLength = __webpack_require__(13);
 var aFunction = __webpack_require__(15);
-var arraySpeciesCreate = __webpack_require__(129);
+var arraySpeciesCreate = __webpack_require__(132);
 
 $export($export.P, 'Array', {
   flatMap: function flatMap(callbackfn /* , thisArg */) {
@@ -56601,7 +56700,7 @@ var flattenIntoArray = __webpack_require__(202);
 var toObject = __webpack_require__(14);
 var toLength = __webpack_require__(13);
 var toInteger = __webpack_require__(30);
-var arraySpeciesCreate = __webpack_require__(129);
+var arraySpeciesCreate = __webpack_require__(132);
 
 $export($export.P, 'Array', {
   flatten: function flatten(/* depthArg = 1 */) {
@@ -56625,7 +56724,7 @@ __webpack_require__(38)('flatten');
 
 // https://github.com/mathiasbynens/String.prototype.at
 var $export = __webpack_require__(0);
-var $at = __webpack_require__(121)(true);
+var $at = __webpack_require__(124)(true);
 
 $export($export.P, 'String', {
   at: function at(pos) {
@@ -56719,7 +56818,7 @@ var $RegExpStringIterator = function (regexp, string) {
   this._s = string;
 };
 
-__webpack_require__(123)($RegExpStringIterator, 'RegExp String', function next() {
+__webpack_require__(126)($RegExpStringIterator, 'RegExp String', function next() {
   var match = this._r.exec(this._s);
   return { value: match, done: match === null };
 });
@@ -56741,14 +56840,14 @@ $export($export.P, 'String', {
 /* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(111)('asyncIterator');
+__webpack_require__(114)('asyncIterator');
 
 
 /***/ }),
 /* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(111)('observable');
+__webpack_require__(114)('observable');
 
 
 /***/ }),
@@ -56760,7 +56859,7 @@ var $export = __webpack_require__(0);
 var ownKeys = __webpack_require__(201);
 var toIObject = __webpack_require__(21);
 var gOPD = __webpack_require__(22);
-var createProperty = __webpack_require__(127);
+var createProperty = __webpack_require__(130);
 
 $export($export.S, 'Object', {
   getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
@@ -57232,7 +57331,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 
 // https://github.com/tc39/proposal-promise-try
 var $export = __webpack_require__(0);
-var newPromiseCapability = __webpack_require__(134);
+var newPromiseCapability = __webpack_require__(137);
 var perform = __webpack_require__(193);
 
 $export($export.S, 'Promise', { 'try': function (callbackfn) {
@@ -57419,7 +57518,7 @@ $metadata.exp({ metadata: function metadata(metadataKey, metadataValue) {
 
 // https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 var $export = __webpack_require__(0);
-var microtask = __webpack_require__(133)();
+var microtask = __webpack_require__(136)();
 var process = __webpack_require__(3).process;
 var isNode = __webpack_require__(26)(process) == 'process';
 
@@ -57441,7 +57540,7 @@ $export($export.G, {
 var $export = __webpack_require__(0);
 var global = __webpack_require__(3);
 var core = __webpack_require__(24);
-var microtask = __webpack_require__(133)();
+var microtask = __webpack_require__(136)();
 var OBSERVABLE = __webpack_require__(7)('observable');
 var aFunction = __webpack_require__(15);
 var anObject = __webpack_require__(1);
@@ -57668,7 +57767,7 @@ $export($export.G + $export.B + $export.F * MSIE, {
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var $task = __webpack_require__(132);
+var $task = __webpack_require__(135);
 $export($export.G + $export.B, {
   setImmediate: $task.set,
   clearImmediate: $task.clear
@@ -57679,7 +57778,7 @@ $export($export.G + $export.B, {
 /* 552 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $iterators = __webpack_require__(131);
+var $iterators = __webpack_require__(134);
 var getKeys = __webpack_require__(41);
 var redefine = __webpack_require__(18);
 var global = __webpack_require__(3);
@@ -58851,7 +58950,7 @@ module.exports = function () {
 "use strict";
 
 
-var isValue = __webpack_require__(136);
+var isValue = __webpack_require__(139);
 
 var keys = Object.keys;
 
@@ -58876,7 +58975,7 @@ module.exports = function () {};
 "use strict";
 
 
-var isValue = __webpack_require__(136);
+var isValue = __webpack_require__(139);
 
 module.exports = function (value) {
 	if (!isValue(value)) throw new TypeError("Cannot use null or undefined");
@@ -58891,7 +58990,7 @@ module.exports = function (value) {
 "use strict";
 
 
-var isValue = __webpack_require__(136);
+var isValue = __webpack_require__(139);
 
 var forEach = Array.prototype.forEach, create = Object.create;
 
@@ -59016,7 +59115,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(146)(content, options);
+var update = __webpack_require__(149)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -59051,7 +59150,7 @@ if(false) {
 /* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(145)(false);
+exports = module.exports = __webpack_require__(148)(false);
 // imports
 
 
