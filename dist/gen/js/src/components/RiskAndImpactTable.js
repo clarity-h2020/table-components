@@ -223,7 +223,7 @@ export default class RiskAndImpactTable extends React.Component {
               allData: obj.convertData(data)
             });
             obj.loadTooltips(server, obj);
-            obj.changeHazard();
+            obj.changeDisplay();
           }).catch(function (error) {
             console.log(JSON.stringify(error));
           });
@@ -320,15 +320,31 @@ export default class RiskAndImpactTable extends React.Component {
     }
   }
 
-  changeHazard() {
-    const combo = document.getElementById('futureScenario-combo');
-    console.log('changeHazard changed: ' + combo.value);
+  changeDisplay() {
+    const scenarioCombo = document.getElementById('futureScenario-combo');
+    const combo = document.getElementById('display-combo');
+    console.log('display changed: ' + combo.value);
     var selectedData = [];
 
     for (var i = 0; i < this.state.allData.length; ++i) {
       var obj = this.state.allData[i];
-      if (obj.hazard === combo.value) {
-        selectedData.push(obj);
+      if (obj.hazard === scenarioCombo.value) {
+        if (combo.value === 'absolute') {
+          selectedData.push(obj);
+        } else {
+          var pObj = {};
+          pObj.hazard = obj.hazard;
+          pObj.elementAtRisk = obj.elementAtRisk;
+          pObj.vulnerabilityClasses = obj.vulnerabilityClasses;
+          pObj.unit = obj.unit;
+          var total = parseFloat(obj.d1) + parseFloat(obj.d2) + parseFloat(obj.d3) + parseFloat(obj.d4) + parseFloat(obj.d5);
+          pObj.d1 = this.roundDecimal(parseFloat(obj.d1) * 100 / total);
+          pObj.d2 = this.roundDecimal(parseFloat(obj.d2) * 100 / total);
+          pObj.d3 = this.roundDecimal(parseFloat(obj.d3) * 100 / total);
+          pObj.d4 = this.roundDecimal(parseFloat(obj.d4) * 100 / total);
+          pObj.d5 = this.roundDecimal(parseFloat(obj.d5) * 100 / total);
+          selectedData.push(pObj);
+        }
       }
     }
 
@@ -377,13 +393,17 @@ export default class RiskAndImpactTable extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.changeHazard();
+  roundDecimal(value) {
+    if (value != null) {
+      return Math.round(value * 100) / 100;
+    } else {
+      return value;
+    }
   }
 
-  // componentDidUpdate () {
-  //   this.changeHazard();
-  // }
+  componentDidMount() {
+    this.changeDisplay();
+  }
 
   render() {
     window.specificTableComponent = this;
@@ -400,8 +420,32 @@ export default class RiskAndImpactTable extends React.Component {
           'Damage level estimates for the selected hazard'
         ),
         React.createElement(
+          'span',
+          null,
+          'Damage Class Values: '
+        ),
+        React.createElement(
           'select',
-          { id: 'futureScenario-combo', onChange: this.changeHazard.bind(this), style: { "marginLeft": '10px' } },
+          { id: 'display-combo', onChange: this.changeDisplay.bind(this), style: { "marginLeft": '10px' } },
+          React.createElement(
+            'option',
+            { key: 'percentage', value: 'percentage' },
+            'percentage'
+          ),
+          React.createElement(
+            'option',
+            { key: 'absolute', value: 'absolute' },
+            'absolute'
+          )
+        ),
+        React.createElement(
+          'span',
+          null,
+          ' Hazard: '
+        ),
+        React.createElement(
+          'select',
+          { id: 'futureScenario-combo', onChange: this.changeDisplay.bind(this), style: { "marginLeft": '10px' } },
           this.createOptions(this.state.allData)
         )
       ),
