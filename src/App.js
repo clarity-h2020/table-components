@@ -33,7 +33,7 @@ export default class App extends React.Component {
           <main>
           <BrowserRouter>
             <Switch>
-              <Route exact path="/" component={RiskAndImpactTable} />
+              <Route exact path="/" component={CharacteriseHazardTable} />
               <Route exact path="/CharacteriseHazardTable/" component={CharacteriseHazardTable} />
               <Route exact path="/ExposureTable/" component={ExposureTable} />
               <Route exact path="/HazardLocalEffectsTable/" component={HazardLocalEffectsTable} />
@@ -41,7 +41,7 @@ export default class App extends React.Component {
               <Route exact path="/VulnerabilityTable/" component={VulnerabilityTable} />
               <Route exact path="/AdaptationOptionsTable/" component={AdaptationOptionsTable} />
 
-              <Route component={RiskAndImpactTable} />
+              <Route component={CharacteriseHazardTable} />
             </Switch>
             </BrowserRouter>
           </main>
