@@ -1,35 +1,57 @@
 {
-  "name": "table-app",
+  "name": "clarity-table-components",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "eslint": "^5.6.1",
-    "html2canvas": "latest",
+    "html2canvas": "^1.0.0-rc.3",
+    "proj4": "latest",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "1.1.5",
-    "react-router-dom": "latest",
-    "react-table": "latest",
+    "react-table": "^6.10.0",
     "turf": "latest",
-    "wicket": "latest",
-    "proj4": "latest"
+    "wicket": "^1.3.4"
+  },
+  "resolutions": {
+    "js-yaml": "^3.13.1",
+    "handlebars": "^4.0.14",
+    "webpack-dev-server": "^2.11.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "babel": "babel src/*.js src/*/*.js src/*/*/*.js --presets babel-preset-react --out-dir dist/gen/js",
-    "webpack": "webpack dist/gen/js/src/*.js dist/gen/js/src/*/*.js dist/gen/js/src/*/*/*.js"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "babel": "babel ./src/*.js ./src/*/*.js ./src/*/*/*.js --presets babel-preset-react --out-dir ./dist/gen/js",
+    "webpack": "webpack"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^7.1.4",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.0",
     "css-loader": "^1.0.1",
+    "image-webpack-loader": "^5.0.0",
     "style-loader": "^0.23.1",
     "webpack": "^3.11.0",
-    "webpack-cli": "^3.1.2",
-    "image-webpack-loader": "latest"
+    "webpack-cli": "^3.1.2"
   }
 }
