@@ -1,113 +1,114 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import TableComponent from './commons/TableComponent';
+import BasicTable from './commons/BasicTable';
 import turf from 'turf';
 import Wkt from 'wicket';
 import proj4 from 'proj4';
 
-export default class ExposureTable extends React.Component {
+export default class ExposureTable extends BasicTable {
   constructor(props) {
-   super(props);
-   this.protocol = "https://";
-   this.layerParams = ['COVERAGEID', 'layers'];
-   this.request = {
-    "type": "eu-gl:exposure-evaluation",
-    "epsg": "EPSG:3035",
-    "bbox": [4650000.0, 1950000.0, 4675000.0, 1975000.0],
-    "data": [
-          {
-              "hazard": "HW,PF,FL",
-              "elementAtRisk": "Population",
-              "vulnerabilityClasses": "Age group 0-14",
-              "layer": "Exposure:Population_men15_naples",
-              "unit": "pop/km2"
-          },
-          {
-              "hazard": "HW,PF,FL",
-              "elementAtRisk": "Population",
-              "vulnerabilityClasses": "Age group 15-64",
-              "layer": "Exposure:Population_15to65_naples",
-              "unit": "pop/km2"
-          },
-          {
-              "hazard": "HW,PF,FL",
-              "elementAtRisk": "Population",
-              "vulnerabilityClasses": ">65",
-              "layer": "Exposure:Population_mayor65_naples",
-              "unit": "pop/km2"
-          }
+    super(props);
+    this.protocol = "https://";
+    this.layerParams = ['COVERAGEID', 'layers'];
+    this.request = {
+      "type": "eu-gl:exposure-evaluation",
+      "epsg": "EPSG:3035",
+      "bbox": [4650000.0, 1950000.0, 4675000.0, 1975000.0],
+      "data": [
+        {
+          "hazard": "HW,PF,FL",
+          "elementAtRisk": "Population",
+          "vulnerabilityClasses": "Age group 0-14",
+          "layer": "Exposure:Population_men15_naples",
+          "unit": "pop/km2"
+        },
+        {
+          "hazard": "HW,PF,FL",
+          "elementAtRisk": "Population",
+          "vulnerabilityClasses": "Age group 15-64",
+          "layer": "Exposure:Population_15to65_naples",
+          "unit": "pop/km2"
+        },
+        {
+          "hazard": "HW,PF,FL",
+          "elementAtRisk": "Population",
+          "vulnerabilityClasses": ">65",
+          "layer": "Exposure:Population_mayor65_naples",
+          "unit": "pop/km2"
+        }
       ]
     };
 
     this.backupData = [
       {
-         hazard: 'HW,PF,FL',
-         elementAtRisk: "Population",
-         vulnerabilityClasses: "Age group 0-14",
-         values: "1.2",
-         unit: "pop/km2"
-       },
-       {
-         hazard: 'HW,PF,FL',
-         elementAtRisk: "Population",
-         vulnerabilityClasses: "Age group 15-64",
-         values: "3.2",
-         unit: "pop/km2"
-       },
-       {
-         hazard: 'HW,PF,FL',
-         elementAtRisk: "Population",
-         vulnerabilityClasses: ">65",
-         values: "3.5",
-         unit: "pop/km2"
-       },
-       {
-         hazard: 'PF,FL',
-         elementAtRisk: "Buildings",
-         vulnerabilityClasses: "Continuous Residential (S.L. > 80%)",
-         values: "2.1",
-         unit: "m3/m2"
-       },
-       {
-         hazard: 'PF,FL',
-         elementAtRisk: "Buildings",
-         vulnerabilityClasses: "Med-Hi Density Discontinuous Res. (30% < S.L. < 80%)",
-         values: "3.2",
-         unit: "m3/m2"
-       },
-       {
-         hazard: 'PF,FL',
-         elementAtRisk: "Buildings",
-         vulnerabilityClasses: "Low Density Discontinuous Res. (S.L. < 30%)",
-         values: "2.5",
-         unit: "m3/m2"
-       },
-       {
-         hazard: 'PF,FL',
-         elementAtRisk: "Buildings",
-         vulnerabilityClasses: "Non Residential",
-         values: "4.3",
-         unit: "m3/m2"
-       },
-       {
-         hazard: 'PF,FL',
-         elementAtRisk: "Infrastructure",
-         vulnerabilityClasses: "Roads",
-         values: "3.3",
-         unit: "ml"
-       },
-       {
-         hazard: 'PF,FL',
-         elementAtRisk: "Infrastructure",
-         vulnerabilityClasses: "Railways",
-         values: "3.2",
-         unit: "ml"
-       }
-     ]
+        hazard: 'HW,PF,FL',
+        elementAtRisk: "Population",
+        vulnerabilityClasses: "Age group 0-14",
+        values: "1.2",
+        unit: "pop/km2"
+      },
+      {
+        hazard: 'HW,PF,FL',
+        elementAtRisk: "Population",
+        vulnerabilityClasses: "Age group 15-64",
+        values: "3.2",
+        unit: "pop/km2"
+      },
+      {
+        hazard: 'HW,PF,FL',
+        elementAtRisk: "Population",
+        vulnerabilityClasses: ">65",
+        values: "3.5",
+        unit: "pop/km2"
+      },
+      {
+        hazard: 'PF,FL',
+        elementAtRisk: "Buildings",
+        vulnerabilityClasses: "Continuous Residential (S.L. > 80%)",
+        values: "2.1",
+        unit: "m3/m2"
+      },
+      {
+        hazard: 'PF,FL',
+        elementAtRisk: "Buildings",
+        vulnerabilityClasses: "Med-Hi Density Discontinuous Res. (30% < S.L. < 80%)",
+        values: "3.2",
+        unit: "m3/m2"
+      },
+      {
+        hazard: 'PF,FL',
+        elementAtRisk: "Buildings",
+        vulnerabilityClasses: "Low Density Discontinuous Res. (S.L. < 30%)",
+        values: "2.5",
+        unit: "m3/m2"
+      },
+      {
+        hazard: 'PF,FL',
+        elementAtRisk: "Buildings",
+        vulnerabilityClasses: "Non Residential",
+        values: "4.3",
+        unit: "m3/m2"
+      },
+      {
+        hazard: 'PF,FL',
+        elementAtRisk: "Infrastructure",
+        vulnerabilityClasses: "Roads",
+        values: "3.3",
+        unit: "ml"
+      },
+      {
+        hazard: 'PF,FL',
+        elementAtRisk: "Infrastructure",
+        vulnerabilityClasses: "Railways",
+        values: "3.2",
+        unit: "ml"
+      }
+    ]
 
-   this.state = {
-     data: [],
-     loading: true,
+    this.state = {
+      data: [],
+      loading: true,
       columns: [{
         Header: 'Hazards',
         id: 'Hazards',
@@ -141,6 +142,11 @@ export default class ExposureTable extends React.Component {
     });
   }
 
+  setStudyURL(id, hostName) {
+    super.setStudyURL(id, hostName)
+    this.initServer(hostName, id);
+  }
+
   initServer(server, id) {
     this.loadDataFromServer(server, id, this.request);
   }
@@ -148,23 +154,26 @@ export default class ExposureTable extends React.Component {
   sendRequestToRestApi(requestData) {
     const obj = this;
 
+    // FIXME: load this URI from data Package
+    // See https://github.com/clarity-h2020/table-components/issues/3#issuecomment-506718558
     fetch("https://clarity.meteogrid.com/api/request_exposure", { method: 'POST', body: JSON.stringify(requestData), headers: { 'Content-Type': 'application/json' } })
-    .then((resp) => resp.json())
+      .then((resp) => resp.json())
       .then(function (data) {
-      obj.setState({
-        allData: data,
-        data: data,
-        loading: false
-      });
-    })
+        obj.setState({
+          allData: data,
+          data: data,
+          loading: false
+        });
+      })
       .catch(function (error) {
-      console.log(JSON.stringify(error));
-      obj.setState({
-        allData: obj.backupData,
-        data: obj.backupData
+        console.log(JSON.stringify(error));
+        obj.setState({
+          allData: obj.backupData,
+          data: obj.backupData
+        });
       });
-  });
   }
+
 
   loadDataFromServer(server, id, request) {
     const obj = this;
@@ -236,7 +245,7 @@ export default class ExposureTable extends React.Component {
             if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
               if (resource.attributes.field_url != null) {
                 let obj = {};
-                
+
                 //get hazards
                 if (analysisContext.relationships.field_hazard != null && analysisContext.relationships.field_hazard.data != null && analysisContext.relationships.field_hazard.data.length > 0) {
                   obj.hazard = "";
@@ -283,7 +292,7 @@ export default class ExposureTable extends React.Component {
                 }
 
                 obj.layer = this.extractLayers(resource.attributes.field_url);
-                obj.unit = 'pop//km2';
+                obj.unit = 'pop//km²';
                 dataFromDP.push(obj);
               }
             }
@@ -294,18 +303,6 @@ export default class ExposureTable extends React.Component {
 
     this.request.data = dataFromDP;
     this.sendRequestToRestApi(this.request);
-  }
-
-  getIncludedObject(type, id, includedArray) {
-    if (type != null && id != null) {
-      for (let i = 0; i < includedArray.length; ++i) {
-        if (includedArray[i].type === type && includedArray[i].id === id) {
-          return includedArray[i];
-        }
-      }
-    }
-
-    return null;
   }
 
   extractLayers(url) {
@@ -323,21 +320,21 @@ export default class ExposureTable extends React.Component {
 
   render() {
     window.tableCom = this;
-      return (
+    return (
+      <div>
         <div>
-          <div>
-            <h1>Exposure elements</h1>
-          </div>
-          <div>
-            <TableComponent
+          <h1>Exposure elements</h1>
+        </div>
+        <div>
+          <TableComponent
             data={this.state.data}
             columns={this.state.columns}
             loading={this.state.loading}
             pivotBy={["Hazards", "ElementAtRisk"]}
-            />
-          </div>
+          />
         </div>
-          );
+      </div>
+    );
   }
 
 }

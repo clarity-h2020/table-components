@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import TableComponent from './commons/TableComponent';
-
-
+import BasicTable from './commons/BasicTable';
 
 export default class RiskAndImpactTable extends React.Component {
-    constructor(props) {
-     super(props);
-     this.protocol = "https://";
-     var originalData = {
+  constructor(props) {
+    super(props);
+    this.protocol = "https://";
+    var originalData = {
       "name": "TAB Impact Results for Impact Assessment Drupal Table",
       "description": null,
       "columnnames": [
@@ -272,127 +271,134 @@ export default class RiskAndImpactTable extends React.Component {
       ]
     };
     this.dData = this.convertData(originalData);
-     this.state = {
+    this.state = {
       loading: true,
       data: [], //this.dData,
       allData: [], //this.dData,
-        columns:  [{
-          Header: 'Hazards',
-          id: 'Hazards',
-//          Header: (<div>
-//            <div>Hazards</div>
-//            <select id="futureScenario-combo" onChange={this.changeHazard.bind(this)} style={{"marginLeft": '10px'}}>
-//              {this.createOptions(this.convertData(originalData))}
-//            </select>
-//          </div>),
-          accessor: 'hazard',
+      columns: [{
+        Header: 'Hazards',
+        id: 'Hazards',
+        //          Header: (<div>
+        //            <div>Hazards</div>
+        //            <select id="futureScenario-combo" onChange={this.changeHazard.bind(this)} style={{"marginLeft": '10px'}}>
+        //              {this.createOptions(this.convertData(originalData))}
+        //            </select>
+        //          </div>),
+        accessor: 'hazard',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
+      }, {
+        Header: 'Element at risk (Exposure)',
+        id: 'ElementAtRisk',
+        accessor: 'elementAtRisk',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
+      }, {
+        Header: 'Vulnerability classes',
+        accessor: 'vulnerabilityClasses',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
+      }, {
+        Header: 'Unit',
+        accessor: 'unit',
+        Cell: row => <div><span title={row.value}>{row.value}</span></div>
+      }, {
+        Header: 'Damage Classes',
+        columns: [{
+          Header: () => (<span title={this.state.d1Tooltip}>D1</span>),
+          accessor: 'd1',
           Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
-          Header: 'Element at risk (Exposure)',
-          id: 'ElementAtRisk',
-          accessor: 'elementAtRisk',
+          Header: () => (<span title={this.state.d2Tooltip}>D2</span>),
+          accessor: 'd2',
           Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
-          Header: 'Vulnerability classes',
-          accessor: 'vulnerabilityClasses',
+          Header: () => (<span title={this.state.d3Tooltip}>D3</span>),
+          accessor: 'd3',
           Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
-          Header: 'Unit',
-          accessor: 'unit',
+          Header: () => (<span title={this.state.d4Tooltip}>D4</span>),
+          accessor: 'd4',
           Cell: row => <div><span title={row.value}>{row.value}</span></div>
         }, {
-          Header: 'Damage Classes',
-          columns: [{
-            Header: () => (<span title={this.state.d1Tooltip}>D1</span>),
-            accessor: 'd1',
-            Cell: row => <div><span title={row.value}>{row.value}</span></div>
-          }, {
-            Header: () => (<span title={this.state.d2Tooltip}>D2</span>),
-            accessor: 'd2',
-            Cell: row => <div><span title={row.value}>{row.value}</span></div>
-          }, {
-            Header: () => (<span title={this.state.d3Tooltip}>D3</span>),
-            accessor: 'd3',
-            Cell: row => <div><span title={row.value}>{row.value}</span></div>
-          }, {
-            Header: () => (<span title={this.state.d4Tooltip}>D4</span>),
-            accessor: 'd4',
-            Cell: row => <div><span title={row.value}>{row.value}</span></div>
-          }, {
-            Header: () => (<span title={this.state.d5Tooltip}>D5</span>),
-            accessor: 'd5',
-            Cell: row => <div><span title={row.value}>{row.value}</span></div>
-          }]
-        }],
-        expanded: ["Hazards", "ElementAtRisk"],
-        pivot: ["Hazards", "ElementAtRisk"]
-      };
-    }
+          Header: () => (<span title={this.state.d5Tooltip}>D5</span>),
+          accessor: 'd5',
+          Cell: row => <div><span title={row.value}>{row.value}</span></div>
+        }]
+      }],
+      expanded: ["Hazards", "ElementAtRisk"],
+      pivot: ["Hazards", "ElementAtRisk"]
+    };
+  }
 
-    loadDataFromServer(server) {
-      const obj = this;
+  setStudyURL(id, hostName) {
+    super.setStudyURL(id, hostName)
+    this.loadDataFromServer(hostName, id);
+  }
 
-      fetch(server + "/jsonapi", {credentials: 'include'})
+  loadDataFromServer(server) {
+    const obj = this;
+
+    fetch(server + "/jsonapi", { credentials: 'include' })
       .then((resp) => resp.json())
-      .then(function(data) {
+      .then(function (data) {
 
         if (data != null && data.meta != null && data.meta.links != null && data.meta.links.me != null && data.meta.links.me.href != null) {
-          fetch(data.meta.links.me.href.replace('http://', obj.protocol), {credentials: 'include'})
-          .then((resp) => resp.json())
-          .then(function(data) {
-            let authInfo = null;
-
-            if (data != null && data.data != null && data.data.attributes != null && data.data.attributes.field_basic_auth_credentials != null) {
-              authInfo = data.data.attributes.field_basic_auth_credentials;
-            }
-          
-            let headers = new Headers();
-      
-            if (authInfo != null) {
-              headers.append('Authorization', 'Basic ' + btoa(authInfo));
-            }
-
-            fetch("https://service.emikat.at/EmiKatTst/api/scenarios/2846/feature/view.2812/table/data", {headers: headers})
+          fetch(data.meta.links.me.href.replace('http://', obj.protocol), { credentials: 'include' })
             .then((resp) => resp.json())
-            .then(function(data) {
-              obj.setState({
-                loading: false,
-                allData: obj.convertData(data)
-              });
-              obj.loadTooltips(server, obj);
-              obj.changeDisplay();
+            .then(function (data) {
+              let authInfo = null;
+
+              if (data != null && data.data != null && data.data.attributes != null && data.data.attributes.field_basic_auth_credentials != null) {
+                authInfo = data.data.attributes.field_basic_auth_credentials;
+              }
+
+              let headers = new Headers();
+
+              if (authInfo != null) {
+                headers.append('Authorization', 'Basic ' + btoa(authInfo));
+              }
+
+              //FIXME: load this uri from data package
+              // https://github.com/clarity-h2020/table-components/issues/4#issuecomment-506712944
+              fetch("https://service.emikat.at/EmiKatTst/api/scenarios/2846/feature/view.2812/table/data", { headers: headers })
+                .then((resp) => resp.json())
+                .then(function (data) {
+                  obj.setState({
+                    loading: false,
+                    allData: obj.convertData(data)
+                  });
+                  obj.loadTooltips(server, obj);
+                  obj.changeDisplay();
+                })
+                .catch(function (error) {
+                  console.log(JSON.stringify(error));
+                });
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(JSON.stringify(error));
-            });         
-          })
-          .catch(function(error) {
-            console.log(JSON.stringify(error));
-          });
+            });
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(JSON.stringify(error));
-      });   
-    }
+      });
+  }
 
-    loadTooltips(server, thisObj) {
-      var eAtRId = "element-at-risk:infrastructure:damage-class:";
+  loadTooltips(server, thisObj) {
+    var eAtRId = "element-at-risk:infrastructure:damage-class:";
 
-      if (this.state.allData != null && this.state.allData[0] != null && this.state.allData[0].elementAtRisk != null) {
-        var eAtRisk = this.state.allData[0].elementAtRisk;
+    if (this.state.allData != null && this.state.allData[0] != null && this.state.allData[0].elementAtRisk != null) {
+      var eAtRisk = this.state.allData[0].elementAtRisk;
 
-        if (eAtRisk === 'people') {
-          eAtRId = "element-at-risk:population:damage-class:";
-        } else {
-          eAtRId = "element-at-risk:" + eAtRisk + ":damage-class:";
-        }
+      if (eAtRisk === 'people') {
+        eAtRId = "element-at-risk:population:damage-class:";
+      } else {
+        eAtRId = "element-at-risk:" + eAtRisk + ":damage-class:";
+      }
 
-        for (var i = 1; i < 6; ++i) {
-          const damageClass = i;
-          fetch(server + "/jsonapi/taxonomy_term/elements_at_risk?filter[field_elements_at_risk_id][value]=" + eAtRId + "d" + i, {credentials: 'include'})
+      for (var i = 1; i < 6; ++i) {
+        const damageClass = i;
+        fetch(server + "/jsonapi/taxonomy_term/elements_at_risk?filter[field_elements_at_risk_id][value]=" + eAtRId + "d" + i, { credentials: 'include' })
           .then((resp) => resp.json())
-          .then(function(data) {
+          .then(function (data) {
             switch (damageClass) {
               case 1: {
                 thisObj.setState({
@@ -426,152 +432,153 @@ export default class RiskAndImpactTable extends React.Component {
               }
             }
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(JSON.stringify(error));
           });
+      }
+    }
+  }
+
+  createOptions(d) {
+    if (d != null) {
+      var options = [];
+      var periods = [];
+
+      for (var i = 0; i < d.length; ++i) {
+        var obj = d[i];
+        if (periods.findIndex((val) => { return val === obj.hazard; }) === -1) {
+          options.push(<option key={obj.hazard} value={obj.hazard}>{obj.hazard}</option>);
+          periods.push(obj.hazard);
+        }
+      }
+
+      return options;
+    } else {
+      return null;
+    }
+  }
+
+  changeDisplay() {
+    const scenarioCombo = document.getElementById('futureScenario-combo');
+    const combo = document.getElementById('display-combo');
+    console.log('display changed: ' + combo.value);
+    var selectedData = [];
+
+    for (var i = 0; i < this.state.allData.length; ++i) {
+      var obj = this.state.allData[i];
+      if (obj.hazard === scenarioCombo.value) {
+        if (combo.value === 'absolute') {
+          selectedData.push(obj);
+        } else {
+          var pObj = {};
+          pObj.hazard = obj.hazard;
+          pObj.elementAtRisk = obj.elementAtRisk;
+          pObj.vulnerabilityClasses = obj.vulnerabilityClasses;
+          pObj.unit = obj.unit;
+          var total = parseFloat(obj.d1) + parseFloat(obj.d2) + parseFloat(obj.d3) + parseFloat(obj.d4) + parseFloat(obj.d5);
+          pObj.d1 = this.roundDecimal(parseFloat(obj.d1) * 100 / total);
+          pObj.d2 = this.roundDecimal(parseFloat(obj.d2) * 100 / total);
+          pObj.d3 = this.roundDecimal(parseFloat(obj.d3) * 100 / total);
+          pObj.d4 = this.roundDecimal(parseFloat(obj.d4) * 100 / total);
+          pObj.d5 = this.roundDecimal(parseFloat(obj.d5) * 100 / total);
+          selectedData.push(pObj);
         }
       }
     }
 
-    createOptions(d) {
-      if (d != null) {
-        var options = [];
-        var periods = [];
-        
-        for (var i = 0; i < d.length; ++i) {
-          var obj = d[i];
-          if ( periods.findIndex((val)=>{return val === obj.hazard;}) === -1) {
-            options.push(<option key={obj.hazard} value={obj.hazard}>{obj.hazard}</option>);
-            periods.push(obj.hazard);
-          }
-        }
+    this.setState({
+      data: selectedData
+    }
+    );
+  }
 
-        return options;
-      } else {
-        return null;
-      }
+  convertData(originData) {
+    var data = [];
+    if (originData == null) {
+      originData = this.dData;
+    }
+    var cols = originData.columnnames;
+    var colIndex = [];
+
+    for (var i = 0; i < cols.length; ++i) {
+      colIndex[cols[i]] = i;
     }
 
-    changeDisplay() {
-      const scenarioCombo = document.getElementById('futureScenario-combo');
-      const combo = document.getElementById('display-combo');
-      console.log('display changed: ' + combo.value);
-      var selectedData = [];
+    var rows = originData.rows;
 
-      for (var i = 0; i < this.state.allData.length; ++i) {
-        var obj = this.state.allData[i];
-        if (obj.hazard === scenarioCombo.value) {
-          if (combo.value === 'absolute') {
-            selectedData.push(obj);
-          } else {
-            var pObj = {};
-            pObj.hazard = obj.hazard;
-            pObj.elementAtRisk = obj.elementAtRisk;
-            pObj.vulnerabilityClasses = obj.vulnerabilityClasses;
-            pObj.unit = obj.unit;
-            var total = parseFloat(obj.d1) + parseFloat(obj.d2) + parseFloat(obj.d3) + parseFloat(obj.d4) + parseFloat(obj.d5);
-            pObj.d1 = this.roundDecimal(parseFloat(obj.d1) * 100 / total);
-            pObj.d2 = this.roundDecimal(parseFloat(obj.d2) * 100 / total);
-            pObj.d3 = this.roundDecimal(parseFloat(obj.d3) * 100 / total);
-            pObj.d4 = this.roundDecimal(parseFloat(obj.d4) * 100 / total);
-            pObj.d5 = this.roundDecimal(parseFloat(obj.d5) * 100 / total);
-            selectedData.push(pObj);
-          }
-        }
-      }
-
-      this.setState({
-        data: selectedData
-       }
-      );
+    for (let i = 0; i < rows.length; ++i) {
+      data[i] = {};
+      var origin = rows[i].values;
+      data[i].hazard = origin[colIndex["HAZEVENT_NAME"]];
+      data[i].elementAtRisk = origin[colIndex["NAME"]];
+      data[i].vulnerabilityClasses = origin[colIndex["VULCLASS_NAME"]];
+      data[i].unit = origin[colIndex["QUANTITYUNIT"]];
+      data[i].d1 = this.round(origin[colIndex["DAMAGELEVEL1QUANTITY"]]);
+      data[i].d2 = this.round(origin[colIndex["DAMAGELEVEL2QUANTITY"]]);
+      data[i].d3 = this.round(origin[colIndex["DAMAGELEVEL3QUANTITY"]]);
+      data[i].d4 = this.round(origin[colIndex["DAMAGELEVEL4QUANTITY"]]);
+      data[i].d5 = this.round(origin[colIndex["DAMAGELEVEL5QUANTITY"]]);
     }
 
-    convertData(originData) {
-      var data = [];
-      if (originData == null) {
-        originData = this.dData;
-      }
-      var cols = originData.columnnames;
-      var colIndex = [];
+    return data;
+  }
 
-      for (var i = 0; i < cols.length; ++i) {
-        colIndex[cols[i]] = i;
-      }
-
-      var rows = originData.rows;
-
-      for (let i = 0; i < rows.length; ++i) {
-        data[i] = {};
-        var origin = rows[i].values;
-        data[i].hazard = origin[colIndex["HAZEVENT_NAME"]];
-        data[i].elementAtRisk = origin[colIndex["NAME"]];
-        data[i].vulnerabilityClasses = origin[colIndex["VULCLASS_NAME"]];
-        data[i].unit = origin[colIndex["QUANTITYUNIT"]];
-        data[i].d1 = this.round(origin[colIndex["DAMAGELEVEL1QUANTITY"]]);
-        data[i].d2 = this.round(origin[colIndex["DAMAGELEVEL2QUANTITY"]]);
-        data[i].d3 = this.round(origin[colIndex["DAMAGELEVEL3QUANTITY"]]);
-        data[i].d4 = this.round(origin[colIndex["DAMAGELEVEL4QUANTITY"]]);
-        data[i].d5 = this.round(origin[colIndex["DAMAGELEVEL5QUANTITY"]]);
-      }
-
-      return data;
+  round(value) {
+    if (value != null) {
+      //round to integer and add thousands separator
+      return Math.round(value).toLocaleString('en-GB');
+    } else {
+      return value;
     }
+  }
 
-    round(value) {
-      if (value != null) {
-        //round to integer and add thousands separator
-        return Math.round(value).toLocaleString('en-GB');
-      } else {
-        return value;
-      }
+  roundDecimal(value) {
+    if (value != null) {
+      return Math.round(value * 100) / 100;
+    } else {
+      return value;
     }
+  }
 
-    roundDecimal(value) {
-      if (value != null) {
-        return Math.round(value * 100) / 100;
-      } else {
-        return value;
-      }
-    }
+  componentDidMount() {
+    super.componentDidMount();
+    this.changeDisplay();
+  }
 
-    componentDidMount () {
-      this.changeDisplay();
-    }
-
-    render() {
-      window.specificTableComponent = this;
-//      var dd = "data=" + this.state.data};
-      return (
+  render() {
+    window.specificTableComponent = this;
+    //      var dd = "data=" + this.state.data};
+    return (
+      <div>
         <div>
-          <div>
           <h1>Damage level estimates for the selected hazard</h1>
           <span>Damage Class Values: </span>
-          <select id="display-combo" onChange={this.changeDisplay.bind(this)} style={{"marginLeft": '10px'}}>
+          <select id="display-combo" onChange={this.changeDisplay.bind(this)} style={{ "marginLeft": '10px' }}>
             <option key="percentage" value="percentage">percentage</option>
             <option key="absolute" value="absolute">absolute</option>
           </select>
           <span> Hazard: </span>
-          <select id="futureScenario-combo" onChange={this.changeDisplay.bind(this)} style={{"marginLeft": '10px'}}>
+          <select id="futureScenario-combo" onChange={this.changeDisplay.bind(this)} style={{ "marginLeft": '10px' }}>
             {this.createOptions(this.state.allData)}
           </select>
-          </div>
-          <div>
-            <TableComponent
+        </div>
+        <div>
+          <TableComponent
             data={this.state.data}
             columns={this.state.columns}
             loading={this.state.loading}
-//            pivotBy={this.state.pivot} //{["Hazards", "ElementAtRisk"]}
-//            expanded={["Hazards", "ElementAtRisk"]}
-            />
-          </div>
+          //            pivotBy={this.state.pivot} //{["Hazards", "ElementAtRisk"]}
+          //            expanded={["Hazards", "ElementAtRisk"]}
+          />
         </div>
-          );
-    }
-  
+      </div>
+    );
   }
+
+}
 
 
 if (document.getElementById('risk-and impact-table-container') != null) {
-    ReactDOM.render(<RiskAndImpactTable />, document.getElementById('risk-and impact-table-container'));
-    document.getElementById('risk-and impact-table-container').style.width = "100%";
+  ReactDOM.render(<RiskAndImpactTable />, document.getElementById('risk-and impact-table-container'));
+  document.getElementById('risk-and impact-table-container').style.width = "100%";
 }
