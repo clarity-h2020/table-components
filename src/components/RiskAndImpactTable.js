@@ -541,7 +541,8 @@ export default class RiskAndImpactTable extends React.Component {
   }
 
   componentDidMount() {
-    super.componentDidMount();
+    //an invocation of uper.componentDidMount() leads to an error
+    // super.componentDidMount();
     this.changeDisplay();
   }
 
