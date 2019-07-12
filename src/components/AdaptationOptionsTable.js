@@ -885,7 +885,7 @@ export default class AdaptationOptionsTable extends BasicTable {
                         .then((resp) => resp.json())
                         .then(function (data) {
                             if (data.data.relationships.field_resources.links.related != null) {
-                                var includes = 'include=field_analysis_context.field_field_eu_gl_methodology';
+                                var includes = 'include=field_resource_tags,field_map_view,field_grid_info.field_bands';
                                 var separator = (data.data.relationships.field_resources.links.related.href.indexOf('?') === - 1 ? '?' : '&');
 
                                 fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + separator + includes, { credentials: 'include' })
@@ -916,32 +916,71 @@ export default class AdaptationOptionsTable extends BasicTable {
         for (var i = 0; i < resourceArray.length; ++i) {
             const resource = resourceArray[i];
 
-            if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
-                var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
-
-                if (analysisContext != null) {
-                    if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
-                        var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
-                        console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
-
-                        if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
-                            if (resource.attributes.field_url != null) {
-                                fetch(resource.attributes.field_url)
-                                    .then((resp) => resp.json())
-                                    .then(function (data) {
-                                        thisObj.setState({
-                                            data: thisObj.convertData(data),
-                                            loading: false
-                                        });
-                                    })
-                                    .catch(function (error) {
-                                        console.log(JSON.stringify(error));
-                                    });
-                            }
-                        }
+            // iterate resource tags
+            if (resource.relationships.field_resource_tags != null && resource.relationships.field_resource_tags.data != null
+                && resource.relationships.field_resource_tags.data.length > 0) {
+                console.debug('inspecting ' + resource.relationships.field_resource_tags.data.length + ' tags of resource #' + i + ': ' + resource.attributes.field_description);
+                var euGlStep, elementsAtRisk, vulnerabilityClass;
+                var hazards = null;
+                
+                for (var j = 0; j < resource.relationships.field_resource_tags.data.length; ++j) {
+                    // step one: extract relevant tags
+                    if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--eu_gl') {
+                        let tag = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+                        euGlStep = tag.attributes.field_eu_gl_taxonomy_id.value;
                     }
                 }
+
+                // step two: create table layers
+                // e.g. mapType = eu-gl:risk-and-impact-assessment
+                if (euGlStep != null && euGlStep === mapType) {
+                    let tableResource = {};
+                    let uom = 'pop//km2';
+
+                    if (resource.attributes.field_url != null && resource.attributes.field_url.length > 0) {
+                        fetch(resource.attributes.field_url)
+                            .then((resp) => resp.json())
+                            .then(function (data) {
+                                thisObj.setState({
+                                    data: thisObj.convertData(data),
+                                    loading: false
+                                });
+                            })
+                            .catch(function (error) {
+                                console.log(JSON.stringify(error));
+                            });
+                    }
+                } else {
+                    console.warn('resource ' + i + ' is not assiged to Eu-GL step ' + mapType)
+                }
             }
+
+            // if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
+            //     var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+
+            //     if (analysisContext != null) {
+            //         if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
+            //             var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
+            //             console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
+
+            //             if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
+            //                 if (resource.attributes.field_url != null) {
+            //                     fetch(resource.attributes.field_url)
+            //                         .then((resp) => resp.json())
+            //                         .then(function (data) {
+            //                             thisObj.setState({
+            //                                 data: thisObj.convertData(data),
+            //                                 loading: false
+            //                             });
+            //                         })
+            //                         .catch(function (error) {
+            //                             console.log(JSON.stringify(error));
+            //                         });
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         }
     }
 
