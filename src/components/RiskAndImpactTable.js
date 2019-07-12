@@ -383,15 +383,15 @@ export default class RiskAndImpactTable extends React.Component {
   }
 
   loadTooltips(server, thisObj) {
-    var eAtRId = "element-at-risk:infrastructure:damage-class:";
+    var eAtRId = "damage-class:infrastructure:";
 
     if (this.state.allData != null && this.state.allData[0] != null && this.state.allData[0].elementAtRisk != null) {
       var eAtRisk = this.state.allData[0].elementAtRisk;
 
       if (eAtRisk === 'people') {
-        eAtRId = "element-at-risk:population:damage-class:";
+        eAtRId = "damage-class:population:";
       } else {
-        eAtRId = "element-at-risk:" + eAtRisk + ":damage-class:";
+        eAtRId = "damage-class:" + eAtRisk + ":";
       }
 
       for (var i = 1; i < 6; ++i) {

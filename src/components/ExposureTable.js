@@ -192,7 +192,7 @@ export default class ExposureTable extends BasicTable {
             .then((resp) => resp.json())
             .then(function (data) {
               if (data.data.relationships.field_resources.links.related != null) {
-                var includes = 'include=field_analysis_context.field_field_eu_gl_methodology,field_analysis_context.field_hazard,field_analysis_context.field_exposure_category,field_analysis_context.field_vulnerability_classes';
+                var includes = 'include=field_resource_tags,field_map_view,field_grid_info.field_bands';
                 var separator = (data.data.relationships.field_resources.links.related.href.indexOf('?') === - 1 ? '?' : '&');
 
                 fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + separator + includes, { credentials: 'include' })
@@ -230,73 +230,66 @@ export default class ExposureTable extends BasicTable {
     const thisObj = this;
     var dataFromDP = [];
 
+    //iterate resources
     for (var i = 0; i < resourceArray.length; ++i) {
       const resource = resourceArray[i];
 
-      if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
-        //analysisContext = eu_fg type
-        var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+      // iterate resource tags
+      if (resource.relationships.field_resource_tags != null && resource.relationships.field_resource_tags.data != null
+        && resource.relationships.field_resource_tags.data.length > 0) {
+        console.debug('inspecting ' + resource.relationships.field_resource_tags.data.length + ' tags of resource #' + i + ': ' + resource.attributes.field_description);
+        var euGlStep, elementsAtRisk, vulnerabilityClass;
+        var hazards = null;
+        
+        for (var j = 0; j < resource.relationships.field_resource_tags.data.length; ++j) {
+          // step one: extract relevant tags
+          if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--eu_gl') {
+            let tag = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+            euGlStep = tag.attributes.field_eu_gl_taxonomy_id.value;
+          } else if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--elements_at_risk') {
+            let tag = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+            if (tag.attributes.field_elements_at_risk_id != null && tag.attributes.field_elements_at_risk_id.startsWith('element-at-risk:')) {
+              elementsAtRisk = tag.attributes.name;
+            } else if (tag.attributes.field_elements_at_risk_id != null && tag.attributes.field_elements_at_risk_id.startsWith('vulnerability-class:')) {
+              vulnerabilityClass = tag.attributes.name;
+            }
+          } if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--hazards') {
+            let tag = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+            if (hazards === null) {
+              hazards = tag.attributes.name;
+            } else {
+              hazards = hazards + ',' + tag.attributes.name;
+            }
+          }
+        }
 
-        if (analysisContext != null) {
-          if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
-            var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
-            console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
+        // step two: create table layers
+        // e.g. mapType = eu-gl:risk-and-impact-assessment
+        if (euGlStep != null && euGlStep === mapType) {
+          let tableResource = {};
+          let uom = 'pop//km2';
 
-            if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
-              if (resource.attributes.field_url != null) {
-                let obj = {};
+          if (resource.relationships.field_grid_info != null && resource.relationships.field_grid_info.data != null && resource.relationships.field_grid_info.data.type != null) {
+            let gridInfo = this.getIncludedObject(resource.relationships.field_grid_info.data.type, resource.relationships.field_grid_info.data.id, originData.included);
 
-                //get hazards
-                if (analysisContext.relationships.field_hazard != null && analysisContext.relationships.field_hazard.data != null && analysisContext.relationships.field_hazard.data.length > 0) {
-                  obj.hazard = "";
-                  for (let i = 0; i < analysisContext.relationships.field_hazard.data.length; ++i) {
-                    var hazard = this.getIncludedObject(analysisContext.relationships.field_hazard.data[i].type, analysisContext.relationships.field_hazard.data[i].id, originData.included);
-                    if (hazard != null) {
-                      if (obj.hazard === "") {
-                        obj.hazard = hazard.attributes.name;
-                      } else {
-                        obj.hazard = obj.hazard + ', ' + hazard.attributes.name;
-                      }
-                    }
-                  }
+            if (gridInfo != null && gridInfo.field_bands != null && gridInfo.field_bands.data != null && gridInfo.field_bands.data.length > 0) {
+              for (let i = 0; i < gridInfo.field_bands.data.length; ++i) {
+                let band = this.getIncludedObject(gridInfo.field_bands.data[i].type, gridInfo.field_bands.data[i].id, originData.included);
+
+                if (band != null && band.attributes != null && band.attributes.field_uom != null) {
+                  uom = band.attributes.field_uom;
                 }
-
-                //get elements at risk
-                if (analysisContext.relationships.field_exposure_category != null && analysisContext.relationships.field_exposure_category.data != null && analysisContext.relationships.field_exposure_category.data.length > 0) {
-                  obj.elementAtRisk = "";
-                  for (let i = 0; i < analysisContext.relationships.field_exposure_category.data.length; ++i) {
-                    var elAtRisk = this.getIncludedObject(analysisContext.relationships.field_exposure_category.data[i].type, analysisContext.relationships.field_exposure_category.data[i].id, originData.included);
-                    if (elAtRisk != null) {
-                      if (obj.elementAtRisk === "") {
-                        obj.elementAtRisk = elAtRisk.attributes.name;
-                      } else {
-                        obj.elementAtRisk = obj.elementAtRisk + ', ' + elAtRisk.attributes.name;
-                      }
-                    }
-                  }
-                }
-
-                //get vulnerability classes
-                if (analysisContext.relationships.field_vulnerability_classes != null && analysisContext.relationships.field_vulnerability_classes.data != null && analysisContext.relationships.field_vulnerability_classes.data.length > 0) {
-                  obj.vulnerabilityClasses = "";
-                  for (let i = 0; i < analysisContext.relationships.field_vulnerability_classes.data.length; ++i) {
-                    var vulClasses = this.getIncludedObject(analysisContext.relationships.field_vulnerability_classes.data[i].type, analysisContext.relationships.field_vulnerability_classes.data[i].id, originData.included);
-                    if (vulClasses != null) {
-                      if (obj.vulnerabilityClasses === "") {
-                        obj.vulnerabilityClasses = vulClasses.attributes.name;
-                      } else {
-                        obj.vulnerabilityClasses = obj.vulnerabilityClasses + ', ' + vulClasses.attributes.name;
-                      }
-                    }
-                  }
-                }
-
-                obj.layer = this.extractLayers(resource.attributes.field_url);
-                obj.unit = 'pop//km²';
-                dataFromDP.push(obj);
               }
             }
           }
+          tableResource.layer = this.extractLayers(resource.attributes.field_url);
+          tableResource.elementAtRisk = elementsAtRisk;
+          tableResource.vulnerabilityClasses = vulnerabilityClass;
+          tableResource.hazard = hazards;
+          tableResource.unit = uom;
+          dataFromDP.push(tableResource);
+        } else {
+          console.warn('resource ' + i + ' is not assiged to Eu-GL step ' + mapType)
         }
       }
     }
@@ -306,12 +299,14 @@ export default class ExposureTable extends BasicTable {
   }
 
   extractLayers(url) {
-    for (let i = 0; i < this.layerParams.length; ++i) {
-      let paramKey = this.layerParams[i];
+    for (var urlIndex = 0; urlIndex < url.length; ++urlIndex) {
+      for (let i = 0; i < this.layerParams.length; ++i) {
+        let paramKey = this.layerParams[i];
 
-      if (url.indexOf(paramKey + '=') != -1) {
-        var layerParam = url.substring(url.indexOf(paramKey + '=') + paramKey.length + 1)
-        return (layerParam.indexOf('&') !== -1 ? layerParam.substring(0, layerParam.indexOf('&')) : layerParam);
+        if (url[urlIndex].indexOf(paramKey + '=') != -1) {
+          var layerParam = url[urlIndex].substring(url[urlIndex].indexOf(paramKey + '=') + paramKey.length + 1)
+          return (layerParam.indexOf('&') !== -1 ? layerParam.substring(0, layerParam.indexOf('&')) : layerParam);
+        }
       }
     }
 
