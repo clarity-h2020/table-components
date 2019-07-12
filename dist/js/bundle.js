@@ -61017,7 +61017,7 @@ var ExposureTable = function (_BasicTable) {
             return resp.json();
           }).then(function (data) {
             if (data.data.relationships.field_resources.links.related != null) {
-              var includes = 'include=field_analysis_context.field_field_eu_gl_methodology,field_analysis_context.field_hazard,field_analysis_context.field_exposure_category,field_analysis_context.field_vulnerability_classes';
+              var includes = 'include=field_resource_tags,field_map_view,field_grid_info.field_bands';
               var separator = data.data.relationships.field_resources.links.related.href.indexOf('?') === -1 ? '?' : '&';
 
               fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + separator + includes, { credentials: 'include' }).then(function (resp) {
@@ -61054,73 +61054,65 @@ var ExposureTable = function (_BasicTable) {
       var thisObj = this;
       var dataFromDP = [];
 
+      //iterate resources
       for (var i = 0; i < resourceArray.length; ++i) {
         var resource = resourceArray[i];
 
-        if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
-          //analysisContext = eu_fg type
-          var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+        // iterate resource tags
+        if (resource.relationships.field_resource_tags != null && resource.relationships.field_resource_tags.data != null && resource.relationships.field_resource_tags.data.length > 0) {
+          console.debug('inspecting ' + resource.relationships.field_resource_tags.data.length + ' tags of resource #' + i + ': ' + resource.attributes.field_description);
+          var euGlStep, elementsAtRisk, vulnerabilityClass;
+          var hazards = null;
 
-          if (analysisContext != null) {
-            if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
-              var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
-              console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
+          for (var j = 0; j < resource.relationships.field_resource_tags.data.length; ++j) {
+            // step one: extract relevant tags
+            if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--eu_gl') {
+              var tag = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+              euGlStep = tag.attributes.field_eu_gl_taxonomy_id.value;
+            } else if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--elements_at_risk') {
+              var _tag = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+              if (_tag.attributes.field_elements_at_risk_id != null && _tag.attributes.field_elements_at_risk_id.startsWith('element-at-risk:')) {
+                elementsAtRisk = _tag.attributes.name;
+              } else if (_tag.attributes.field_elements_at_risk_id != null && _tag.attributes.field_elements_at_risk_id.startsWith('vulnerability-class:')) {
+                vulnerabilityClass = _tag.attributes.name;
+              }
+            }if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--hazards') {
+              var _tag2 = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+              if (hazards === null) {
+                hazards = _tag2.attributes.name;
+              } else {
+                hazards = hazards + ',' + _tag2.attributes.name;
+              }
+            }
+          }
 
-              if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
-                if (resource.attributes.field_url != null) {
-                  var obj = {};
+          // step two: create table layers
+          // e.g. mapType = eu-gl:risk-and-impact-assessment
+          if (euGlStep != null && euGlStep === mapType) {
+            var tableResource = {};
+            var uom = 'pop//km2';
 
-                  //get hazards
-                  if (analysisContext.relationships.field_hazard != null && analysisContext.relationships.field_hazard.data != null && analysisContext.relationships.field_hazard.data.length > 0) {
-                    obj.hazard = "";
-                    for (var _i = 0; _i < analysisContext.relationships.field_hazard.data.length; ++_i) {
-                      var hazard = this.getIncludedObject(analysisContext.relationships.field_hazard.data[_i].type, analysisContext.relationships.field_hazard.data[_i].id, originData.included);
-                      if (hazard != null) {
-                        if (obj.hazard === "") {
-                          obj.hazard = hazard.attributes.name;
-                        } else {
-                          obj.hazard = obj.hazard + ', ' + hazard.attributes.name;
-                        }
-                      }
-                    }
+            if (resource.relationships.field_grid_info != null && resource.relationships.field_grid_info.data != null && resource.relationships.field_grid_info.data.type != null) {
+              var gridInfo = this.getIncludedObject(resource.relationships.field_grid_info.data.type, resource.relationships.field_grid_info.data.id, originData.included);
+
+              if (gridInfo != null && gridInfo.field_bands != null && gridInfo.field_bands.data != null && gridInfo.field_bands.data.length > 0) {
+                for (var _i = 0; _i < gridInfo.field_bands.data.length; ++_i) {
+                  var band = this.getIncludedObject(gridInfo.field_bands.data[_i].type, gridInfo.field_bands.data[_i].id, originData.included);
+
+                  if (band != null && band.attributes != null && band.attributes.field_uom != null) {
+                    uom = band.attributes.field_uom;
                   }
-
-                  //get elements at risk
-                  if (analysisContext.relationships.field_exposure_category != null && analysisContext.relationships.field_exposure_category.data != null && analysisContext.relationships.field_exposure_category.data.length > 0) {
-                    obj.elementAtRisk = "";
-                    for (var _i2 = 0; _i2 < analysisContext.relationships.field_exposure_category.data.length; ++_i2) {
-                      var elAtRisk = this.getIncludedObject(analysisContext.relationships.field_exposure_category.data[_i2].type, analysisContext.relationships.field_exposure_category.data[_i2].id, originData.included);
-                      if (elAtRisk != null) {
-                        if (obj.elementAtRisk === "") {
-                          obj.elementAtRisk = elAtRisk.attributes.name;
-                        } else {
-                          obj.elementAtRisk = obj.elementAtRisk + ', ' + elAtRisk.attributes.name;
-                        }
-                      }
-                    }
-                  }
-
-                  //get vulnerability classes
-                  if (analysisContext.relationships.field_vulnerability_classes != null && analysisContext.relationships.field_vulnerability_classes.data != null && analysisContext.relationships.field_vulnerability_classes.data.length > 0) {
-                    obj.vulnerabilityClasses = "";
-                    for (var _i3 = 0; _i3 < analysisContext.relationships.field_vulnerability_classes.data.length; ++_i3) {
-                      var vulClasses = this.getIncludedObject(analysisContext.relationships.field_vulnerability_classes.data[_i3].type, analysisContext.relationships.field_vulnerability_classes.data[_i3].id, originData.included);
-                      if (vulClasses != null) {
-                        if (obj.vulnerabilityClasses === "") {
-                          obj.vulnerabilityClasses = vulClasses.attributes.name;
-                        } else {
-                          obj.vulnerabilityClasses = obj.vulnerabilityClasses + ', ' + vulClasses.attributes.name;
-                        }
-                      }
-                    }
-                  }
-
-                  obj.layer = this.extractLayers(resource.attributes.field_url);
-                  obj.unit = 'pop//km²';
-                  dataFromDP.push(obj);
                 }
               }
             }
+            tableResource.layer = this.extractLayers(resource.attributes.field_url);
+            tableResource.elementAtRisk = elementsAtRisk;
+            tableResource.vulnerabilityClasses = vulnerabilityClass;
+            tableResource.hazard = hazards;
+            tableResource.unit = uom;
+            dataFromDP.push(tableResource);
+          } else {
+            console.warn('resource ' + i + ' is not assiged to Eu-GL step ' + mapType);
           }
         }
       }
@@ -61131,12 +61123,14 @@ var ExposureTable = function (_BasicTable) {
   }, {
     key: 'extractLayers',
     value: function extractLayers(url) {
-      for (var i = 0; i < this.layerParams.length; ++i) {
-        var paramKey = this.layerParams[i];
+      for (var urlIndex = 0; urlIndex < url.length; ++urlIndex) {
+        for (var i = 0; i < this.layerParams.length; ++i) {
+          var paramKey = this.layerParams[i];
 
-        if (url.indexOf(paramKey + '=') != -1) {
-          var layerParam = url.substring(url.indexOf(paramKey + '=') + paramKey.length + 1);
-          return layerParam.indexOf('&') !== -1 ? layerParam.substring(0, layerParam.indexOf('&')) : layerParam;
+          if (url[urlIndex].indexOf(paramKey + '=') != -1) {
+            var layerParam = url[urlIndex].substring(url[urlIndex].indexOf(paramKey + '=') + paramKey.length + 1);
+            return layerParam.indexOf('&') !== -1 ? layerParam.substring(0, layerParam.indexOf('&')) : layerParam;
+          }
         }
       }
 
@@ -61874,15 +61868,15 @@ var RiskAndImpactTable = function (_React$Component) {
   }, {
     key: 'loadTooltips',
     value: function loadTooltips(server, thisObj) {
-      var eAtRId = "element-at-risk:infrastructure:damage-class:";
+      var eAtRId = "damage-class:infrastructure:";
 
       if (this.state.allData != null && this.state.allData[0] != null && this.state.allData[0].elementAtRisk != null) {
         var eAtRisk = this.state.allData[0].elementAtRisk;
 
         if (eAtRisk === 'people') {
-          eAtRId = "element-at-risk:population:damage-class:";
+          eAtRId = "damage-class:population:";
         } else {
-          eAtRId = "element-at-risk:" + eAtRisk + ":damage-class:";
+          eAtRId = "damage-class:" + eAtRisk + ":";
         }
 
         var _loop = function _loop() {
@@ -62971,7 +62965,7 @@ var AdaptationOptionsTable = function (_BasicTable) {
                         return resp.json();
                     }).then(function (data) {
                         if (data.data.relationships.field_resources.links.related != null) {
-                            var includes = 'include=field_analysis_context.field_field_eu_gl_methodology';
+                            var includes = 'include=field_resource_tags,field_map_view,field_grid_info.field_bands';
                             var separator = data.data.relationships.field_resources.links.related.href.indexOf('?') === -1 ? '?' : '&';
 
                             fetch(data.data.relationships.field_resources.links.related.href.replace('http://', obj.protocol) + separator + includes, { credentials: 'include' }).then(function (resp) {
@@ -62999,31 +62993,69 @@ var AdaptationOptionsTable = function (_BasicTable) {
             for (var i = 0; i < resourceArray.length; ++i) {
                 var resource = resourceArray[i];
 
-                if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
-                    var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+                // iterate resource tags
+                if (resource.relationships.field_resource_tags != null && resource.relationships.field_resource_tags.data != null && resource.relationships.field_resource_tags.data.length > 0) {
+                    console.debug('inspecting ' + resource.relationships.field_resource_tags.data.length + ' tags of resource #' + i + ': ' + resource.attributes.field_description);
+                    var euGlStep, elementsAtRisk, vulnerabilityClass;
+                    var hazards = null;
 
-                    if (analysisContext != null) {
-                        if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
-                            var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
-                            console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
-
-                            if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
-                                if (resource.attributes.field_url != null) {
-                                    fetch(resource.attributes.field_url).then(function (resp) {
-                                        return resp.json();
-                                    }).then(function (data) {
-                                        thisObj.setState({
-                                            data: thisObj.convertData(data),
-                                            loading: false
-                                        });
-                                    }).catch(function (error) {
-                                        console.log(JSON.stringify(error));
-                                    });
-                                }
-                            }
+                    for (var j = 0; j < resource.relationships.field_resource_tags.data.length; ++j) {
+                        // step one: extract relevant tags
+                        if (resource.relationships.field_resource_tags.data[j].type === 'taxonomy_term--eu_gl') {
+                            var tag = this.getIncludedObject(resource.relationships.field_resource_tags.data[j].type, resource.relationships.field_resource_tags.data[j].id, originData.included);
+                            euGlStep = tag.attributes.field_eu_gl_taxonomy_id.value;
                         }
                     }
+
+                    // step two: create table layers
+                    // e.g. mapType = eu-gl:risk-and-impact-assessment
+                    if (euGlStep != null && euGlStep === mapType) {
+                        var tableResource = {};
+                        var uom = 'pop//km2';
+
+                        if (resource.attributes.field_url != null && resource.attributes.field_url.length > 0) {
+                            fetch(resource.attributes.field_url).then(function (resp) {
+                                return resp.json();
+                            }).then(function (data) {
+                                thisObj.setState({
+                                    data: thisObj.convertData(data),
+                                    loading: false
+                                });
+                            }).catch(function (error) {
+                                console.log(JSON.stringify(error));
+                            });
+                        }
+                    } else {
+                        console.warn('resource ' + i + ' is not assiged to Eu-GL step ' + mapType);
+                    }
                 }
+
+                // if (resource.relationships.field_analysis_context != null && resource.relationships.field_analysis_context.data != null) {
+                //     var analysisContext = this.getIncludedObject(resource.relationships.field_analysis_context.data.type, resource.relationships.field_analysis_context.data.id, originData.included);
+
+                //     if (analysisContext != null) {
+                //         if (analysisContext.relationships.field_field_eu_gl_methodology != null && analysisContext.relationships.field_field_eu_gl_methodology.data != null) {
+                //             var mythodologyData = this.getIncludedObject(analysisContext.relationships.field_field_eu_gl_methodology.data[0].type, analysisContext.relationships.field_field_eu_gl_methodology.data[0].id, originData.included);
+                //             console.log(mythodologyData.attributes.field_eu_gl_taxonomy_id.value);
+
+                //             if (mythodologyData.attributes.field_eu_gl_taxonomy_id.value == mapType) {
+                //                 if (resource.attributes.field_url != null) {
+                //                     fetch(resource.attributes.field_url)
+                //                         .then((resp) => resp.json())
+                //                         .then(function (data) {
+                //                             thisObj.setState({
+                //                                 data: thisObj.convertData(data),
+                //                                 loading: false
+                //                             });
+                //                         })
+                //                         .catch(function (error) {
+                //                             console.log(JSON.stringify(error));
+                //                         });
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
     }, {
